@@ -13,4 +13,10 @@
     tools:context="com.nativos.forumriu.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragmentContainer"></FrameLayout>
+
 </RelativeLayout>
