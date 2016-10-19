@@ -10,7 +10,7 @@
     <string name="prompt_confirmPassword">Confirmar Contraseña</string>
     <string name="signUpButton">Registrar</string>
     <string name="loginButton">Iniciar Sesión</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Debates Activos</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
