@@ -15,20 +15,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".SignIn"
-            android:screenOrientation="portrait" >
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".SignUp"
             android:screenOrientation="portrait" />
         <activity
             android:name=".forgotPassword"
             android:screenOrientation="portrait" />
-        <activity android:name=".MainActivity" />
-
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
