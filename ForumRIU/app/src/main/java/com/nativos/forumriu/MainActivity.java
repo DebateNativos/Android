@@ -1,11 +1,10 @@
 package com.nativos.forumriu;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,10 +14,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import static android.R.attr.id;
-
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+            ProfileFragment.OnFragmentInteractionListener{
 
     FragmentTransaction fragmentTransaction;
     @Override
@@ -78,21 +76,19 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        FragmentManager manager = getSupportFragmentManager();
 
         switch (item.getItemId()){
-
                     case R.id.nav_home:
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.add(R.id.fragmentContainer, new HomeFragment());
-                        fragmentTransaction.commit();
+                        HomeFragment homeFragment = new HomeFragment();
+                        manager.beginTransaction().replace(R.id.fragmentContainer,homeFragment,homeFragment.getTag()).commit();
                         getSupportActionBar().setTitle("Página Principal");
                         break;
                     case R.id.nav_history:
                         break;
                     case R.id.nav_profile:
-                                fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.add(R.id.fragmentContainer, new ProfileFragment());
-                        fragmentTransaction.commit();
+                        ProfileFragment profileFragment = ProfileFragment.newInstance("as","sd");
+                        manager.beginTransaction().replace(R.id.fragmentContainer,profileFragment,profileFragment.getTag()).commit();
                         getSupportActionBar().setTitle("Editar Perfil");
                        break;
                     case R.id.nav_signOut:
@@ -107,5 +103,10 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+    //Recibir dato
     }
 }

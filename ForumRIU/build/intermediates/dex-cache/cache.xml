@@ -12,24 +12,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="867dad63c33388ff8c7644b236579355036d075f">
-        <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_5db24830b3d8547ee81d0cd75c3bc3a5c4a31bf4\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
-        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.2.1_fa4984b8d8133e707710fbedeea22995f82d2901\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -57,39 +39,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
-        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-24.2.1_3b0984240dfb1523f3ad4212163bed8fcf9abead\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
-        <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-24.2.1_ce3e3cd9d7be467a2975302ccfc8e7f7f6e3fea6\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
         <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-24.2.1_5b6a1e4538da10af9d6606d145ef87d59ead5858\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
-        <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-24.2.1_b233fb3222224befe291cc27b3e35d0e1f8c3c26\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -106,7 +61,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="4f60c0bd1eda125625632088d80336f27714a588">
+        sha1="e8cf0ff38d4d39cd722717dcf0715fd2d5d53255">
         <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_9112f66aa92bad8f73a07307d25641c870f52cca\classes.dex" />
     </item>
     <item
@@ -126,24 +81,6 @@
         revision="24.0.2"
         sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
         <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_e2b6d6d095eca64bb561f9454da76128b2c0021c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
-        <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.1_2c9ce67de73ae6100213a1f2cfbf758eddbb870b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
-        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_5b493341edc67e88c17a3b0bf5d2422a7c69f211\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -228,33 +165,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
-        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.1_f298bb657ac661f7ded0cbf1cdbc6dc0e1b67ea3\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
-        <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.2.1_d651a898f76bb7ba6794fd4dc96216d3199d274c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\chang\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
-        <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.2.1_d711178a97beb6ca952bb9f32b19947bed5b59fb\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -282,6 +192,114 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_a7787b566173b59284aa661431681d2b49f0178f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_5a44fdee60f4681b6f68f6390872e13183c60c3d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_5db24830b3d8547ee81d0cd75c3bc3a5c4a31bf4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.2.1_fa4984b8d8133e707710fbedeea22995f82d2901\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
+        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-24.2.1_3b0984240dfb1523f3ad4212163bed8fcf9abead\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-24.2.1_ce3e3cd9d7be467a2975302ccfc8e7f7f6e3fea6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-24.2.1_b233fb3222224befe291cc27b3e35d0e1f8c3c26\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.1_2c9ce67de73ae6100213a1f2cfbf758eddbb870b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_5b493341edc67e88c17a3b0bf5d2422a7c69f211\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.1_f298bb657ac661f7ded0cbf1cdbc6dc0e1b67ea3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.2.1_d651a898f76bb7ba6794fd4dc96216d3199d274c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\chang\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.2.1_d711178a97beb6ca952bb9f32b19947bed5b59fb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
@@ -295,7 +313,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="0f3c6642fa6c6ccf73ac3ab9216a22da7c377df5">
+        sha1="d8e9e32e782577cf1ddf70d28232a52bea15aaeb">
         <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_d5711200b7bca29e768c0e07ad64feb88cb31a51\classes.dex" />
     </item>
     <item
@@ -309,30 +327,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
-        <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_a7787b566173b59284aa661431681d2b49f0178f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
         <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-24.2.1_4e37040df80b68969810fc0d0cd274f6c8008422\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
-        <dex dex="C:\Users\chang\Desktop\Prueba\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_5a44fdee60f4681b6f68f6390872e13183c60c3d\classes.dex" />
     </item>
 
 </items>
