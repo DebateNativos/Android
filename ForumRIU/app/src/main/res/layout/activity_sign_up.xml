@@ -26,7 +26,7 @@
         android:ems="10"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/editTextName" />
+        android:id="@+id/editTextSignUpName" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -45,7 +45,7 @@
             android:hint="@string/prompt_lastname"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:id="@+id/editTextLastName" />
+            android:id="@+id/editTextSignUpLastName" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -63,7 +63,7 @@
             android:hint="@string/prompt_lastname2"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:id="@+id/editTextLastName2" />
+            android:id="@+id/editTextSignUpLastName2" />
 
     </android.support.design.widget.TextInputLayout>
 
