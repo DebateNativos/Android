@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity
         final TextView finalText=(TextView) hView.findViewById(R.id.textViewEmailHeader);
         finalText.setText(getEmail);
 
+
+
     }
 
     @Override

@@ -11,6 +11,15 @@
     tools:context="com.nativos.forumriu.SignIn"
     android:background="@drawable/login">
 
+    <TextView
+        android:text="Hola"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/jasonTextView"
+        android:textColor="#0F7F41"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="170dp"
+        />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -84,4 +93,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="29dp"
         android:onClick="goToSignUp"/>
+
+
+
 </RelativeLayout>
