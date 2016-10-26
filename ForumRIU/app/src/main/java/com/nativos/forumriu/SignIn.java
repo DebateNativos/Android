@@ -65,7 +65,7 @@ public class SignIn extends Activity {
                     et_password.requestFocus();
                 } else {
                    // new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/getAll");
-                    new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/login?email=@gmail&password=123");
+                    // new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/login?email=@gmail&password=123");
                    goToHome();
                 }
             }

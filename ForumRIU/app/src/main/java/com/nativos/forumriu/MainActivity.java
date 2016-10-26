@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 
@@ -29,7 +30,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity
         String getEmail= emailData.getString("UserEmail");
         final TextView finalText=(TextView) hView.findViewById(R.id.textViewEmailHeader);
         finalText.setText(getEmail);
-
 
 
     }

@@ -52,7 +52,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="29c77c5be6d854deb42a594705639c3c7f3f442d">
+        sha1="7403925098fe19bc240397b765794a89c659a3dc">
         <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_9112f66aa92bad8f73a07307d25641c870f52cca\classes.dex" />
     </item>
     <item
@@ -160,7 +160,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="d2466ff5dba72b4e257f52558a180fa997f9f78c">
+        sha1="7bd2ff99b9ab81876ad09759e23861a350ec7283">
         <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_d5711200b7bca29e768c0e07ad64feb88cb31a51\classes.dex" />
     </item>
     <item
