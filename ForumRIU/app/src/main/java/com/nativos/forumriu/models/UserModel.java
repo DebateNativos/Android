@@ -11,17 +11,27 @@ public class UserModel {
     private String lastname;
     private String lastname2;
     private String email;
+    private String status;
 
 
     public UserModel() {
     }
 
-    public UserModel(int idUser, String email, String lastname2, String lastname, String name) {
-        this.idUser = idUser;
+    public UserModel(String email, int idUser, String lastname2, String lastname, String name, String status) {
         this.email = email;
+        this.idUser = idUser;
         this.lastname2 = lastname2;
         this.lastname = lastname;
         this.name = name;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getName() {

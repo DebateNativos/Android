@@ -5,13 +5,24 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.nativos.forumriu.models.DebateModel;
 import com.nativos.forumriu.models.UserModel;
 
 import org.json.JSONArray;
@@ -25,19 +36,25 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static android.R.attr.button;
-import static android.R.attr.id;
-import static android.R.attr.name;
-import static android.os.Build.VERSION_CODES.N;
+import static android.content.ContentValues.TAG;
 import static com.nativos.forumriu.R.drawable.user;
+import static com.nativos.forumriu.R.id.listViewDebate;
+
 
 public class SignIn extends Activity {
 
     EditText et_email = null;
     EditText et_password = null;
     Button btnSignIn;
-    private TextView tvData;
+
+    private RequestQueue requestQueue;
+    private static String URL="";
+    private StringRequest request;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +68,7 @@ public class SignIn extends Activity {
         et_password = (EditText) findViewById(R.id.passwordText);
 
         btnSignIn = (Button) findViewById(R.id.loginButton);
-        tvData=(TextView)findViewById(R.id.jasonTextView);
-
+        requestQueue = Volley.newRequestQueue(this);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,23 +80,64 @@ public class SignIn extends Activity {
                     et_password.setError("Campo requerido");
                     et_password.requestFocus();
                 } else {
+//                    URL="http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/login?email="+et_email.getText().toString().trim()+"&password="+et_password.getText().toString().trim();
+//                    request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
+//                        @Override
+//                        public void onResponse(String response) {
+//                            try {
+//                                JSONObject jsonObject = new JSONObject(response);
+//                                    String status = jsonObject.getString("status");
+//                                    if(status.equals("@validLogin")){
+//                                        goToHome();
+//                                    }
+//                                    else{
+//                                        Toast.makeText(getApplicationContext(),"Error"+jsonObject.get("status"), Toast.LENGTH_LONG).show();
+//                                    }
+//
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }, new Response.ErrorListener() {
+//                        @Override
+//                        public void onErrorResponse(VolleyError error) {
+//                            error.printStackTrace();
+//                            Log.d(TAG, "Error fghjk: " + error.getMessage());
+//                        }
+//                    }){
+//                        @Override
+//                        protected Map<String, String> getParams() throws AuthFailureError {
+//                            HashMap<String, String> hashMap= new HashMap<String, String>();
+//                            hashMap.put("email",et_email.getText().toString());
+//                            hashMap.put("password",et_password.getText().toString());
+//                            return hashMap;
+//                        }
+//                    };
+//
+//                    requestQueue.add(request);
+
+
                    // new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/getAll");
-                    // new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/login?email=@gmail&password=123");
-                   goToHome();
+                   // new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/login?email=@gmail.com&password=123");
+
+
+                    URL="http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/login?email="+et_email.getText().toString().trim()+"&password="+et_password.getText().toString().trim();
+                    new JsonTask().execute(URL);
                 }
             }
         });
     }
 
-    public class JsonTask extends AsyncTask<String,String, String>{
+
+    public class JsonTask extends AsyncTask<String,String, UserModel> {
         @Override
-        protected String doInBackground(String... params) {
+        protected UserModel doInBackground(String... params) {
             HttpURLConnection connection = null;
             BufferedReader reader = null;
 
             try {
-                URL url  =new URL(params[0]);
-                connection =(HttpURLConnection) url.openConnection();
+                java.net.URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
 
                 InputStream stream = connection.getInputStream();
@@ -89,36 +146,21 @@ public class SignIn extends Activity {
 
                 StringBuffer buffer = new StringBuffer();
 
-                String line="";
+                String line = "";
 
-                while ((line = reader.readLine())!=null){
+                while ((line = reader.readLine()) != null) {
                     buffer.append(line);
                 }
-                String finalJson= buffer.toString();
-               // JSONArray parentArray = new JSONArray(finalJson);
-
-               // JSONArray parentArray = parentObject.getJSONArray("user");
-
-                JSONObject parentObject = new JSONObject(finalJson);
+                String finalJson = buffer.toString();
 
                 UserModel userModel = new UserModel();
-                userModel.setName(parentObject.getJSONObject("user").getString("name"));
-                userModel.setLastname(parentObject.getJSONObject("user").getString("lastName"));
+                JSONObject finalObject = new JSONObject(finalJson);
+                userModel.setStatus(finalObject.getString("status"));
 
 
+                //String r=finalObject.getString("status");
 
-//                for (int i=0; i<parentArray.length();i++) {
-//                    JSONObject finalObject = parentArray.getJSONObject(i);
-//
-//                    String name = finalObject.getString("name");
-//                    String lastname = finalObject.getString("lastName");
-//
-//                    finalBufferedData.append(name+" "+lastname+"\n");
-
-               // }
-
-
-                return userModel.getName()+userModel.getLastname();
+                return userModel;
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -138,14 +180,25 @@ public class SignIn extends Activity {
             }
             return null;
         }
-
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(UserModel result) {
             super.onPostExecute(result);
-            tvData.setText(result);
 
+            String status = result.getStatus();
+
+            if(status.equals("@validLogin")){
+                goToHome();
+            }
+            else{
+                Toast.makeText(SignIn.this,"Correo o contraseña incorrecta ", Toast.LENGTH_LONG).show();
+            }
+
+//            HomeFragment.DebateAdapter adapter = new HomeFragment.DebateAdapter(getActivity().getApplicationContext(), R.layout.row, result);
+//            listViewDebate.setAdapter(adapter);
         }
+
     }
+
 
     public boolean validatePassword(String password) {
 
