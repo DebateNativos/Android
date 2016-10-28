@@ -84,12 +84,6 @@ public class HomeFragment extends Fragment {
                 String finalJson = buffer.toString();
                 JSONArray parentArray = new JSONArray(finalJson);
 
-                // JSONArray parentArray = parentObject.getJSONArray("user");
-
-                //JSONObject parentObject = new JSONObject(finalJson);
-//                UserModel userModel = new UserModel();
-//                userModel.setName(parentObject.getJSONObject("user").getString("name"));
-//                userModel.setLastname(parentObject.getJSONObject("user").getString("lastName"));
 
                 List<DebateModel> debateModelList = new ArrayList<>();
 
