@@ -11,21 +11,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.nativos.forumriu.models.DebateModel;
 import com.nativos.forumriu.models.UserModel;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,14 +26,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import static android.content.ContentValues.TAG;
-import static com.nativos.forumriu.R.drawable.user;
-import static com.nativos.forumriu.R.id.listViewDebate;
 
 
 public class SignIn extends Activity {
@@ -52,9 +35,7 @@ public class SignIn extends Activity {
     EditText et_password = null;
     Button btnSignIn;
 
-    private RequestQueue requestQueue;
     private static String URL="";
-    private StringRequest request;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +44,9 @@ public class SignIn extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sign_in);
 
-
         et_email = (EditText) findViewById(R.id.emailText);
         et_password = (EditText) findViewById(R.id.passwordText);
-
         btnSignIn = (Button) findViewById(R.id.loginButton);
-        requestQueue = Volley.newRequestQueue(this);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,9 +135,6 @@ public class SignIn extends Activity {
                 JSONObject finalObject = new JSONObject(finalJson);
                 userModel.setStatus(finalObject.getString("status"));
 
-
-                //String r=finalObject.getString("status");
-
                 return userModel;
 
             } catch (MalformedURLException e) {
@@ -192,13 +167,8 @@ public class SignIn extends Activity {
             else{
                 Toast.makeText(SignIn.this,"Correo o contraseña incorrecta ", Toast.LENGTH_LONG).show();
             }
-
-//            HomeFragment.DebateAdapter adapter = new HomeFragment.DebateAdapter(getActivity().getApplicationContext(), R.layout.row, result);
-//            listViewDebate.setAdapter(adapter);
         }
-
     }
-
 
     public boolean validatePassword(String password) {
 
