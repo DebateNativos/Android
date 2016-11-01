@@ -10,24 +10,24 @@ public class DebateModel {
 
     private int id;
     private String name;
-    private Date date;
+    private String date;
     private boolean isActive;
 
     public DebateModel() {
     }
 
-    public DebateModel(Date date, int id, boolean isActive, String name) {
+    public DebateModel(String date, int id, boolean isActive, String name) {
         this.date = date;
         this.id = id;
         this.isActive = isActive;
         this.name = name;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

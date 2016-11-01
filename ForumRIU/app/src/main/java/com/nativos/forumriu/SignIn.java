@@ -3,9 +3,7 @@ package com.nativos.forumriu;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -46,7 +44,7 @@ public class SignIn extends Activity {
 
         et_email = (EditText) findViewById(R.id.emailText);
         et_password = (EditText) findViewById(R.id.passwordText);
-        btnSignIn = (Button) findViewById(R.id.loginButton);
+        btnSignIn = (Button) findViewById(R.id.StudentButton);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override

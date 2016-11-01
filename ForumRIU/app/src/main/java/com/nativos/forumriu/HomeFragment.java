@@ -2,6 +2,8 @@ package com.nativos.forumriu;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,7 +11,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -40,6 +44,10 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 public class HomeFragment extends Fragment {
 
     private ListView listViewDebate;
+    TextView tvDebateName;
+    ImageView imageIcon;
+    TextView tvDebateDate;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -49,11 +57,25 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView =inflater.inflate(R.layout.fragment_home, container, false);
+       final View rootView =inflater.inflate(R.layout.fragment_home, container, false);
         listViewDebate=(ListView) rootView.findViewById(R.id.listViewDebate);
 
         new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/activedebates");
-        // Inflate the layout for this fragment
+
+
+        listViewDebate.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               // String name = String.valueOf(listViewDebate.getItemAtPosition(position));
+                tvDebateDate= (TextView) rootView.findViewById(R.id.textViewDebateDate);
+                String name= tvDebateName.getText().toString();
+
+                Intent intent = new Intent(getActivity().getBaseContext(), InsertCodeActivity.class);
+                intent.putExtra("DebateName", name);
+                startActivity(intent);
+
+            }
+        });
 
         return rootView;
 
@@ -62,13 +84,13 @@ public class HomeFragment extends Fragment {
     public class JsonTask extends AsyncTask<String,String, List<DebateModel>> {
         @Override
         protected List<DebateModel> doInBackground(String... params) {
-            HttpURLConnection connection = null;
-            BufferedReader reader = null;
+                    HttpURLConnection connection = null;
+                    BufferedReader reader = null;
 
-            try {
-                URL url = new URL(params[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
+                    try {
+                        URL url = new URL(params[0]);
+                        connection = (HttpURLConnection) url.openConnection();
+                        connection.connect();
 
                 InputStream stream = connection.getInputStream();
 
@@ -91,6 +113,7 @@ public class HomeFragment extends Fragment {
                     JSONObject finalObject = parentArray.getJSONObject(i);
                     DebateModel debateModel = new DebateModel();
                     debateModel.setName(finalObject.getString("name"));
+                    debateModel.setDate(finalObject.getString("startingDate"));
 
                     debateModelList.add(debateModel);
                 }
@@ -122,6 +145,7 @@ public class HomeFragment extends Fragment {
 
             DebateAdapter adapter = new DebateAdapter(getActivity().getApplicationContext(), R.layout.row, result);
             listViewDebate.setAdapter(adapter);
+
         }
 
 }
@@ -146,13 +170,24 @@ public class HomeFragment extends Fragment {
                 convertView = inflater.inflate(resource, null);
             }
 
-            TextView tvDebateName;
 
+
+            tvDebateDate= (TextView) convertView.findViewById(R.id.textViewDebateDate);
             tvDebateName= (TextView) convertView.findViewById(R.id.textViewDebateName);
 
+
             tvDebateName.setText(debateModelList.get(position).getName());
+            tvDebateDate.setText("Fecha del debate: "+debateModelList.get(position).getDate());
+
+            imageIcon=(ImageView) convertView.findViewById(R.id.imageViewDebate_ic);
+
             return convertView;
         }
+    }
+
+    public void goToInsertCode() {
+        Intent intent = new Intent(getActivity().getBaseContext(), InsertCodeActivity.class);
+        startActivity(intent);
     }
 
 }

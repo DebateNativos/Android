@@ -29,5 +29,9 @@
     <string name="editProfileButton">Actualizar Perfil</string>
     <string name="textViewInstruction">Le enviaremos un correo con instrucciones sobre como restablecer la contraseña</string>
     <string name="forgotPasswordButton">Enviar correo</string>
+    <string name="isStudent">Si desea ingresar al debate como estudiante ingrese el código enviado a su correo</string>
+    <string name="studentButton">Ingresar como estudiante</string>
+    <string name="isPublic">De lo contrario puede ingresar como público</string>
+    <string name="publicButton">Ingresar como público</string>
 
 </resources>
