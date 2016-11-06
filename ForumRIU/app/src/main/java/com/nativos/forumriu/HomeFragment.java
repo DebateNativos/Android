@@ -66,9 +66,14 @@ public class HomeFragment extends Fragment {
         listViewDebate.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               // String name = String.valueOf(listViewDebate.getItemAtPosition(position));
+                DebateModel debateModel ;
+                debateModel= (DebateModel) listViewDebate.getItemAtPosition(position);
+
+                String name = debateModel.getName();
+              //  String name = String.valueOf(listViewDebate.getItemAtPosition(position));
+
                 tvDebateDate= (TextView) rootView.findViewById(R.id.textViewDebateDate);
-                String name= tvDebateName.getText().toString();
+                //String name= tvDebateName.getText().toString();
 
                 Intent intent = new Intent(getActivity().getBaseContext(), InsertCodeActivity.class);
                 intent.putExtra("DebateName", name);
