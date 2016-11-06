@@ -33,5 +33,6 @@
     <string name="studentButton">Ingresar como estudiante</string>
     <string name="isPublic">De lo contrario puede ingresar como público</string>
     <string name="publicButton">Ingresar como público</string>
+    <string name="warningTextview">Amonestaciones</string>
 
 </resources>

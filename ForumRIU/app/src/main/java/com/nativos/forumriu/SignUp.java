@@ -11,10 +11,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static android.R.attr.data;
 import static android.R.attr.password;
 
 public class SignUp extends Activity {
+
 
     private EditText et_email, et_password, et_confirmPassword, et_name,et_lastname,et_lastname2;
     Button btnSignUp;
@@ -75,6 +87,55 @@ public class SignUp extends Activity {
 
 
         }
+
+    private void registerUser() {
+        final String email = et_email.getText().toString().trim();
+        final String name = et_name.getText().toString().trim();
+        final String password = et_password.getText().toString().trim();
+        final String lastName = et_lastname.getText().toString().trim();
+        final String lastName2 = et_lastname2.getText().toString().trim();
+
+        final String registerURL = "";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, registerURL, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+            }
+        },
+                new Response.ErrorListener() {
+
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String,String> params = new HashMap<String, String>();
+
+                params.put("email",email);
+                params.put("name",name);
+                params.put("lastName",lastName);
+                params.put("email",email);
+
+                return params;
+
+//                HashMap<String, String> hashMap = new HashMap<String, String>();
+//                hashMap.put("email", et_email.getText().toString());
+//                hashMap.put("password", et_password.getText().toString());
+//                return hashMap;
+
+            }
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
 
     public boolean validateData(String data){
 
