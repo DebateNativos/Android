@@ -30,6 +30,7 @@ public class DebaterActivity extends AppCompatActivity {
         btnNotification.setText(getAllWarning(warning));
 
         notification = new NotificationCompat.Builder(this);
+
         notification.setAutoCancel(true);
     }
 
@@ -47,16 +48,16 @@ public class DebaterActivity extends AppCompatActivity {
 
 
     public void NotificationClick(View view){
-        notification.setSmallIcon(R.drawable.splash_image);
+        notification.setSmallIcon(R.drawable.amarilla);
         notification.setTicker("Recibiste una amonestación");
         notification.setWhen(System.currentTimeMillis());
         notification.setContentTitle("Notificación de amonestación");
-        notification.setContentText("Has sido amonestado");
+        notification.setContentText("Has sido amonestado por el moderador");
 
         String currentWarning= btnNotification.getText().toString();
         warning=Integer.parseInt(currentWarning);
         warning++;
-
+        notification.setVibrate(new long[]{ 1000, 1000});
         if(warning>=3) {
             btnNotification.setText((String.valueOf(warning)));
             Toast.makeText(DebaterActivity.this, "Tercera amonestación, has sido expulsado del debate", Toast.LENGTH_LONG).show();

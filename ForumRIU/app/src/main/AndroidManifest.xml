@@ -13,9 +13,12 @@
         <activity
             android:name=".SplashScreen"
             android:screenOrientation="portrait">
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".SignIn"
@@ -33,10 +36,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".InsertCodeActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".DebaterActivity"
-            android:screenOrientation="portrait"> <intent-filter>
 
-        </intent-filter></activity>
+        <activity android:name=".DebaterActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>
