@@ -1,13 +1,10 @@
 package com.nativos.forumriu;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -43,6 +40,8 @@ public class SignUp extends Activity {
         et_name = (EditText) findViewById(R.id.editTextSignUpName);
         et_lastname = (EditText) findViewById(R.id.editTextSignUpLastName);
         et_lastname2 = (EditText) findViewById(R.id.editTextSignUpLastName2);
+
+
 
         btnSignUp= (Button) findViewById(R.id.buttonSignUp);
 

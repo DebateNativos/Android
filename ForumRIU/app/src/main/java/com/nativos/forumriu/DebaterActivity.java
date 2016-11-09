@@ -3,18 +3,22 @@ package com.nativos.forumriu;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.annotation.StringRes;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import static android.R.attr.id;
 
-public class DebaterActivity extends AppCompatActivity {
+public class DebaterActivity extends AppCompatActivity implements View.OnClickListener{
+
     NotificationCompat.Builder notification;
     Button btnNotification ;
     private int warning= 0;
@@ -25,12 +29,9 @@ public class DebaterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debater);
 
-        btnNotification=(Button) findViewById(R.id.buttonWarning);
 
         btnNotification.setText(getAllWarning(warning));
-
         notification = new NotificationCompat.Builder(this);
-
         notification.setAutoCancel(true);
     }
 
