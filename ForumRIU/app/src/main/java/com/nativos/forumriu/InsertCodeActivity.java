@@ -1,6 +1,7 @@
 package com.nativos.forumriu;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,5 +26,11 @@ public class InsertCodeActivity extends Activity {
         String getName= debateData.getString("DebateName");
         final TextView finalText=(TextView)findViewById(R.id.textViewDebateName);
         finalText.setText(getName);
+    }
+
+
+    public void goToDebaterActivity(View view) {
+        Intent intent = new Intent(getBaseContext(), DebaterActivity.class);
+        startActivity(intent);
     }
 }
