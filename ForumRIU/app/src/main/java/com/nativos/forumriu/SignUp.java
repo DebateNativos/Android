@@ -1,35 +1,35 @@
 package com.nativos.forumriu;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static android.R.attr.data;
-import static android.R.attr.password;
 
 public class SignUp extends Activity {
 
-
     private EditText et_email, et_password, et_confirmPassword, et_name,et_lastname,et_lastname2;
     Button btnSignUp;
+    private static String URL="";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,9 +78,12 @@ public class SignUp extends Activity {
                      Toast.makeText(SignUp.this,"Contraseñas no coinciden",Toast.LENGTH_LONG).show();
                  }
                 else{
-                    Intent intent = new Intent(getBaseContext(),SignIn.class);
-                    startActivity(intent);
-                    Toast.makeText(SignUp.this,"Usuario registrado con éxito",Toast.LENGTH_LONG).show();
+
+                     //URL="http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/registeruser?name=Jordan&lastname=Wong&lastname2=Y&email=j@gmail.com&password=1&phone=70151515&birthday=06/27/2007&address=San%20Jose&idUniversity=12352";
+                     URL="http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/registeruser?name="+et_name.getText().toString().trim()+"&lastname="+et_lastname.getText().toString().trim()+"&lastname2="+et_lastname2.getText().toString().trim()+"&email="+et_email.getText().toString().trim()+"&password="+et_password.getText().toString().trim()+"&phone=null"+"&birthday=06/27/2007"+"&address=null"+"&idUniversity=152";
+
+                     new JsonTask().execute(URL);
+
                 }
             }
         });
@@ -88,54 +91,67 @@ public class SignUp extends Activity {
 
         }
 
-    private void registerUser() {
-        final String email = et_email.getText().toString().trim();
-        final String name = et_name.getText().toString().trim();
-        final String password = et_password.getText().toString().trim();
-        final String lastName = et_lastname.getText().toString().trim();
-        final String lastName2 = et_lastname2.getText().toString().trim();
 
-        final String registerURL = "";
+    public class JsonTask extends AsyncTask<String,String, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, registerURL, new Response.Listener<String>() {
+            try {
+                java.net.URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
 
-            @Override
-            public void onResponse(String response) {
+                InputStream stream = connection.getInputStream();
 
-            }
-        },
-                new Response.ErrorListener() {
+                reader = new BufferedReader(new InputStreamReader(stream));
 
+                StringBuffer buffer = new StringBuffer();
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                String line = "";
 
-                    }
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line);
                 }
-        ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+                String status = buffer.toString();
 
-                Map<String,String> params = new HashMap<String, String>();
+                return status;
 
-                params.put("email",email);
-                params.put("name",name);
-                params.put("lastName",lastName);
-                params.put("email",email);
-
-                return params;
-
-//                HashMap<String, String> hashMap = new HashMap<String, String>();
-//                hashMap.put("email", et_email.getText().toString());
-//                hashMap.put("password", et_password.getText().toString());
-//                return hashMap;
-
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if(connection !=null){
+                    connection.disconnect();}
+                try {
+                    if(reader !=null){
+                        reader.close();}
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
 
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+            String status = result;
+
+            if(status!=null &&status.equals("@validRegistration")){
+                Intent intent = new Intent(getBaseContext(),SignIn.class);
+                startActivity(intent);
+                Toast.makeText(SignUp.this,"Usuario registrado con éxito",Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(SignUp.this,"Error en registro ", Toast.LENGTH_LONG).show();
+            }
+        }
     }
+
+
 
     public boolean validateData(String data){
 
@@ -163,4 +179,6 @@ public class SignUp extends Activity {
         else
             return false;
     }
+
+
 }

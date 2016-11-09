@@ -3,6 +3,7 @@
     package="com.nativos.forumriu">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -18,14 +19,18 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".SignIn"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".SignUp"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+
+        </activity>
+
         <activity
             android:name=".forgotPassword"
             android:screenOrientation="portrait" />
@@ -34,10 +39,12 @@
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".InsertCodeActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".InsertCodeActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".DebaterActivity"
+        <activity
+            android:name=".DebaterActivity"
             android:screenOrientation="portrait">
 
         </activity>
