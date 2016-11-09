@@ -19,6 +19,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".SignIn"
@@ -28,7 +29,6 @@
             android:name=".SignUp"
             android:screenOrientation="portrait">
 
-
         </activity>
 
         <activity
@@ -36,12 +36,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".InsertCodeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+
+
+
+        </activity>
+
 
         <activity
             android:name=".DebaterActivity"
