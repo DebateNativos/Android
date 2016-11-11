@@ -34,6 +34,12 @@ public class SignUp extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sign_up);
 
+        signUp();
+    }
+
+
+
+    public void signUp(){
         et_email = (EditText) findViewById(R.id.editTextSignUpEmail);
         et_password = (EditText) findViewById(R.id.editTextSignUpPassword);
         et_confirmPassword = (EditText) findViewById(R.id.editTextSignUpConfirmPassword);
@@ -49,7 +55,7 @@ public class SignUp extends Activity {
             @Override
             public void onClick(View v) {
 
-                 if(validateData(et_name.getText().toString())){
+                if(validateData(et_name.getText().toString())){
                     et_name.setError("Campo requerido");
                     et_name.requestFocus();
                 }
@@ -73,23 +79,22 @@ public class SignUp extends Activity {
                     et_confirmPassword.setError("Campo requerido");
                     et_confirmPassword.requestFocus();
                 }
-                 else if(!comparePassword(et_password.getText().toString(),et_confirmPassword.getText().toString())){
-                     Toast.makeText(SignUp.this,"Contraseñas no coinciden",Toast.LENGTH_LONG).show();
-                 }
+                else if(!comparePassword(et_password.getText().toString(),et_confirmPassword.getText().toString())){
+                    Toast.makeText(SignUp.this,"Contraseñas no coinciden",Toast.LENGTH_LONG).show();
+                }
                 else{
 
-                     //URL="http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/registeruser?name=Jordan&lastname=Wong&lastname2=Y&email=j@gmail.com&password=1&phone=70151515&birthday=06/27/2007&address=San%20Jose&idUniversity=12352";
-                     URL="http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/registeruser?name="+et_name.getText().toString().trim()+"&lastname="+et_lastname.getText().toString().trim()+"&lastname2="+et_lastname2.getText().toString().trim()+"&email="+et_email.getText().toString().trim()+"&password="+et_password.getText().toString().trim()+"&phone=null"+"&birthday=06/27/2007"+"&address=null"+"&idUniversity=152";
+                    //URL="http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/registeruser?name=Jordan&lastname=Wong&lastname2=Y&email=j@gmail.com&password=1&phone=70151515&birthday=06/27/2007&address=San%20Jose&idUniversity=12352";
+                    URL="http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/registeruser?name="+et_name.getText().toString().trim()+"&lastname="+et_lastname.getText().toString().trim()+"&lastname2="+et_lastname2.getText().toString().trim()+"&email="+et_email.getText().toString().trim()+"&password="+et_password.getText().toString().trim()+"&phone=null"+"&address=null"+"&idUniversity=152";
 
-                     new JsonTask().execute(URL);
+                    new JsonTask().execute(URL);
 
                 }
             }
         });
 
 
-        }
-
+    }
 
     public class JsonTask extends AsyncTask<String,String, String> {
         @Override
@@ -133,6 +138,7 @@ public class SignUp extends Activity {
             }
             return null;
         }
+
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);

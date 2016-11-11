@@ -15,7 +15,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nativos.forumriu.models.UserModel;
+
 import static android.R.attr.id;
+import static android.R.string.no;
+import static com.nativos.forumriu.R.drawable.user;
 
 public class DebaterActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -34,11 +38,7 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debater);
 
-
-        btnNotification=(Button) findViewById(R.id.buttonWarning);
-        btnNotification.setText(getAllWarning(warning));
-        notification = new NotificationCompat.Builder(this);
-        notification.setAutoCancel(true);
+        notifications();
 
         buttonStartTime = (Button) findViewById(R.id.button_timerview_start);
         buttonStopTime = (Button) findViewById(R.id.button_timerview_stop);
@@ -53,6 +53,14 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
         buttonStartTime.setOnClickListener(this);
         buttonStopTime.setOnClickListener(this);
 
+    }
+
+    public void notifications(){
+
+        btnNotification=(Button) findViewById(R.id.buttonWarning);
+        btnNotification.setText(getAllWarning(warning));
+        notification = new NotificationCompat.Builder(this);
+        notification.setAutoCancel(true);
     }
 
     @Override
@@ -165,5 +173,6 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
     public void goToSignIn() {
         Intent intent = new Intent(getBaseContext(), SignIn.class);
         startActivity(intent);
+        
     }
 }

@@ -40,15 +40,21 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-       navigationView.setNavigationItemSelectedListener(this);
-
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragmentContainer, new HomeFragment());
         fragmentTransaction.commit();
         getSupportActionBar().setTitle("Página Principal");
 
+
+        getUserEmail();
+
+    }
+
+    public void getUserEmail(){
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         Bundle emailData= getIntent().getExtras();
         if(emailData==null){
@@ -59,7 +65,6 @@ public class MainActivity extends AppCompatActivity
         String getEmail= emailData.getString("UserEmail");
         final TextView finalText=(TextView) hView.findViewById(R.id.textViewEmailHeader);
         finalText.setText(getEmail);
-
 
     }
 

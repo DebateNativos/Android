@@ -25,7 +25,7 @@
     <string name="itemNavHome">Página Principal</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="editProfileButton">Actualizar Perfil</string>
     <string name="textViewInstruction">Le enviaremos un correo con instrucciones sobre como restablecer la contraseña</string>
     <string name="forgotPasswordButton">Enviar correo</string>
