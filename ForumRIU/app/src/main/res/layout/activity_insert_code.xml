@@ -57,7 +57,7 @@
         android:layout_alignRight="@+id/editTextDebateCode"
         android:layout_alignEnd="@+id/editTextDebateCode"
         android:layout_marginTop="13dp"
-        android:onClick="goToDebaterActivity"/>
+       />
 
     <TextView
         android:text="@string/isPublic"

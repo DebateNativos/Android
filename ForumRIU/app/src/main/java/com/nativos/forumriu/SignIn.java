@@ -43,9 +43,7 @@ public class SignIn extends Activity {
         setContentView(R.layout.activity_sign_in);
 
         login();
-
     }
-
 
     public void login(){
         et_email = (EditText) findViewById(R.id.emailText);
