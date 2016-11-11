@@ -11,18 +11,6 @@
     tools:context="com.nativos.forumriu.InsertCodeActivity"
     android:background="@drawable/insertcode">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editTextDebateCode"
-        android:hint="Código"
-        android:layout_below="@+id/textViewIsStudent"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="21dp"
-        android:background="@android:color/white"/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,6 +67,18 @@
         android:layout_marginTop="54dp"
         android:textColor="@android:color/white"
         android:layout_below="@+id/StudentButton"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextDebateCode"
+        android:hint="Código"
+        android:layout_marginTop="21dp"
+        android:background="@drawable/edittext_rounded"
+        android:layout_below="@+id/textViewIsStudent"
         android:layout_centerHorizontal="true" />
 
 

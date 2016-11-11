@@ -24,6 +24,10 @@ public class forgotPassword extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_forgot_password);
 
+        validateEmailOnclick();
+    }
+
+    public void validateEmailOnclick(){
         et_email = (EditText) findViewById(R.id.forgotPasswordEmailText);
         btnSendMail= (Button) findViewById(R.id.forgotPasswordButton);
 
@@ -41,6 +45,7 @@ public class forgotPassword extends Activity {
                 }
             }
         });
+
     }
 
     public boolean validateEmail(String email){

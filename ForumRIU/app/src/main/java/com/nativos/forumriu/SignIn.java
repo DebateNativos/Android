@@ -42,6 +42,12 @@ public class SignIn extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sign_in);
 
+        login();
+
+    }
+
+
+    public void login(){
         et_email = (EditText) findViewById(R.id.emailText);
         et_password = (EditText) findViewById(R.id.passwordText);
         btnSignIn = (Button) findViewById(R.id.StudentButton);
@@ -102,8 +108,8 @@ public class SignIn extends Activity {
                 }
             }
         });
-    }
 
+    }
 
     public class JsonTask extends AsyncTask<String,String, UserModel> {
         @Override

@@ -18,6 +18,12 @@ public class InsertCodeActivity extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_insert_code);
 
+       getDebateName();
+    }
+
+
+    public void getDebateName(){
+
         Bundle debateData= getIntent().getExtras();
         if(debateData==null){
             return;
@@ -27,7 +33,6 @@ public class InsertCodeActivity extends Activity {
         final TextView finalText=(TextView)findViewById(R.id.textViewDebateName);
         finalText.setText(getName);
     }
-
 
     public void goToDebaterActivity(View view) {
         Intent intent = new Intent(getBaseContext(), DebaterActivity.class);
