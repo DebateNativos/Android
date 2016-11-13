@@ -7,5 +7,6 @@
     <item name="ic_email" type="drawable">@drawable/ic_email_icon </item>
     <item name="ic_password" type="drawable">@drawable/ic_password_icon</item>
     <item name="ic_user" type="drawable">@drawable/ic_user_icon</item>
+    <item name="ic_question" type="drawable">@drawable/ic_question_icon</item>
 
 </resources>
