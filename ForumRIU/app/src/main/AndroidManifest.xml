@@ -19,18 +19,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".SignIn"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".SignUp"
-            android:screenOrientation="portrait">
-
-        </activity>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".forgotPassword"
             android:screenOrientation="portrait" />
@@ -40,18 +35,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".InsertCodeActivity"
-            android:screenOrientation="portrait" >
-
-
-
-        </activity>
-
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".DebaterActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".PublicActivity" />
+        <activity android:name=".QuestionActivity"></activity>
     </application>
 
 </manifest>

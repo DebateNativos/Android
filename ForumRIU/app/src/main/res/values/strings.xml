@@ -34,5 +34,8 @@
     <string name="isPublic">De lo contrario puede ingresar como público</string>
     <string name="publicButton">Ingresar como público</string>
     <string name="warningTextview">Amonestaciones</string>
+    <string name="QuestionsText">Formule la pregunta que desea enviar </string>
+    <string name="questionHint" >Digite la pregunta</string>>
+    <string name="sendQuestionButton">Enviar</string>>
 
 </resources>

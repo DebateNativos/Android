@@ -42,10 +42,7 @@ public class InsertCodeActivity extends Activity {
                     Toast.makeText(InsertCodeActivity.this, "Código Incorrecto ", Toast.LENGTH_LONG).show();
             }
         });
-
-
     }
-
 
     public void getDebateName() {
 
@@ -61,6 +58,11 @@ public class InsertCodeActivity extends Activity {
 
     public void goToDebaterActivity() {
         Intent intent = new Intent(getBaseContext(), DebaterActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToPublicActivity(View view) {
+        Intent intent = new Intent(getBaseContext(), PublicActivity.class);
         startActivity(intent);
     }
 }
