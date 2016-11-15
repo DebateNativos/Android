@@ -3,6 +3,7 @@ package com.nativos.forumriu;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Movie;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,7 +32,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import static android.R.attr.name;
@@ -60,7 +67,7 @@ public class HomeFragment extends Fragment {
        final View rootView =inflater.inflate(R.layout.fragment_home, container, false);
         listViewDebate=(ListView) rootView.findViewById(R.id.listViewDebate);
 
-        new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/activedebates");
+        new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getdebates");
 
 
         listViewDebate.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -111,17 +118,43 @@ public class HomeFragment extends Fragment {
                 String finalJson = buffer.toString();
                 JSONArray parentArray = new JSONArray(finalJson);
 
-
                 List<DebateModel> debateModelList = new ArrayList<>();
 
                 for (int i = 0; i < parentArray.length(); i++) {
                     JSONObject finalObject = parentArray.getJSONObject(i);
                     DebateModel debateModel = new DebateModel();
                     debateModel.setName(finalObject.getString("name"));
-                    debateModel.setDate(finalObject.getString("startingDate"));
 
-                    debateModelList.add(debateModel);
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(Long.parseLong(finalObject.getString("startingDate")));
+                    Date date = calendar.getTime();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+                    debateModel.setDate(sdf.format(date));
+                    //debateModel.setDate(finalObject.getString("startingDate"));
+
+                    Date now = new Date(System.currentTimeMillis());
+                    try {
+                        Date dated = sdf.parse(debateModel.getDate());
+                        int result = now.compareTo(dated);
+
+                        if (result<=0){//mayores que hoy
+                            debateModelList.add(debateModel);
+
+                        }
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+
                 }
+
+                        Collections.sort(debateModelList, new Comparator<DebateModel>() {
+                            public int compare(DebateModel m1, DebateModel m2) {
+                                return m1.getDate().compareTo(m2.getDate());
+                            }
+                        });
 
 
                 return debateModelList;
@@ -175,11 +208,8 @@ public class HomeFragment extends Fragment {
                 convertView = inflater.inflate(resource, null);
             }
 
-
-
             tvDebateDate= (TextView) convertView.findViewById(R.id.textViewDebateDate);
             tvDebateName= (TextView) convertView.findViewById(R.id.textViewDebateName);
-
 
             tvDebateName.setText(debateModelList.get(position).getName());
             tvDebateDate.setText("Fecha del debate: "+debateModelList.get(position).getDate());
