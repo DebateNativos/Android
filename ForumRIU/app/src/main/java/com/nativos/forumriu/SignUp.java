@@ -48,7 +48,6 @@ public class SignUp extends Activity {
         et_lastname2 = (EditText) findViewById(R.id.editTextSignUpLastName2);
 
 
-
         btnSignUp= (Button) findViewById(R.id.buttonSignUp);
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +82,7 @@ public class SignUp extends Activity {
                     Toast.makeText(SignUp.this,"Contraseñas no coinciden",Toast.LENGTH_LONG).show();
                 }
                 else{
-
+                    Toast.makeText(SignUp.this," Registrando... ", Toast.LENGTH_SHORT).show();
                     //URL="http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/registeruser?name=Jordan&lastname=Wong&lastname2=Y&email=j@gmail.com&password=1&phone=70151515&birthday=06/27/2007&address=San%20Jose&idUniversity=12352";
                     URL="http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/registeruser?name="+et_name.getText().toString().trim()+"&lastname="+et_lastname.getText().toString().trim()+"&lastname2="+et_lastname2.getText().toString().trim()+"&email="+et_email.getText().toString().trim()+"&password="+et_password.getText().toString().trim()+"&phone=null"+"&address=null"+"&idUniversity=152";
 

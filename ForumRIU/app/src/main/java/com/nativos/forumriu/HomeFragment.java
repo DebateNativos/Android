@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment {
        final View rootView =inflater.inflate(R.layout.fragment_home, container, false);
         listViewDebate=(ListView) rootView.findViewById(R.id.listViewDebate);
 
-        new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getdebates");
+        new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getactualdebates");
 
 
         listViewDebate.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -81,9 +81,13 @@ public class HomeFragment extends Fragment {
 
                 tvDebateDate= (TextView) rootView.findViewById(R.id.textViewDebateDate);
                 //String name= tvDebateName.getText().toString();
+                String debateDate= debateModel.getDate();
 
                 Intent intent = new Intent(getActivity().getBaseContext(), InsertCodeActivity.class);
-                intent.putExtra("DebateName", name);
+                Bundle mBundle = new Bundle();
+                mBundle.putParcelable("debateModel", debateModel);
+                intent.putExtras(mBundle);
+
                 startActivity(intent);
 
             }
@@ -147,11 +151,18 @@ public class HomeFragment extends Fragment {
                         e.printStackTrace();
                     }
 
-
                 }
-
                         Collections.sort(debateModelList, new Comparator<DebateModel>() {
                             public int compare(DebateModel m1, DebateModel m2) {
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                                try {
+                                    Date date1= sdf.parse(m1.getDate());
+                                    Date date2=sdf.parse(m2.getDate());
+                                    return date1.compareTo(date2);
+
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
                                 return m1.getDate().compareTo(m2.getDate());
                             }
                         });

@@ -1,10 +1,13 @@
 package com.nativos.forumriu.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Jordan on 22-Oct-16.
  */
 
-public class UserModel {
+public class UserModel implements Parcelable{
 
     private int idUser;
     private String name;
@@ -25,6 +28,27 @@ public class UserModel {
         this.name = name;
         this.status = status;
     }
+
+    protected UserModel(Parcel in) {
+        idUser = in.readInt();
+        name = in.readString();
+        lastname = in.readString();
+        lastname2 = in.readString();
+        email = in.readString();
+        status = in.readString();
+    }
+
+    public static final Creator<UserModel> CREATOR = new Creator<UserModel>() {
+        @Override
+        public UserModel createFromParcel(Parcel in) {
+            return new UserModel(in);
+        }
+
+        @Override
+        public UserModel[] newArray(int size) {
+            return new UserModel[size];
+        }
+    };
 
     public String getStatus() {
         return status;
@@ -72,5 +96,20 @@ public class UserModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(idUser);
+        dest.writeString(name);
+        dest.writeString(lastname);
+        dest.writeString(lastname2);
+        dest.writeString(email);
+        dest.writeString(status);
     }
 }

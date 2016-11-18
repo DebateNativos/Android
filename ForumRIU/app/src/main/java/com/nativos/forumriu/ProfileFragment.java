@@ -9,6 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.nativos.forumriu.models.DebateModel;
+import com.nativos.forumriu.models.UserModel;
+
+import static android.R.attr.name;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +37,8 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    EditText et_Name, etLastname, et_Lastname2, et_email;
 
     private OnFragmentInteractionListener mListener;
 
@@ -66,15 +74,29 @@ public class ProfileFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        final View rootView =inflater.inflate(R.layout.fragment_profile, container, false);
+
+
+        UserModel userModel = getActivity().getIntent().getParcelableExtra("userModel");
+
+        et_name = (EditText) rootView.findViewById(R.id.editTextProfileName);
+        et_name.setText(userModel.getName());
+
+        et_lastname = (EditText) rootView.findViewById(R.id.editTextProfileLastName);
+        et_lastname.setText(userModel.getLastname());
+
+        et_lastname2 = (EditText) rootView.findViewById(R.id.editTextProfileLastName2);
+        et_lastname2.setText(userModel.getLastname2());
+
+        return rootView;
 
     }
 
@@ -84,6 +106,8 @@ public class ProfileFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
+
 
     @Override
     public void onAttach(Context context) {

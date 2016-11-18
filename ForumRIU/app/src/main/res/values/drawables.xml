@@ -1,6 +1,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <item name="ic_menu_history" type="drawable">@android:drawable/ic_menu_recent_history</item>
-    <item name="ic_menu_signOut" type="drawable">@android:drawable/ic_menu_close_clear_cancel</item>
+    <item name="ic_menu_signOut" type="drawable">@drawable/ic_logout_ic</item>
     <item name="ic_menu_profile" type="drawable">@android:drawable/ic_menu_edit</item>
     <item name="ic_menu_rules" type="drawable">@android:drawable/ic_menu_info_details</item>
     <item name="ic_menu_home" type="drawable">@drawable/ic_action_home</item>
@@ -8,5 +8,6 @@
     <item name="ic_password" type="drawable">@drawable/ic_password_icon</item>
     <item name="ic_user" type="drawable">@drawable/ic_user_icon</item>
     <item name="ic_question" type="drawable">@drawable/ic_question_icon</item>
+
 
 </resources>

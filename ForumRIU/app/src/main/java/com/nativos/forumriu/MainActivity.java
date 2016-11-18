@@ -18,6 +18,12 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.nativos.forumriu.models.DebateModel;
+import com.nativos.forumriu.models.UserModel;
+
+import static com.nativos.forumriu.R.drawable.profile;
+import static com.nativos.forumriu.R.drawable.user;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -30,6 +36,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -39,14 +46,13 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragmentContainer, new HomeFragment());
         fragmentTransaction.commit();
         getSupportActionBar().setTitle("Página Principal");
 
-
         getUserEmail();
+
 
     }
 
@@ -55,17 +61,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Bundle emailData= getIntent().getExtras();
-        if(emailData==null){
-            return;
-        }
-
         View hView =  navigationView.getHeaderView(0);
-        String getEmail= emailData.getString("UserEmail");
+        UserModel userModel = getIntent().getParcelableExtra("userModel");
+        String getEmail= userModel.getEmail();
         final TextView finalText=(TextView) hView.findViewById(R.id.textViewEmailHeader);
         finalText.setText(getEmail);
 
     }
+
 
     @Override
     public void onBackPressed() {
