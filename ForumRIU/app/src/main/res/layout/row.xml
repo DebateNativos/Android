@@ -21,14 +21,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textViewDebateName"
-            android:textStyle="normal|bold" />
+            android:textStyle="normal|bold"
+            android:textAlignment="center" />
 
         <TextView
             android:text="TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textViewDebateDate"
-            android:layout_below="@id/textViewDebateName"/>
+            android:layout_below="@id/textViewDebateName"
+            android:textStyle="normal|bold"
+            android:textAlignment="center" />
 
     </LinearLayout>
 

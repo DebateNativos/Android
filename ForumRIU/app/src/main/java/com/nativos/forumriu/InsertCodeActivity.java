@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nativos.forumriu.models.DebateModel;
+
 import static android.R.id.edit;
 
 public class InsertCodeActivity extends Activity {
@@ -46,12 +48,9 @@ public class InsertCodeActivity extends Activity {
 
     public void getDebateName() {
 
-        Bundle debateData = getIntent().getExtras();
-        if (debateData == null) {
-            return;
-        }
+        DebateModel debateModel = getIntent().getParcelableExtra("debateModel");
 
-        String getName = debateData.getString("DebateName");
+        String getName = debateModel.getName();
         final TextView finalText = (TextView) findViewById(R.id.textViewDebateName);
         finalText.setText(getName);
     }

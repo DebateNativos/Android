@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -32,7 +33,7 @@ public class SignIn extends Activity {
     EditText et_email = null;
     EditText et_password = null;
     Button btnSignIn;
-
+    UserModel userModel = new UserModel();
     private static String URL="";
 
     @Override
@@ -60,46 +61,6 @@ public class SignIn extends Activity {
                     et_password.setError("Campo requerido");
                     et_password.requestFocus();
                 } else {
-//                    URL="http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/login?email="+et_email.getText().toString().trim()+"&password="+et_password.getText().toString().trim();
-//                    request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
-//                        @Override
-//                        public void onResponse(String response) {
-//                            try {
-//                                JSONObject jsonObject = new JSONObject(response);
-//                                    String status = jsonObject.getString("status");
-//                                    if(status.equals("@validLogin")){
-//                                        goToHome();
-//                                    }
-//                                    else{
-//                                        Toast.makeText(getApplicationContext(),"Error"+jsonObject.get("status"), Toast.LENGTH_LONG).show();
-//                                    }
-//
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }, new Response.ErrorListener() {
-//                        @Override
-//                        public void onErrorResponse(VolleyError error) {
-//                            error.printStackTrace();
-//                            Log.d(TAG, "Error fghjk: " + error.getMessage());
-//                        }
-//                    }){
-//                        @Override
-//                        protected Map<String, String> getParams() throws AuthFailureError {
-//                            HashMap<String, String> hashMap= new HashMap<String, String>();
-//                            hashMap.put("email",et_email.getText().toString());
-//                            hashMap.put("password",et_password.getText().toString());
-//                            return hashMap;
-//                        }
-//                    };
-//
-//                    requestQueue.add(request);
-
-
-                    // new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/getAll");
-                    // new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/login?email=@gmail.com&password=123");
-
 
                     URL="http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/login?email="+et_email.getText().toString().trim()+"&password="+et_password.getText().toString().trim();
                     new JsonTask().execute(URL);
@@ -133,9 +94,15 @@ public class SignIn extends Activity {
                 }
                 String finalJson = buffer.toString();
 
-                UserModel userModel = new UserModel();
-                JSONObject finalObject = new JSONObject(finalJson);
-                userModel.setStatus(finalObject.getString("status"));
+                JSONObject parentObject = new JSONObject(finalJson);
+                userModel.setStatus(parentObject.getString("status"));
+
+                JSONObject finalObject =  parentObject.getJSONObject("user");
+
+                userModel.setName(finalObject.getString("name"));
+                userModel.setLastname(finalObject.getString("lastName"));
+                userModel.setLastname2(finalObject.getString("lastName2"));
+                userModel.setEmail(finalObject.getString("email"));
 
                 return userModel;
 
@@ -200,8 +167,11 @@ public class SignIn extends Activity {
 
     public void goToHome() {
         Intent intent = new Intent(getBaseContext(), MainActivity.class);
-        String email = et_email.getText().toString();
-        intent.putExtra("UserEmail", email);
+
+        Bundle mBundle = new Bundle();
+        mBundle.putParcelable("userModel", userModel);
+        intent.putExtras(mBundle);
+
         startActivity(intent);
     }
 
