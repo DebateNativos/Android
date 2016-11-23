@@ -39,13 +39,13 @@
         <activity
             android:name=".DebaterActivity"
             android:screenOrientation="portrait" />
-
-
-        <activity android:name=".PublicActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".QuestionActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".PublicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QuestionActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".DebateNotActiveActivity"></activity>
     </application>
 
 </manifest>

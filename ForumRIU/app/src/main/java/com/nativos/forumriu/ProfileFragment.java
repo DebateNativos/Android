@@ -15,6 +15,7 @@ import com.nativos.forumriu.models.DebateModel;
 import com.nativos.forumriu.models.UserModel;
 
 import static android.R.attr.name;
+import static android.R.attr.onClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +31,7 @@ public class ProfileFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private EditText et_password, et_confirmPassword, et_name,et_lastname,et_lastname2;
+    private EditText  et_name,et_lastname,et_lastname2,et_Password,et_confirmPassword;;
     Button btnUpdateProfile;
 
 
@@ -38,7 +39,6 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    EditText et_Name, etLastname, et_Lastname2, et_email;
 
     private OnFragmentInteractionListener mListener;
 
@@ -96,8 +96,37 @@ public class ProfileFragment extends Fragment {
         et_lastname2 = (EditText) rootView.findViewById(R.id.editTextProfileLastName2);
         et_lastname2.setText(userModel.getLastname2());
 
+        et_Password =(EditText) rootView.findViewById(R.id.editTextProfilePassword);
+        et_confirmPassword =(EditText) rootView.findViewById(R.id.editTextProfileConfirmPassword);
+
+        btnUpdateProfile=(Button) rootView.findViewById(R.id.StudentButton);
+
+//        btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (validatePassword(et_Password.getText().toString())) {
+//                    et_Password.setError("Campo requerido");
+//                    et_Password.requestFocus();
+//                }
+//
+//                else if (validatePassword(et_confirmPassword.getText().toString())) {
+//                    et_confirmPassword.setError("Campo requerido");
+//                    et_confirmPassword.requestFocus();
+//                }
+//
+//
+//            }
+//        });
         return rootView;
 
+    }
+
+    public boolean validatePassword(String password) {
+
+        if (password.isEmpty()) {
+            return true;
+        } else
+            return false;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
