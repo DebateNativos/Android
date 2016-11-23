@@ -76,12 +76,13 @@ public class HomeFragment extends Fragment {
                 DebateModel debateModel ;
                 debateModel= (DebateModel) listViewDebate.getItemAtPosition(position);
 
-                String name = debateModel.getName();
               //  String name = String.valueOf(listViewDebate.getItemAtPosition(position));
 
                 tvDebateDate= (TextView) rootView.findViewById(R.id.textViewDebateDate);
-                //String name= tvDebateName.getText().toString();
-                String debateDate= debateModel.getDate();
+
+                debateModel.getDate();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
 
                 Intent intent = new Intent(getActivity().getBaseContext(), InsertCodeActivity.class);
                 Bundle mBundle = new Bundle();
@@ -128,7 +129,7 @@ public class HomeFragment extends Fragment {
                     JSONObject finalObject = parentArray.getJSONObject(i);
                     DebateModel debateModel = new DebateModel();
                     debateModel.setName(finalObject.getString("name"));
-
+                    debateModel.setId(finalObject.getInt("idDebates"));
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTimeInMillis(Long.parseLong(finalObject.getString("startingDate")));
                     Date date = calendar.getTime();

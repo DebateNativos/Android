@@ -51,12 +51,12 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.commit();
         getSupportActionBar().setTitle("Página Principal");
 
-        getUserEmail();
+        setUserDataHeader();
 
 
     }
 
-    public void getUserEmail(){
+    public void setUserDataHeader(){
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -64,9 +64,13 @@ public class MainActivity extends AppCompatActivity
         View hView =  navigationView.getHeaderView(0);
         UserModel userModel = getIntent().getParcelableExtra("userModel");
         String getEmail= userModel.getEmail();
-        final TextView finalText=(TextView) hView.findViewById(R.id.textViewEmailHeader);
-        finalText.setText(getEmail);
+        String getFullName= userModel.getName()+" "+userModel.getLastname();
 
+        final TextView finalTextEmail=(TextView) hView.findViewById(R.id.textViewEmailHeader);
+        finalTextEmail.setText(getEmail);
+
+        final TextView finalTextFullName=(TextView) hView.findViewById(R.id.textViewFullnameHeader);
+        finalTextFullName.setText(getFullName);
     }
 
 

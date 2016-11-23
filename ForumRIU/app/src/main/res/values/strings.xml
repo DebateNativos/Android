@@ -35,7 +35,8 @@
     <string name="publicButton">Ingresar como público</string>
     <string name="warningTextview">Amonestaciones</string>
     <string name="QuestionsText">Formule la pregunta que desea enviar </string>
-    <string name="questionHint" >Digite la pregunta</string>>
-    <string name="sendQuestionButton">Enviar</string>>
+    <string name="questionHint">Digite la pregunta</string>>
+    <string name="sendQuestionButton">Enviar</string>
+    <string name="tvNotActive">Este debate aún no se encuentra activo</string>>
 
 </resources>
