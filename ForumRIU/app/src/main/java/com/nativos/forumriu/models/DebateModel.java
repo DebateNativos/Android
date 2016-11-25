@@ -53,7 +53,7 @@ public class DebateModel implements Parcelable{
         this.date = date;
     }
 
-    public boolean isActive() {
+    public boolean getActive() {
         return isActive;
     }
 

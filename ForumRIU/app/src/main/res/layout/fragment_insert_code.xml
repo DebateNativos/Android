@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.nativos.forumriu.InsertCodeFragment"
+    android:background="#A40000">
+
+
+
+
+    <TextView
+        android:text="@string/insertCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="51dp"
+        android:id="@+id/textViewCode"
+        android:textSize="30sp"
+        android:textColor="@android:color/background_light"
+        android:textStyle="normal|bold"
+        android:textAlignment="center" />
+
+
+    <TextView
+        android:text="@string/insertCodeInstructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewCodeInstructions"
+        android:textColor="@android:color/background_light"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:layout_below="@+id/textViewCode"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextInsertCode"
+        android:hint="  Código"
+        android:background="@drawable/edittext_rounded"
+        android:layout_below="@+id/textViewCodeInstructions"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ButtonInsertCode"
+        android:backgroundTint="#0F7F41"
+        android:textColor="@android:color/white"
+        android:text="@string/acceptButton"
+        android:layout_below="@+id/editTextInsertCode"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:textSize="14sp" />
+
+
+</RelativeLayout>

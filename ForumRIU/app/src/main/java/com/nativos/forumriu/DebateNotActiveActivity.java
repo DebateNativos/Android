@@ -1,5 +1,6 @@
 package com.nativos.forumriu;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
@@ -8,7 +9,7 @@ import android.widget.TextView;
 
 import com.nativos.forumriu.models.DebateModel;
 
-public class DebateNotActiveActivity extends AppCompatActivity {
+public class DebateNotActiveActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

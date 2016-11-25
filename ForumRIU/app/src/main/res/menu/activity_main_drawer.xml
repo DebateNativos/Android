@@ -8,9 +8,9 @@
             android:icon="@drawable/ic_menu_home"
             android:title="@string/itemNavHome" />
         <item
-            android:id="@+id/nav_history"
-            android:icon="@drawable/ic_menu_history"
-            android:title="@string/itemNavHistory" />
+            android:id="@+id/nav_insertCode"
+            android:icon="@drawable/ic_menu_insertCode"
+            android:title="@string/itemNavInsertCode" />
 
         <item
             android:id="@+id/nav_rules"
@@ -21,6 +21,10 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_menu_profile"
             android:title="@string/itemNavProfile" />
+        <item
+            android:id="@+id/nav_aboutUs"
+            android:icon="@drawable/ic_menu_aboutUs"
+            android:title="@string/itemNavAboutUs" />
         <item
             android:id="@+id/nav_signOut"
             android:icon="@drawable/ic_menu_signOut"
