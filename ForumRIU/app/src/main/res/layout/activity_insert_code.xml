@@ -55,7 +55,7 @@
         android:id="@+id/StudentButton"
         android:backgroundTint="#0F7F41"
         android:textColor="@android:color/white"
-        android:text="@string/studentButton"
+        android:text="@string/acceptButton"
         android:layout_below="@+id/editTextDebateCode"
         android:layout_alignRight="@+id/editTextDebateCode"
         android:layout_alignEnd="@+id/editTextDebateCode"

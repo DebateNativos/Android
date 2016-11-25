@@ -45,7 +45,14 @@
         <activity
             android:name=".QuestionActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".DebateNotActiveActivity"></activity>
+        <activity
+            android:name=".DebateNotActiveActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".CourseInsertedActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

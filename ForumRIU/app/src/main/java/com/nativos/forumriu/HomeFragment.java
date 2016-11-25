@@ -80,16 +80,57 @@ public class HomeFragment extends Fragment {
 
                 tvDebateDate= (TextView) rootView.findViewById(R.id.textViewDebateDate);
 
-                debateModel.getDate();
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                if(debateModel.getActive()){
+
+                    Intent intent = new Intent(getActivity().getBaseContext(), InsertCodeActivity.class);
+                        Bundle mBundle = new Bundle();
+                        mBundle.putParcelable("debateModel", debateModel);
+                        intent.putExtras(mBundle);
+
+                        startActivity(intent);
+                }
+
+                else{
+                    Intent intent = new Intent(getActivity().getBaseContext(), DebateNotActiveActivity.class);
+                        Bundle mBundle = new Bundle();
+                        mBundle.putParcelable("debateModel", debateModel);
+                        intent.putExtras(mBundle);
+
+                        startActivity(intent);
+                }
 
 
-                Intent intent = new Intent(getActivity().getBaseContext(), InsertCodeActivity.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putParcelable("debateModel", debateModel);
-                intent.putExtras(mBundle);
+//                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+//                Date now = new Date(System.currentTimeMillis());
+//
+//                try {
+//                    Date date= sdf.parse(debateModel.getDate());
+//                    int result = now.compareTo(date);
+//
+//                    if (result==0){//iguales que hoy
+//                        Intent intent = new Intent(getActivity().getBaseContext(), InsertCodeActivity.class);
+//                        Bundle mBundle = new Bundle();
+//                        mBundle.putParcelable("debateModel", debateModel);
+//                        intent.putExtras(mBundle);
+//
+//                        startActivity(intent);
+//
+//                    }
+//                    else{
+//                        Intent intent = new Intent(getActivity().getBaseContext(), DebateNotActiveActivity.class);
+//                        Bundle mBundle = new Bundle();
+//                        mBundle.putParcelable("debateModel", debateModel);
+//                        intent.putExtras(mBundle);
+//
+//                        startActivity(intent);
+//
+//                    }
+//
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
 
-                startActivity(intent);
+
 
             }
         });
@@ -130,6 +171,8 @@ public class HomeFragment extends Fragment {
                     DebateModel debateModel = new DebateModel();
                     debateModel.setName(finalObject.getString("name"));
                     debateModel.setId(finalObject.getInt("idDebates"));
+                    debateModel.setActive(Boolean.parseBoolean(finalObject.getString("isActive")));
+
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTimeInMillis(Long.parseLong(finalObject.getString("startingDate")));
                     Date date = calendar.getTime();

@@ -27,10 +27,13 @@ import static com.nativos.forumriu.R.drawable.user;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-            ProfileFragment.OnFragmentInteractionListener{
+        ProfileFragment.OnFragmentInteractionListener,
+        AboutUsFragment.OnFragmentInteractionListener,
+        InsertCodeFragment.OnFragmentInteractionListener {
 
 
     FragmentTransaction fragmentTransaction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,20 +59,20 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void setUserDataHeader(){
+    public void setUserDataHeader() {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        View hView =  navigationView.getHeaderView(0);
+        View hView = navigationView.getHeaderView(0);
         UserModel userModel = getIntent().getParcelableExtra("userModel");
-        String getEmail= userModel.getEmail();
-        String getFullName= userModel.getName()+" "+userModel.getLastname();
+        String getEmail = userModel.getEmail();
+        String getFullName = userModel.getName() + " " + userModel.getLastname();
 
-        final TextView finalTextEmail=(TextView) hView.findViewById(R.id.textViewEmailHeader);
+        final TextView finalTextEmail = (TextView) hView.findViewById(R.id.textViewEmailHeader);
         finalTextEmail.setText(getEmail);
 
-        final TextView finalTextFullName=(TextView) hView.findViewById(R.id.textViewFullnameHeader);
+        final TextView finalTextFullName = (TextView) hView.findViewById(R.id.textViewFullnameHeader);
         finalTextFullName.setText(getFullName);
     }
 
@@ -99,9 +102,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-       // if (id == R.id.action_settings) {
-       //     return true;
-    //    }
+        // if (id == R.id.action_settings) {
+        //     return true;
+        //    }
 
         return super.onOptionsItemSelected(item);
     }
@@ -111,26 +114,35 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         FragmentManager manager = getSupportFragmentManager();
 
-        switch (item.getItemId()){
-                    case R.id.nav_home:
-                        HomeFragment homeFragment = new HomeFragment();
-                        manager.beginTransaction().replace(R.id.fragmentContainer,homeFragment,homeFragment.getTag()).commit();
-                        getSupportActionBar().setTitle("Página Principal");
-                        break;
-                    case R.id.nav_history:
-                        break;
-                    case R.id.nav_profile:
-                        ProfileFragment profileFragment = ProfileFragment.newInstance("as","sd");
-                        manager.beginTransaction().replace(R.id.fragmentContainer,profileFragment,profileFragment.getTag()).commit();
-                        getSupportActionBar().setTitle("Editar Perfil");
-                       break;
-                    case R.id.nav_signOut:
-                        Intent intent = new Intent(getBaseContext(),SignIn.class);
-                        startActivity(intent);
-                        break;
-                     case R.id.nav_rules:
-                        break;
-                 }
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                HomeFragment homeFragment = new HomeFragment();
+                manager.beginTransaction().replace(R.id.fragmentContainer, homeFragment, homeFragment.getTag()).commit();
+                getSupportActionBar().setTitle("Página Principal");
+                break;
+            case R.id.nav_insertCode:
+                InsertCodeFragment insertCodeFragment = InsertCodeFragment.newInstance("1", "2");
+                manager.beginTransaction().replace(R.id.fragmentContainer, insertCodeFragment, insertCodeFragment.getTag()).commit();
+                getSupportActionBar().setTitle("Ingresar Código");
+                break;
+            case R.id.nav_profile:
+                ProfileFragment profileFragment = ProfileFragment.newInstance("as", "sd");
+                manager.beginTransaction().replace(R.id.fragmentContainer, profileFragment, profileFragment.getTag()).commit();
+                getSupportActionBar().setTitle("Editar Perfil");
+                break;
+            case R.id.nav_signOut:
+                Intent intent = new Intent(getBaseContext(), SignIn.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_rules:
+                break;
+            case R.id.nav_aboutUs:
+                AboutUsFragment aboutUsFragment = AboutUsFragment.newInstance("1", "2");
+                manager.beginTransaction().replace(R.id.fragmentContainer, aboutUsFragment, aboutUsFragment.getTag()).commit();
+                getSupportActionBar().setTitle("Acerca de Nosotros");
+
+                break;
+        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -140,7 +152,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-    //Recibir dato
+        //Recibir dato
     }
 
 
