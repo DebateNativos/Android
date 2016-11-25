@@ -3,30 +3,12 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
-        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_5b493341edc67e88c17a3b0bf5d2422a7c69f211\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
         <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_eda8ea895de7ea1005d0e1a25920ceb992b3f43e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
-        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-24.2.1_51cc38560eacc56ecc31b27b55d6db85100ad680\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -48,6 +30,51 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
+        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-24.2.1_3b0984240dfb1523f3ad4212163bed8fcf9abead\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-24.2.1_5b6a1e4538da10af9d6606d145ef87d59ead5858\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="feda3a68e4bb24b7fd60eff5c8a8a08ff05c666e">
+        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_9112f66aa92bad8f73a07307d25641c870f52cca\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_5b493341edc67e88c17a3b0bf5d2422a7c69f211\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-24.2.1_51cc38560eacc56ecc31b27b55d6db85100ad680\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
@@ -66,15 +93,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
-        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-24.2.1_3b0984240dfb1523f3ad4212163bed8fcf9abead\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -84,30 +102,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
-        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-24.2.1_5b6a1e4538da10af9d6606d145ef87d59ead5858\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
         <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_e0a796749b348a03f07d256d59e0e020bd1d8894\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="0db167bea881404a0eaa647f9303cf481013a7e2">
-        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_9112f66aa92bad8f73a07307d25641c870f52cca\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -160,7 +160,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="dc929f6ea5ae5bc2be0e14e41e5079e0e7d2f4c7">
+        sha1="762f16b242b612ff58de9d844b563f7a9b52565c">
         <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_d5711200b7bca29e768c0e07ad64feb88cb31a51\classes.dex" />
     </item>
     <item

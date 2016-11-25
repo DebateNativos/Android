@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nativos.forumriu.models.DebateModel;
+import com.nativos.forumriu.models.PlayerModel;
 import com.nativos.forumriu.models.UserModel;
 
 import org.json.JSONArray;
@@ -54,7 +55,8 @@ public class HomeFragment extends Fragment {
     TextView tvDebateName;
     ImageView imageIcon;
     TextView tvDebateDate;
-
+    PlayerModel playerModel= new PlayerModel();
+    DebateModel debateModel;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -64,39 +66,33 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-       final View rootView =inflater.inflate(R.layout.fragment_home, container, false);
-        listViewDebate=(ListView) rootView.findViewById(R.id.listViewDebate);
+        final View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        listViewDebate = (ListView) rootView.findViewById(R.id.listViewDebate);
 
         new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getactualdebates");
-
+        final UserModel userModel = getActivity().getIntent().getParcelableExtra("userModel");
 
         listViewDebate.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                DebateModel debateModel ;
-                debateModel= (DebateModel) listViewDebate.getItemAtPosition(position);
 
-              //  String name = String.valueOf(listViewDebate.getItemAtPosition(position));
+                debateModel = (DebateModel) listViewDebate.getItemAtPosition(position);
 
-                tvDebateDate= (TextView) rootView.findViewById(R.id.textViewDebateDate);
+                //  String name = String.valueOf(listViewDebate.getItemAtPosition(position));
 
-                if(debateModel.getActive()){
+                tvDebateDate = (TextView) rootView.findViewById(R.id.textViewDebateDate);
 
-                    Intent intent = new Intent(getActivity().getBaseContext(), InsertCodeActivity.class);
-                        Bundle mBundle = new Bundle();
-                        mBundle.putParcelable("debateModel", debateModel);
-                        intent.putExtras(mBundle);
+                if (debateModel.getActive()) {
 
-                        startActivity(intent);
-                }
+                    new JsonTaskGetRole().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/confirmeddebates?email="+userModel.getEmail());
 
-                else{
+                } else {
                     Intent intent = new Intent(getActivity().getBaseContext(), DebateNotActiveActivity.class);
-                        Bundle mBundle = new Bundle();
-                        mBundle.putParcelable("debateModel", debateModel);
-                        intent.putExtras(mBundle);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putParcelable("debateModel", debateModel);
+                    intent.putExtras(mBundle);
 
-                        startActivity(intent);
+                    startActivity(intent);
                 }
 
 
@@ -131,7 +127,6 @@ public class HomeFragment extends Fragment {
 //                }
 
 
-
             }
         });
 
@@ -139,16 +134,96 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public class JsonTask extends AsyncTask<String,String, List<DebateModel>> {
+    public class JsonTaskGetRole extends AsyncTask<String, String, PlayerModel> {
+        @Override
+        protected PlayerModel doInBackground(String... params) {
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+
+            try {
+                URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+
+                InputStream stream = connection.getInputStream();
+
+                reader = new BufferedReader(new InputStreamReader(stream));
+
+                StringBuffer buffer = new StringBuffer();
+
+                String line = "";
+
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line);
+                }
+                String finalJson = buffer.toString();
+                JSONArray parentArray = new JSONArray(finalJson);
+                JSONObject finalObject = parentArray.getJSONObject(0);
+
+                playerModel.setRole(finalObject.getInt("role"));
+                playerModel.setDebate(finalObject.getInt("debate"));
+                playerModel.setWarnings(finalObject.getInt("warning"));
+
+
+                return playerModel;
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(PlayerModel result) {
+            super.onPostExecute(result);
+
+            Bundle mBundle = new Bundle();
+            mBundle.putParcelable("debateModel", debateModel);
+
+            if(result.getRole()==1){
+
+            Intent intent = new Intent(getActivity().getBaseContext(), DebaterActivity.class);
+            intent.putExtras(mBundle);
+
+            startActivity(intent);
+        }
+            else{
+                Intent intent = new Intent(getActivity().getBaseContext(), PublicActivity.class);
+                intent.putExtras(mBundle);
+
+                startActivity(intent);
+
+            }
+        }
+
+    }
+
+
+    public class JsonTask extends AsyncTask<String, String, List<DebateModel>> {
         @Override
         protected List<DebateModel> doInBackground(String... params) {
-                    HttpURLConnection connection = null;
-                    BufferedReader reader = null;
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
 
-                    try {
-                        URL url = new URL(params[0]);
-                        connection = (HttpURLConnection) url.openConnection();
-                        connection.connect();
+            try {
+                URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
 
                 InputStream stream = connection.getInputStream();
 
@@ -186,7 +261,7 @@ public class HomeFragment extends Fragment {
                         Date dated = sdf.parse(debateModel.getDate());
                         int result = now.compareTo(dated);
 
-                        if (result<=0){//mayores que hoy
+                        if (result <= 0) {//mayores que hoy
                             debateModelList.add(debateModel);
 
                         }
@@ -196,20 +271,20 @@ public class HomeFragment extends Fragment {
                     }
 
                 }
-                        Collections.sort(debateModelList, new Comparator<DebateModel>() {
-                            public int compare(DebateModel m1, DebateModel m2) {
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                                try {
-                                    Date date1= sdf.parse(m1.getDate());
-                                    Date date2=sdf.parse(m2.getDate());
-                                    return date1.compareTo(date2);
+                Collections.sort(debateModelList, new Comparator<DebateModel>() {
+                    public int compare(DebateModel m1, DebateModel m2) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                        try {
+                            Date date1 = sdf.parse(m1.getDate());
+                            Date date2 = sdf.parse(m2.getDate());
+                            return date1.compareTo(date2);
 
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                return m1.getDate().compareTo(m2.getDate());
-                            }
-                        });
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        return m1.getDate().compareTo(m2.getDate());
+                    }
+                });
 
 
                 return debateModelList;
@@ -221,17 +296,20 @@ public class HomeFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             } finally {
-                if(connection !=null){
-                    connection.disconnect();}
+                if (connection != null) {
+                    connection.disconnect();
+                }
                 try {
-                    if(reader !=null){
-                        reader.close();}
+                    if (reader != null) {
+                        reader.close();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
             return null;
         }
+
         @Override
         protected void onPostExecute(List<DebateModel> result) {
             super.onPostExecute(result);
@@ -241,35 +319,36 @@ public class HomeFragment extends Fragment {
 
         }
 
-}
-    public class DebateAdapter extends ArrayAdapter{
+    }
 
-        public  List<DebateModel> debateModelList;
+    public class DebateAdapter extends ArrayAdapter {
+
+        public List<DebateModel> debateModelList;
         private int resource;
         private LayoutInflater inflater;
 
         public DebateAdapter(Context context, int resource, List<DebateModel> objects) {
             super(context, resource, objects);
             debateModelList = objects;
-            this.resource=resource;
-            inflater= (LayoutInflater) getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
+            this.resource = resource;
+            inflater = (LayoutInflater) getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
         }
 
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            if(convertView == null){
+            if (convertView == null) {
                 convertView = inflater.inflate(resource, null);
             }
 
-            tvDebateDate= (TextView) convertView.findViewById(R.id.textViewDebateDate);
-            tvDebateName= (TextView) convertView.findViewById(R.id.textViewDebateName);
+            tvDebateDate = (TextView) convertView.findViewById(R.id.textViewDebateDate);
+            tvDebateName = (TextView) convertView.findViewById(R.id.textViewDebateName);
 
             tvDebateName.setText(debateModelList.get(position).getName());
-            tvDebateDate.setText("Fecha del debate: "+debateModelList.get(position).getDate());
+            tvDebateDate.setText("Fecha del debate: " + debateModelList.get(position).getDate());
 
-            imageIcon=(ImageView) convertView.findViewById(R.id.imageViewDebate_ic);
+            imageIcon = (ImageView) convertView.findViewById(R.id.imageViewDebate_ic);
 
             return convertView;
         }
