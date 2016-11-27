@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity
                 getSupportActionBar().setTitle("Página Principal");
                 break;
             case R.id.nav_insertCode:
+
                 InsertCodeFragment insertCodeFragment = InsertCodeFragment.newInstance("1", "2");
                 manager.beginTransaction().replace(R.id.fragmentContainer, insertCodeFragment, insertCodeFragment.getTag()).commit();
                 getSupportActionBar().setTitle("Ingresar Código");

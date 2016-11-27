@@ -28,7 +28,8 @@ public class DebateNotActiveActivity extends Activity {
         DebateModel debateModel = getIntent().getParcelableExtra("debateModel");
 
         String getName = debateModel.getName();
+        String getDate= debateModel.getDate();
         final TextView finalText = (TextView) findViewById(R.id.textViewDebateNameNotActive);
-        finalText.setText(getName);
+        finalText.setText(getName+"\n"+getDate);
     }
 }

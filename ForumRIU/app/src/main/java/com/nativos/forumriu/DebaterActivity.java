@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nativos.forumriu.models.DebateModel;
 import com.nativos.forumriu.models.UserModel;
 
 import static android.R.attr.id;
@@ -27,7 +28,7 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
     Button btnNotification ;
     private int warning= 0;
     ProgressBar mProgressBar, mProgressBar1;
-    private Button buttonStartTime, buttonStopTime;
+    private Button buttonStartTime, buttonStopTime, buttonWarning;
     private EditText edtTimerValue;
     private TextView textViewShowTime;
     private CountDownTimer countDownTimer;
@@ -37,6 +38,8 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debater);
+        DebateModel debateModel = getIntent().getParcelableExtra("debateModel");
+        getSupportActionBar().setTitle(debateModel.getName());
 
         notifications();
 
@@ -53,6 +56,14 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
         buttonStartTime.setOnClickListener(this);
         buttonStopTime.setOnClickListener(this);
 
+
+        buttonWarning= (Button) findViewById(R.id.buttonWarning);
+        buttonWarning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NotificationClick(v);
+            }
+        });
     }
 
     public void notifications(){
@@ -145,7 +156,7 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
         notification.setContentText("Has sido amonestado por el moderador");
 
         String currentWarning= btnNotification.getText().toString();
-        warning=Integer.parseInt(currentWarning);
+        warning= Integer.parseInt(currentWarning);
         warning++;
         notification.setVibrate(new long[]{ 1000, 1000});
         if(warning>=3) {
