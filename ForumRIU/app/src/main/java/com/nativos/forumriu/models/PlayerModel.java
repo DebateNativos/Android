@@ -42,4 +42,6 @@ public class PlayerModel {
     public void setWarnings(int warnings) {
         this.warnings = warnings;
     }
+
+
 }

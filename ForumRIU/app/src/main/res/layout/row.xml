@@ -5,16 +5,25 @@
     android:layout_height="match_parent">
 
 
-    <ImageView
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/selecteditem_listview">
+
+        <ImageView
             android:layout_width="51dp"
             android:layout_height="53dp"
             app:srcCompat="@drawable/debate_ic"
             android:id="@+id/imageViewDebate_ic" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/selecteditem_listview">
 
         <TextView
             android:text="TextView"
@@ -22,7 +31,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/textViewDebateName"
             android:textStyle="normal|bold"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+        />
 
         <TextView
             android:text="TextView"
@@ -31,8 +42,10 @@
             android:id="@+id/textViewDebateDate"
             android:layout_below="@id/textViewDebateName"
             android:textStyle="normal|bold"
-            android:textAlignment="center" />
-
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true"
+            />
+        </LinearLayout>
     </LinearLayout>
 
 

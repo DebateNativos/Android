@@ -8,6 +8,7 @@ public class QuestionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle("Formular pregunta");
         setContentView(R.layout.activity_question);
     }
 }

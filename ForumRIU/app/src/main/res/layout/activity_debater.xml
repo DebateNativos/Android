@@ -103,9 +103,10 @@
         android:layout_height="80dp"
         android:id="@+id/buttonWarning"
         android:background="@drawable/button_redcircle"
-        android:onClick="NotificationClick"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="12dp"
         android:layout_marginEnd="12dp"
+
+
         />
 </RelativeLayout>

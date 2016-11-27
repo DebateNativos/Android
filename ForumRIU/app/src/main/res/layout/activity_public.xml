@@ -26,4 +26,14 @@
         android:layout_alignParentEnd="true"
         android:onClick="goToSendQuestion"/>
 
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        app:srcCompat="@drawable/publiclogo"
+        android:id="@+id/imageViewPublicLogo"
+        android:layout_above="@+id/imageButtonQuestions" />
+
 </RelativeLayout>

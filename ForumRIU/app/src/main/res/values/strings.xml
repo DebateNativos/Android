@@ -38,7 +38,7 @@
     <string name="QuestionsText">Formule la pregunta que desea enviar </string>
     <string name="questionHint">Digite la pregunta</string>>
     <string name="sendQuestionButton">Enviar</string>
-    <string name="tvNotActive">Este debate aún no se encuentra activo</string>
+    <string name="tvNotActive">Este debate aún no se encuentra activo.\nIntente más tarde.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -51,7 +51,7 @@
         Jordan Wong Yeung
     </string>
     <string name="insertCode">Código del curso</string>
-    <string name="insertCodeInstructions">\n Ingrese el código del curso brindado para acceder a los debates \n</string>
+    <string name="insertCodeInstructions">\n Ingrese el código del curso para acceder a los debates \n</string>
     <string name="GotoHomeButton">Regresar al Menú Principal</string>
 
 </resources>

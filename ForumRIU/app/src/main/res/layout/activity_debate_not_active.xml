@@ -19,8 +19,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textColor="@android:color/white"
-        android:textSize="24sp"
-        />
+        android:textSize="30sp"
+        android:textAlignment="center" />
 
 
     <TextView
@@ -28,10 +28,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/textViewNotActive"
         android:textColor="@android:color/white"
-        android:textSize="14sp"
+        android:textSize="20sp"
         android:text="@string/tvNotActive"
         android:layout_marginTop="56dp"
         android:layout_below="@+id/textViewDebateNameNotActive"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"/>
 
 </RelativeLayout>
