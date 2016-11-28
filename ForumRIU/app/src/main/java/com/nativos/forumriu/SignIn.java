@@ -97,13 +97,14 @@ public class SignIn extends Activity {
                 JSONObject parentObject = new JSONObject(finalJson);
                 userModel.setStatus(parentObject.getString("status"));
 
-                JSONObject finalObject =  parentObject.getJSONObject("user");
+                if(userModel.getStatus().equals("@validLogin")) {
+                    JSONObject finalObject = parentObject.getJSONObject("user");
 
-                userModel.setName(finalObject.getString("name"));
-                userModel.setLastname(finalObject.getString("lastName"));
-                userModel.setLastname2(finalObject.getString("lastName2"));
-                userModel.setEmail(finalObject.getString("email"));
-
+                    userModel.setName(finalObject.getString("name"));
+                    userModel.setLastname(finalObject.getString("lastName"));
+                    userModel.setLastname2(finalObject.getString("lastName2"));
+                    userModel.setEmail(finalObject.getString("email"));
+                }
                 return userModel;
 
             } catch (MalformedURLException e) {

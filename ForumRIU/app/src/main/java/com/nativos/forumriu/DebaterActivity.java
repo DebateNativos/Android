@@ -2,25 +2,49 @@ package com.nativos.forumriu;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.CountDownTimer;
-import android.support.annotation.StringRes;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nativos.forumriu.models.DebateModel;
-import com.nativos.forumriu.models.UserModel;
+import com.nativos.forumriu.models.PlayerModel;
+import com.nativos.forumriu.models.SectionModel;
+
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import java.util.ArrayList;
+
+import java.util.List;
 
 import static android.R.attr.id;
-import static android.R.string.no;
-import static com.nativos.forumriu.R.drawable.user;
+import static android.media.CamcorderProfile.get;
+
 
 public class DebaterActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -29,10 +53,14 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
     private int warning= 0;
     ProgressBar mProgressBar, mProgressBar1;
     private Button buttonStartTime, buttonStopTime, buttonWarning;
-    private EditText edtTimerValue;
-    private TextView textViewShowTime;
+
+    private TextView textViewShowTime, tvSectionName,tvSectionMinutes;
     private CountDownTimer countDownTimer;
     private long totalTimeCountInMilliseconds;
+    PlayerModel playerModel;
+    SectionModel sectionModel ;
+    private ListView listViewSection;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +68,8 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_debater);
         DebateModel debateModel = getIntent().getParcelableExtra("debateModel");
         getSupportActionBar().setTitle(debateModel.getName());
-
+        playerModel = getIntent().getParcelableExtra("playerModel");
+        listViewSection = (ListView) findViewById(R.id.listViewSections);
         notifications();
 
         buttonStartTime = (Button) findViewById(R.id.button_timerview_start);
@@ -48,7 +77,7 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
 
         textViewShowTime = (TextView)
                 findViewById(R.id.textView_timerview_time);
-        edtTimerValue = (EditText) findViewById(R.id.textview_timerview_back);
+
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressbar_timerview);
         mProgressBar1 = (ProgressBar) findViewById(R.id.progressbar1_timerview);
@@ -56,8 +85,10 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
         buttonStartTime.setOnClickListener(this);
         buttonStopTime.setOnClickListener(this);
 
+        new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getsections?id="+debateModel.getId());
 
-        buttonWarning= (Button) findViewById(R.id.buttonWarning);
+
+        buttonWarning= (Button) findViewById(R.id.buttonWarningDebater);
         buttonWarning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,10 +97,122 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
         });
     }
 
+    public class JsonTask extends AsyncTask<String, String, List<SectionModel>> {
+        @Override
+        protected List<SectionModel> doInBackground(String... params) {
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+            try {
+                URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+
+                InputStream stream = connection.getInputStream();
+
+                reader = new BufferedReader(new InputStreamReader(stream));
+
+                StringBuffer buffer = new StringBuffer();
+
+                String line = "";
+
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line);
+                }
+                String finalJson = buffer.toString();
+                JSONArray parentArray = new JSONArray(finalJson);
+
+                List<SectionModel> sectionModelList = new ArrayList<>();
+
+                for (int i = 0; i < parentArray.length(); i++) {
+                    JSONObject finalObject = parentArray.getJSONObject(i);
+
+                    sectionModel= new SectionModel();
+                    sectionModel.setMinutes(Integer.parseInt(finalObject.getString("minutesPerUser")));
+                    sectionModel.setActiveSection(Boolean.parseBoolean(finalObject.getString("activeSection")));
+
+
+                    sectionModelList.add(sectionModel);
+                }
+
+
+                return sectionModelList;
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<SectionModel> result) {
+            super.onPostExecute(result);
+
+            SectionAdapter adapter = new SectionAdapter(getApplicationContext(), R.layout.row_section, result);
+            listViewSection.setAdapter(adapter);
+        }
+
+    }
+
+    public class SectionAdapter extends ArrayAdapter {
+
+        public List<SectionModel> sectionModelList;
+        private int resource;
+        private LayoutInflater inflater;
+
+        public SectionAdapter(Context context, int resource, List<SectionModel> objects) {
+            super(context, resource, objects);
+            sectionModelList = objects;
+            this.resource = resource;
+            inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if (convertView == null) {
+                convertView = inflater.inflate(resource, null);
+            }
+
+            tvSectionName = (TextView) convertView.findViewById(R.id.textViewSectionName);
+            tvSectionMinutes = (TextView) convertView.findViewById(R.id.textViewSectionMinutes);
+
+            //tvSectionName.setText(sectionModelList.get(position).getName());
+            tvSectionName.setText("Sección ");
+            tvSectionMinutes.setText("  Tiempo : " + sectionModelList.get(position).getMinutes()+" minutos");
+            boolean active = sectionModelList.get(position).getActiveSection();
+                    if(active){
+                        convertView.setBackgroundColor(Color.GREEN);
+                        setTimer(sectionModelList.get(position).getMinutes());
+
+                    }
+            else {
+                        convertView.setBackgroundColor(Color.TRANSPARENT);
+                    }
+            return convertView;
+        }
+
+    }
+
+
     public void notifications(){
 
-        btnNotification=(Button) findViewById(R.id.buttonWarning);
-        btnNotification.setText(getAllWarning(warning));
+        btnNotification=(Button) findViewById(R.id.buttonWarningDebater);
+        btnNotification.setText(String.valueOf(playerModel.getWarnings()));
         notification = new NotificationCompat.Builder(this);
         notification.setAutoCancel(true);
     }
@@ -79,7 +222,6 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
 
         if (v.getId() == R.id.button_timerview_start) {
 
-            setTimer();
 
             buttonStartTime.setVisibility(View.INVISIBLE);
             buttonStopTime.setVisibility(View.VISIBLE);
@@ -94,20 +236,17 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
             countDownTimer.onFinish();
             mProgressBar1.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.VISIBLE);
-            edtTimerValue.setVisibility(View.VISIBLE);
+
             buttonStartTime.setVisibility(View.VISIBLE);
             buttonStopTime.setVisibility(View.INVISIBLE);
         }
 
     }
 
-    private void setTimer(){
-        int time = 0;
-        if (!edtTimerValue.getText().toString().equals("")) {
-            time = Integer.parseInt(edtTimerValue.getText().toString());
-        } else
-            Toast.makeText(DebaterActivity.this, "Digite los segundos...",
-                    Toast.LENGTH_LONG).show();
+    private void setTimer(int time){
+
+         time = time*60;
+
         totalTimeCountInMilliseconds =  time * 1000;
         mProgressBar1.setMax( time * 1000);
     }
