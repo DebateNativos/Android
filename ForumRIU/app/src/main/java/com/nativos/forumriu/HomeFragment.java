@@ -81,14 +81,14 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         listViewDebate.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    view.setSelected(true);
+                view.setSelected(true);
                 debateModel = (DebateModel) listViewDebate.getItemAtPosition(position);
 
                 //  String name = String.valueOf(listViewDebate.getItemAtPosition(position));
 
                 tvDebateDate = (TextView) rootView.findViewById(R.id.textViewDebateDate);
 
-                if (debateModel.getActive() ) {
+                if (debateModel.getActive()) {
                     //&& currentDebate()
                     new JsonTaskGetRole().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/confirmeddebates?email=" + userModel.getEmail());
 
@@ -207,35 +207,41 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         @Override
         protected void onPostExecute(PlayerModel result) {
             super.onPostExecute(result);
-
+            Intent intent;
             Bundle mBundle = new Bundle();
             mBundle.putParcelable("debateModel", debateModel);
+            mBundle.putParcelable("playerModel", result);
 
-            switch (result.getRole()) {
-                case 1:
-                    Intent intent = new Intent(getActivity().getBaseContext(), DebaterActivity.class);
-                    intent.putExtras(mBundle);
-                    startActivity(intent);
-                    break;
+            if (result.getDebate() == debateModel.getId()) {
+                switch (result.getRole()) {
+                    case 1:
+                        intent = new Intent(getActivity().getBaseContext(), DebaterActivity.class);
+                        intent.putExtras(mBundle);
+                        startActivity(intent);
+                        break;
 
-                case 2:
-                    Intent intent2 = new Intent(getActivity().getBaseContext(), PublicActivity.class);
-                    intent2.putExtras(mBundle);
-                    startActivity(intent2);
-                    break;
-                case 3:
-                    Intent intent3 = new Intent(getActivity().getBaseContext(), PublicActivity.class);
-                    intent3.putExtras(mBundle);
-                    startActivity(intent3);
-                    break;
-                case 4:
-                    Intent intent4 = new Intent(getActivity().getBaseContext(), PublicActivity.class);
-                    intent4.putExtras(mBundle);
-                    startActivity(intent4);
-                    break;
-                default:
-                    Toast.makeText(getActivity(), "No tiene rol asignado", Toast.LENGTH_SHORT).show();
-                    break;
+                    case 2:
+                        intent = new Intent(getActivity().getBaseContext(), PublicActivity.class);
+                        intent.putExtras(mBundle);
+                        startActivity(intent);
+                        break;
+                    case 3:
+                        intent = new Intent(getActivity().getBaseContext(), PublicActivity.class);
+                        intent.putExtras(mBundle);
+                        startActivity(intent);
+                        break;
+                    case 4:
+                        intent = new Intent(getActivity().getBaseContext(), PublicActivity.class);
+                        intent.putExtras(mBundle);
+                        startActivity(intent);
+                        break;
+                    default:
+                        Toast.makeText(getActivity(), "No tiene rol asignado", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            } else {
+                Toast.makeText(getActivity(), "No tiene acceso al debate seleccionado ", Toast.LENGTH_SHORT).show();
+
             }
         }
 
