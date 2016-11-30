@@ -79,12 +79,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        if (drawer.isDrawerOpen(GravityCompat.START)) {
 //            drawer.closeDrawer(GravityCompat.START);
 //        } else {
 //            super.onBackPressed();
 //        }
+       drawer.openDrawer(GravityCompat.START);
+
     }
 
     @Override
@@ -134,6 +136,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_signOut:
                 Intent intent = new Intent(getBaseContext(), SignIn.class);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.nav_rules:
                 break;

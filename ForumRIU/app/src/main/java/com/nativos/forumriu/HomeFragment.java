@@ -53,11 +53,12 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private ListView listViewDebate;
-    TextView tvDebateName;
-    ImageView imageIcon;
-    TextView tvDebateDate;
-    PlayerModel playerModel = new PlayerModel();
-    DebateModel debateModel;
+    private TextView tvDebateName;
+    private ImageView imageIcon;
+    private TextView tvDebateDate;
+    private PlayerModel playerModel = new PlayerModel();
+    private DebateModel debateModel;
+    private UserModel userModel;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     public HomeFragment() {
@@ -72,7 +73,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         listViewDebate = (ListView) rootView.findViewById(R.id.listViewDebate);
 
         new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getactualdebates");
-        final UserModel userModel = getActivity().getIntent().getParcelableExtra("userModel");
+        userModel = getActivity().getIntent().getParcelableExtra("userModel");
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeDebates);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark);
@@ -209,8 +210,10 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             super.onPostExecute(result);
             Intent intent;
             Bundle mBundle = new Bundle();
+            mBundle.putParcelable("userModel", userModel);
             mBundle.putParcelable("debateModel", debateModel);
             mBundle.putParcelable("playerModel", result);
+
 
             if (result.getDebate() == debateModel.getId()) {
                 switch (result.getRole()) {
@@ -420,27 +423,5 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
 
-//    private final static int INTERVAL = 1000 * 1 ; //1 min
-//    Handler mHandler = new Handler();
-//
-//    Runnable mHandlerTask = new Runnable()
-//    {
-//        @Override
-//        public void run() {
-//            new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getactualdebates");
-//            Log.d("myTag", "This is my message");
-//            mHandler.postDelayed(mHandlerTask, INTERVAL);
-//        }
-//    };
-//
-//    void startRepeatingTaskGetDebates()
-//    {
-//        mHandlerTask.run();
-//    }
-//
-//    void stopRepeatingTaskGetDebates()
-//    {
-//        mHandler.removeCallbacks(mHandlerTask);
-//    }
 
 }

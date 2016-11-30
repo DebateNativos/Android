@@ -26,13 +26,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static android.R.id.list;
 import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
 public class CourseInsertedActivity extends Activity {
 
     private TextView tv_courseName, tv_courseSchedule, tv_courseTeacher, tv_courseClassroom;
-    Button btnBackToHome;
-    CourseModel courseModel = new CourseModel();
+    private Button btnBackToHome;
+    private CourseModel courseModel = new CourseModel();
 
 
     @Override

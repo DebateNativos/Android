@@ -15,7 +15,7 @@ public class forgotPassword extends Activity {
 
     private EditText et_email;
 
-    Button btnSendMail;
+    private Button btnSendMail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

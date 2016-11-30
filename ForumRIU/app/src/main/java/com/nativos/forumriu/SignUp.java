@@ -23,7 +23,7 @@ import java.net.URL;
 public class SignUp extends Activity {
 
     private EditText et_email, et_password, et_confirmPassword, et_name,et_lastname,et_lastname2;
-    Button btnSignUp;
+    private Button btnSignUp;
     private static String URL="";
 
 

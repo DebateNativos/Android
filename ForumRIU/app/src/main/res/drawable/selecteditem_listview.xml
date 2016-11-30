@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- State when a row is being pressed, but hasn't yet been activated (finger down) -->
+
+
     <item android:state_pressed="true" android:drawable="@android:color/darker_gray"  />
 
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/white"/>
+            <stroke android:width="2dp"
+                android:color="#8e0000"/>
+            <corners android:radius="3dp"/>
+
+        </shape>
+    </item>
     <!-- Used when the view is "activated". -->
     <item android:state_activated="true" android:drawable="@android:color/darker_gray"  />
 
     <!-- Default, "just hangin' out" state. -->
     <item android:drawable="@android:color/transparent" />
+
+
 </selector>

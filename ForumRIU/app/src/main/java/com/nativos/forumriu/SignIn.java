@@ -1,7 +1,12 @@
 package com.nativos.forumriu;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,10 +35,10 @@ import java.net.URL;
 
 public class SignIn extends Activity {
 
-    EditText et_email = null;
-    EditText et_password = null;
-    Button btnSignIn;
-    UserModel userModel = new UserModel();
+    private EditText et_email = null;
+    private EditText et_password = null;
+    private Button btnSignIn;
+    private UserModel userModel = new UserModel();
     private static String URL="";
 
     @Override
@@ -43,7 +48,9 @@ public class SignIn extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sign_in);
 
+
         login();
+
     }
 
     public void login(){
@@ -62,8 +69,13 @@ public class SignIn extends Activity {
                     et_password.requestFocus();
                 } else {
 
+                    if(isOnline()){
                     URL="http://debatesapp.azurewebsites.net/podiumwebapp/ws/user/login?email="+et_email.getText().toString().trim()+"&password="+et_password.getText().toString().trim();
                     new JsonTask().execute(URL);
+                    }
+                    else{
+                        Toast.makeText(SignIn.this,"No se detectó conexión a internet", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
@@ -174,10 +186,55 @@ public class SignIn extends Activity {
         intent.putExtras(mBundle);
 
         startActivity(intent);
+        finish();
     }
 
     public void onBackPressed() {
         //do nothing
+
+        createExitDialog();
+
+    }
+
+    private void createExitDialog(){
+
+        AlertDialog.Builder alertDialog= new AlertDialog.Builder(this);
+        alertDialog.setMessage("¿Está seguro que desea salir de Podium?");
+        alertDialog.setCancelable(false);
+        alertDialog.setIcon(R.drawable.ic_logout_ic);
+        alertDialog.setTitle("Salir de Podium");
+
+        alertDialog.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+
+        });
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+
+
+        alertDialog.create().show();
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+
+        if (netInfo == null || !netInfo.isConnected() || !netInfo.isAvailable()) {
+            /*
+             * Toast.makeText(getActivity(), "No Internet connection!",
+             * Toast.LENGTH_LONG).show();
+             */
+            return false;
+        }
+        return true;
     }
 
 }
