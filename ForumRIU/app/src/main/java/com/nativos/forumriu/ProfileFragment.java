@@ -32,7 +32,7 @@ public class ProfileFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private EditText  et_name,et_lastname,et_lastname2,et_Password,et_confirmPassword;;
-    Button btnUpdateProfile;
+    private Button btnUpdateProfile;
 
 
     // TODO: Rename and change types of parameters

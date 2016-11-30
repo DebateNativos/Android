@@ -40,6 +40,7 @@ import java.util.List;
 import static android.R.attr.button;
 import static com.nativos.forumriu.R.id.activity_course_inserted;
 import static com.nativos.forumriu.R.id.listViewDebate;
+import static java.sql.Types.NULL;
 
 
 /**
@@ -56,8 +57,8 @@ public class InsertCodeFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private EditText et_code;
-    Button btnAcceptCode;
-    String email, courserCode;
+    private Button btnAcceptCode;
+    private String email, courserCode;
 
 
     private String mParam1;
@@ -113,8 +114,14 @@ public class InsertCodeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 courserCode = et_code.getText().toString().trim();
-                new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/course/registerusercourse?email=" + email + "&coursecode=" + courserCode);
 
+                if(courserCode.equals("")){
+                    Toast.makeText(getActivity(), "Error en el registro, favor ingresar código", Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/course/registerusercourse?email=" + email + "&coursecode=" + courserCode);
+                }
             }
         });
 
@@ -176,11 +183,16 @@ public class InsertCodeFragment extends Fragment {
             super.onPostExecute(result);
 
             if (result.equals("@validRegistration")) {
-                Toast.makeText(getActivity(), "Registrado con éxito ", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Registrado con éxito ", Toast.LENGTH_SHORT).show();
                 goToCourseInserted();
-            } else {
 
-                Toast.makeText(getActivity(), "Error en el registro, intente de nuevo", Toast.LENGTH_LONG).show();
+            }
+            else if(result.equals("@courseAlreadyRegistrated")){
+
+                Toast.makeText(getActivity(), "Error, solo puede registrarse una vez en el curso ", Toast.LENGTH_SHORT).show();
+            }else {
+
+                Toast.makeText(getActivity(), "Error en el registro, intente de nuevo", Toast.LENGTH_SHORT).show();
             }
 
 

@@ -7,15 +7,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,7 +25,7 @@ import android.widget.Toast;
 import com.nativos.forumriu.models.DebateModel;
 import com.nativos.forumriu.models.PlayerModel;
 import com.nativos.forumriu.models.SectionModel;
-
+import com.nativos.forumriu.models.UserModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,23 +43,31 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import static android.R.attr.color;
+import static android.R.attr.colorBackground;
+import static android.R.attr.drawable;
 import static android.R.attr.id;
-import static android.media.CamcorderProfile.get;
+import static android.graphics.Color.DKGRAY;
+import static android.graphics.Color.GRAY;
+import static android.graphics.Color.LTGRAY;
+import static android.graphics.Color.TRANSPARENT;
 
 
-public class DebaterActivity extends AppCompatActivity implements View.OnClickListener{
+public class DebaterActivity extends AppCompatActivity implements View.OnClickListener {
 
     NotificationCompat.Builder notification;
-    Button btnNotification ;
-    private int warning= 0;
+    private Button btnNotification;
+    private int warning = 0;
     ProgressBar mProgressBar, mProgressBar1;
     private Button buttonStartTime, buttonStopTime, buttonWarning;
 
-    private TextView textViewShowTime, tvSectionName,tvSectionMinutes;
+    private TextView textViewShowTime, tvSectionName, tvSectionMinutes;
     private CountDownTimer countDownTimer;
     private long totalTimeCountInMilliseconds;
-    PlayerModel playerModel;
-    SectionModel sectionModel ;
+    private PlayerModel playerModel;
+    private SectionModel sectionModel;
+    private DebateModel debateModel;
+    private UserModel userModel;
     private ListView listViewSection;
 
 
@@ -66,9 +75,10 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debater);
-        DebateModel debateModel = getIntent().getParcelableExtra("debateModel");
+        debateModel = getIntent().getParcelableExtra("debateModel");
         getSupportActionBar().setTitle(debateModel.getName());
         playerModel = getIntent().getParcelableExtra("playerModel");
+
         listViewSection = (ListView) findViewById(R.id.listViewSections);
         notifications();
 
@@ -85,10 +95,11 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
         buttonStartTime.setOnClickListener(this);
         buttonStopTime.setOnClickListener(this);
 
-        new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getsections?id="+debateModel.getId());
+        new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getsections?id=" + debateModel.getId());
 
+        startRepeatingTaskGetSections();
 
-        buttonWarning= (Button) findViewById(R.id.buttonWarningDebater);
+        buttonWarning = (Button) findViewById(R.id.buttonWarningDebater);
         buttonWarning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +137,7 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
                 for (int i = 0; i < parentArray.length(); i++) {
                     JSONObject finalObject = parentArray.getJSONObject(i);
 
-                    sectionModel= new SectionModel();
+                    sectionModel = new SectionModel();
                     sectionModel.setMinutes(Integer.parseInt(finalObject.getString("minutesPerUser")));
                     sectionModel.setActiveSection(Boolean.parseBoolean(finalObject.getString("activeSection")));
 
@@ -193,25 +204,27 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
 
             //tvSectionName.setText(sectionModelList.get(position).getName());
             tvSectionName.setText("Sección ");
-            tvSectionMinutes.setText("  Tiempo : " + sectionModelList.get(position).getMinutes()+" minutos");
+            tvSectionMinutes.setText(sectionModelList.get(position).getMinutes() + " min");
             boolean active = sectionModelList.get(position).getActiveSection();
-                    if(active){
-                        convertView.setBackgroundColor(Color.GREEN);
-                        setTimer(sectionModelList.get(position).getMinutes());
+            if (active) {
+                tvSectionName.setText("*Sección Actual* ");
+                convertView.setBackgroundResource(R.color.colorVerde);
 
-                    }
-            else {
-                        convertView.setBackgroundColor(Color.TRANSPARENT);
-                    }
+                setTimer(sectionModelList.get(position).getMinutes());
+
+            } else {
+                convertView.setBackgroundColor(LTGRAY);
+            }
+
             return convertView;
         }
 
     }
 
 
-    public void notifications(){
+    public void notifications() {
 
-        btnNotification=(Button) findViewById(R.id.buttonWarningDebater);
+        btnNotification = (Button) findViewById(R.id.buttonWarningDebater);
         btnNotification.setText(String.valueOf(playerModel.getWarnings()));
         notification = new NotificationCompat.Builder(this);
         notification.setAutoCancel(true);
@@ -243,13 +256,14 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private void setTimer(int time){
+    private void setTimer(int time) {
 
-         time = time*60;
+        time = time * 60;
 
-        totalTimeCountInMilliseconds =  time * 1000;
-        mProgressBar1.setMax( time * 1000);
+        totalTimeCountInMilliseconds = time * 1000;
+        mProgressBar1.setMax(time * 1000);
     }
+
     private void startTimer() {
         countDownTimer = new CountDownTimer(totalTimeCountInMilliseconds, 1) {
             @Override
@@ -274,55 +288,90 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
         }.start();
     }
 
-    public String getAllWarning(int num){
+    public String getAllWarning(int num) {
 
-        Bundle WarningData= getIntent().getExtras();
-        if(WarningData==null){
+        Bundle WarningData = getIntent().getExtras();
+        if (WarningData == null) {
             return "0";
         }
 
-        String getWarnings= WarningData.getString("Warnings");
+        String getWarnings = WarningData.getString("Warnings");
 
         return getWarnings;
     }
 
 
-    public void NotificationClick(View view){
+    public void NotificationClick(View view) {
         notification.setSmallIcon(R.drawable.amarilla);
         notification.setTicker("Recibiste una amonestación");
         notification.setWhen(System.currentTimeMillis());
         notification.setContentTitle("Notificación de amonestación");
         notification.setContentText("Has sido amonestado por el moderador");
 
-        String currentWarning= btnNotification.getText().toString();
-        warning= Integer.parseInt(currentWarning);
+        String currentWarning = btnNotification.getText().toString();
+        warning = Integer.parseInt(currentWarning);
         warning++;
-        notification.setVibrate(new long[]{ 1000, 1000});
-        if(warning>=3) {
+        notification.setVibrate(new long[]{1000, 1000});
+        if (warning >= 3) {
             btnNotification.setText((String.valueOf(warning)));
             Toast.makeText(DebaterActivity.this, "Tercera amonestación, has sido expulsado del debate", Toast.LENGTH_LONG).show();
-            NotificationManager nm=(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            nm.notify(id,notification.build());
+            NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            nm.notify(id, notification.build());
             goToSignIn();
-        }
-        else{
-        Toast.makeText(DebaterActivity.this, "Has sido amonestado", Toast.LENGTH_SHORT).show();
-        btnNotification.setText((String.valueOf(warning)));
+        } else {
+            Toast.makeText(DebaterActivity.this, "Has sido amonestado", Toast.LENGTH_SHORT).show();
+            btnNotification.setText((String.valueOf(warning)));
 
-        Intent intent = new Intent(this,DebaterActivity.class);
+            Intent intent = new Intent(this, DebaterActivity.class);
             String warningText = btnNotification.getText().toString();
             intent.putExtra("Warnings", warningText);
-        PendingIntent pendingIntent=  PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-        notification.setContentIntent(pendingIntent);
-        NotificationManager nm=(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        nm.notify(id,notification.build());
-    }
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            notification.setContentIntent(pendingIntent);
+            NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            nm.notify(id, notification.build());
+        }
 
     }
 
     public void goToSignIn() {
+        stopRepeatingTaskGetSections();
         Intent intent = new Intent(getBaseContext(), SignIn.class);
         startActivity(intent);
-        
+
+    }
+
+    private final static int INTERVAL = 1000 * 1; //1 sec
+    Handler mHandler = new Handler();
+
+    Runnable mHandlerTask = new Runnable() {
+        @Override
+        public void run() {
+            new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getsections?id=" + debateModel.getId());
+           // Log.d("myTag", "This is my message");
+            mHandler.postDelayed(mHandlerTask, INTERVAL);
+        }
+    };
+
+    void startRepeatingTaskGetSections() {
+        mHandlerTask.run();
+    }
+
+    void stopRepeatingTaskGetSections() {
+        mHandler.removeCallbacks(mHandlerTask);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        stopRepeatingTaskGetSections();
+
+        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+        userModel = getIntent().getParcelableExtra("userModel");
+        Bundle mBundle = new Bundle();
+        mBundle.putParcelable("userModel", userModel);
+        intent.putExtras(mBundle);
+
+        startActivity(intent);
+
     }
 }
