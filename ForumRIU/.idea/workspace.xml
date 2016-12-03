@@ -120,8 +120,8 @@
       <file leaf-file-name="DebaterActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nativos/forumriu/DebaterActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="448" column="26" selection-start-line="448" selection-start-column="26" selection-end-line="448" selection-end-column="26" />
+            <state relative-caret-position="184">
+              <caret line="450" column="5" selection-start-line="450" selection-start-column="5" selection-end-line="450" selection-end-column="5" />
               <folding>
                 <element signature="e#15701#15702#0" expanded="true" />
                 <element signature="e#15735#15736#0" expanded="true" />
@@ -2407,7 +2407,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2997,8 +2997,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nativos/forumriu/DebaterActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="448" column="26" selection-start-line="448" selection-start-column="26" selection-end-line="448" selection-end-column="26" />
+        <state relative-caret-position="184">
+          <caret line="450" column="5" selection-start-line="450" selection-start-column="5" selection-end-line="450" selection-end-column="5" />
           <folding>
             <element signature="e#15701#15702#0" expanded="true" />
             <element signature="e#15735#15736#0" expanded="true" />
