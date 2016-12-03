@@ -192,7 +192,7 @@ public class SignIn extends Activity {
     public void onBackPressed() {
         //do nothing
 
-        createExitDialog();
+
 
     }
 
@@ -217,8 +217,6 @@ public class SignIn extends Activity {
 
             }
         });
-
-
 
         alertDialog.create().show();
     }

@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
 
@@ -136,7 +137,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_signOut:
                 Intent intent = new Intent(getBaseContext(), SignIn.class);
                 startActivity(intent);
-                finish();
+
                 break;
             case R.id.nav_rules:
                 break;

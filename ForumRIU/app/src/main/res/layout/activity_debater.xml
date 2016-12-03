@@ -19,7 +19,8 @@
         android:id="@+id/listViewSections"
         android:layout_marginBottom="370dp"
         android:layout_centerHorizontal="true"
-
+        android:divider="@color/colorVerde"
+        android:dividerHeight="4px"
         />
 
     <ProgressBar

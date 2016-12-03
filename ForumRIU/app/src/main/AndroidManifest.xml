@@ -16,6 +16,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -43,11 +44,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".DebateNotActiveActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CourseInsertedActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AdvisorActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".ObserverActivity"
             android:screenOrientation="portrait">
+
         </activity>
     </application>
 

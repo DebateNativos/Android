@@ -15,12 +15,14 @@ public class DebateModel implements Parcelable{
     private String name;
     private String date;
     private boolean isActive;
+    private String debateType;
 
     public DebateModel() {
     }
 
-    public DebateModel(String date, int id, boolean isActive, String name) {
+    public DebateModel(String date, String debateType, int id, boolean isActive, String name) {
         this.date = date;
+        this.debateType = debateType;
         this.id = id;
         this.isActive = isActive;
         this.name = name;
@@ -31,6 +33,21 @@ public class DebateModel implements Parcelable{
         name = in.readString();
         date = in.readString();
         isActive = in.readByte() != 0;
+        debateType = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(date);
+        dest.writeByte((byte) (isActive ? 1 : 0));
+        dest.writeString(debateType);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<DebateModel> CREATOR = new Creator<DebateModel>() {
@@ -44,6 +61,14 @@ public class DebateModel implements Parcelable{
             return new DebateModel[size];
         }
     };
+
+    public String getDebateType() {
+        return debateType;
+    }
+
+    public void setDebateType(String debateType) {
+        this.debateType = debateType;
+    }
 
     public String getDate() {
         return date;
@@ -77,16 +102,5 @@ public class DebateModel implements Parcelable{
         this.name = name;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(name);
-        dest.writeString(date);
-        dest.writeByte((byte) (isActive ? 1 : 0));
-    }
 }

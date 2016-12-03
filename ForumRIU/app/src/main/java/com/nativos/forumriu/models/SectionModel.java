@@ -9,6 +9,7 @@ public class SectionModel {
     String name;
     int minutes;
     boolean activeSection;
+    int sectionNumber;
 
     public SectionModel() {
     }
@@ -17,6 +18,14 @@ public class SectionModel {
         this.activeSection = activeSection;
         this.minutes = minutes;
         this.name = name;
+    }
+
+    public int getSectionNumber() {
+        return sectionNumber;
+    }
+
+    public void setSectionNumber(int sectionNumber) {
+        this.sectionNumber = sectionNumber;
     }
 
     public boolean getActiveSection() {

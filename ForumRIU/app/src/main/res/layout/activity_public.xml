@@ -20,33 +20,34 @@
         android:id="@+id/listViewSectionsPublic"
         android:layout_marginBottom="370dp"
         android:layout_centerHorizontal="true"
-
+        android:divider="@color/colorVerde"
+        android:dividerHeight="4px"
         />
 
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         app:srcCompat="@drawable/ic_question"
-        android:layout_marginRight="23dp"
-        android:layout_marginEnd="23dp"
-        android:layout_marginBottom="24dp"
-        android:id="@+id/imageButtonQuestions"
-        android:elevation="0dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginEnd="22dp"
+        android:id="@+id/imageButtonQuestionsPublic"
         android:background="@drawable/button_blackcircle"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:onClick="goToSendQuestion"/>
 
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
         android:layout_marginTop="150dp"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         app:srcCompat="@drawable/publiclogo"
         android:id="@+id/imageViewPublicLogo"
-        android:layout_above="@+id/imageButtonQuestions" />
+        android:layout_above="@+id/imageButtonQuestionsPublic" />
+
+
+
 
 </RelativeLayout>

@@ -7,11 +7,11 @@
     >
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:srcCompat="@drawable/profile"
         android:id="@+id/imageViewEditProfile"
-        android:scaleType="fitCenter"
+
         android:adjustViewBounds="true"
         />
 
@@ -20,6 +20,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/editProfileNameTIL"
         android:layout_below="@id/imageViewEditProfile"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         >
         <EditText
             android:drawableLeft="@drawable/ic_user"
@@ -40,6 +42,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/editProfileLastNameTIL"
         android:layout_below="@+id/editProfileNameTIL"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         >
         <EditText
             android:drawableLeft="@drawable/ic_user"
@@ -60,6 +64,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/editProfileLastName2TIL"
         android:layout_below="@+id/editProfileLastNameTIL"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         >
         <EditText
             android:drawableLeft="@drawable/ic_user"
@@ -80,6 +86,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/editProfilePasswordTIL"
         android:layout_below="@+id/editProfileLastName2TIL"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         >
         <EditText
             android:drawableLeft="@drawable/ic_password"
@@ -99,6 +107,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/editProfileConfirmPasswordTIL"
         android:layout_below="@+id/editProfilePasswordTIL"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         >
 
         <EditText

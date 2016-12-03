@@ -33,10 +33,10 @@
     <string name="acceptButton">Aceptar </string>
     <string name="warningTextview">Amonestaciones</string>
     <string name="QuestionsText">Formule la pregunta que desea enviar </string>
-    <string name="questionHint">Digite la pregunta</string>>
+    <string name="questionHint"> Digite la pregunta \n</string>>
     <string name="sendQuestionButton">Enviar</string>
     <string name="tvNotActive">Este debate aún no se encuentra activo.\nIntente más tarde.</string>
-    
+
     <string name="S4U">Solutions4U</string>
     <string name="S4Uinfo">
         Federico Meléndez\n
