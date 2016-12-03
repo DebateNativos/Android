@@ -1,10 +1,14 @@
 package com.nativos.forumriu;
 
+import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nativos.forumriu.models.DebateModel;
 import com.nativos.forumriu.models.PlayerModel;
@@ -34,22 +41,32 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.attr.id;
+import static android.R.attr.inAnimation;
+
 public class PublicActivity extends AppCompatActivity {
+
     private DebateModel debateModel;
     private SectionModel sectionModel;
     private UserModel userModel;
     private ListView listViewSection;
     private TextView  tvSectionName, tvSectionMinutes;
+    private ImageButton imgButtonQuestions;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        listViewSection = (ListView) findViewById(R.id.listViewSectionsPublic);
         debateModel = getIntent().getParcelableExtra("debateModel");
-        getSupportActionBar().setTitle(debateModel.getName());
+        userModel = getIntent().getParcelableExtra("userModel");
+        getSupportActionBar().setTitle(debateModel.getName()+"  (Público)");
         setContentView(R.layout.activity_public);
+        listViewSection = (ListView) findViewById(R.id.listViewSectionsPublic);
+       // new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getsections?id=" + debateModel.getId());
+        startRepeatingTaskCallWebService();
 
-//        z
     }
 
     public class JsonTask extends AsyncTask<String, String, List<SectionModel>> {
@@ -84,7 +101,8 @@ public class PublicActivity extends AppCompatActivity {
                     sectionModel = new SectionModel();
                     sectionModel.setMinutes(Integer.parseInt(finalObject.getString("minutesPerUser")));
                     sectionModel.setActiveSection(Boolean.parseBoolean(finalObject.getString("activeSection")));
-
+                    sectionModel.setName(finalObject.getString("name"));
+                    sectionModel.setSectionNumber(Integer.parseInt(finalObject.getString("sectionNUmber")));
 
                     sectionModelList.add(sectionModel);
                 }
@@ -146,20 +164,41 @@ public class PublicActivity extends AppCompatActivity {
             tvSectionName = (TextView) convertView.findViewById(R.id.textViewSectionName);
             tvSectionMinutes = (TextView) convertView.findViewById(R.id.textViewSectionMinutes);
 
-            tvSectionName.setText("Sección ");
-            tvSectionMinutes.setText("  Tiempo : " + sectionModelList.get(position).getMinutes() + " minutos");
+            tvSectionName.setText(" " +sectionModelList.get(position).getName());
+            tvSectionMinutes.setText("  "+sectionModelList.get(position).getMinutes() + " minutos");
             boolean active = sectionModelList.get(position).getActiveSection();
             if (active) {
-                convertView.setBackgroundColor(Color.GREEN);
+
+                tvSectionName.setTextColor(Color.WHITE);
+                tvSectionMinutes.setTextColor(Color.WHITE);
+                tvSectionName.setText(" " +sectionModelList.get(position).getName());
+                tvSectionMinutes.setText("  "+sectionModelList.get(position).getMinutes() + " minutos ");
+                convertView.setBackgroundResource(R.color.colorVerde);
+
+                imgButtonQuestions = (ImageButton) findViewById(R.id.imageButtonQuestionsPublic);
+                if(sectionModelList.get(position).getSectionNumber()>3){
+
+                    imgButtonQuestions.setVisibility(View.INVISIBLE);
+                }
+                else{
+                    imgButtonQuestions.setVisibility(View.VISIBLE);
+                }
+
 
             } else {
+                tvSectionName.setTextColor(Color.BLACK);
+                tvSectionMinutes.setTextColor(Color.BLACK);
                 convertView.setBackgroundColor(Color.LTGRAY);
             }
+
+
 
             return convertView;
         }
 
     }
+
+
 
     private final static int INTERVAL = 1000 * 1; //1 sec
     Handler mHandler = new Handler();
@@ -169,29 +208,24 @@ public class PublicActivity extends AppCompatActivity {
         public void run() {
             new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getsections?id=" + debateModel.getId());
            // Log.d("myTag", "This is my message");
+
             mHandler.postDelayed(mHandlerTask, INTERVAL);
         }
     };
 
-    void startRepeatingTaskGetSections() {
+    void startRepeatingTaskCallWebService() {
         mHandlerTask.run();
     }
 
-    void stopRepeatingTaskGetSections() {
+    void stopRepeatingTaskCallWebService() {
         mHandler.removeCallbacks(mHandlerTask);
     }
 
     @Override
     public void onBackPressed() {
-        stopRepeatingTaskGetSections();
+        //stopRepeatingTaskGetSections();
 
-        Intent intent = new Intent(getBaseContext(), MainActivity.class);
-        userModel = getIntent().getParcelableExtra("userModel");
-        Bundle mBundle = new Bundle();
-        mBundle.putParcelable("userModel", userModel);
-        intent.putExtras(mBundle);
-
-        startActivity(intent);
+        createExitDialog();
 
     }
 
@@ -199,4 +233,36 @@ public class PublicActivity extends AppCompatActivity {
         Intent intent = new Intent(getBaseContext(), QuestionActivity.class);
         startActivity(intent);
     }
+
+    private void createExitDialog(){
+
+        AlertDialog.Builder alertDialog= new AlertDialog.Builder(this);
+        alertDialog.setMessage("¿Está seguro que desea salir del debate?");
+        alertDialog.setCancelable(false);
+        alertDialog.setIcon(R.drawable.ic_logout_ic);
+        alertDialog.setTitle("Salir del debate");
+
+        alertDialog.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                userModel = getIntent().getParcelableExtra("userModel");
+                Bundle mBundle = new Bundle();
+                mBundle.putParcelable("userModel", userModel);
+                intent.putExtras(mBundle);
+
+                startActivity(intent);
+            }
+
+        });
+        alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alertDialog.create().show();
+}
+
 }

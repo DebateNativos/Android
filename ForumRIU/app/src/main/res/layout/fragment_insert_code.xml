@@ -3,9 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.nativos.forumriu.InsertCodeFragment"
-    android:background="#8e0000">
-
-
+    android:background="#b51717">
 
 
     <TextView
