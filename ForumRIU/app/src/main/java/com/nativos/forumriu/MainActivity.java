@@ -21,8 +21,9 @@ import android.widget.TextView;
 import com.nativos.forumriu.models.DebateModel;
 import com.nativos.forumriu.models.UserModel;
 
-import static com.nativos.forumriu.R.drawable.profile;
+
 import static com.nativos.forumriu.R.drawable.user;
+import static java.security.AccessController.getContext;
 
 
 public class MainActivity extends AppCompatActivity
@@ -137,7 +138,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_signOut:
                 Intent intent = new Intent(getBaseContext(), SignIn.class);
                 startActivity(intent);
-
                 break;
             case R.id.nav_rules:
                 break;

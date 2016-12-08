@@ -24,7 +24,7 @@
         />
 
     <ProgressBar
-        android:id="@+id/progressbar1_timerview"
+        android:id="@+id/progressbar1_timerviewRunningDebater"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="260dp"
         android:layout_height="260dp"
@@ -36,7 +36,7 @@
         android:visibility="gone" />
 
     <ProgressBar
-        android:id="@+id/progressbar_timerview"
+        android:id="@+id/progressbar_timerviewStartDebater"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="260dp"
         android:layout_height="260dp"
@@ -47,7 +47,7 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:id="@+id/textView_timerview_time"
+        android:id="@+id/textView_timerview_timeDebater"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_centerHorizontal="true"
@@ -60,20 +60,6 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-
-    <Button
-        android:id="@+id/button_timerview_stop"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/button_timerview_start"
-        android:background="@android:color/transparent"
-        android:text="Stop"
-        android:textAllCaps="false"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:visibility="invisible" />
 
 
     <TextView
@@ -96,22 +82,56 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="12dp"
         android:layout_marginEnd="12dp"
-
-
         />
 
-    <Button
-        android:id="@+id/button_timerview_start"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@android:color/transparent"
-        android:text="Start"
-        android:textAllCaps="false"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_alignBottom="@+id/progressbar_timerview"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+    <RelativeLayout  android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_marginRight="-20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true">
+
+        <ProgressBar
+            android:id="@+id/progressbar1_timerviewRunningSectionDebater"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal|center"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/circularshape_timerview_runningsections"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/progressbar_timerviewStartSectionDebater"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/circularshape_timerview_startsections"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            />
+
+
+        <TextView
+
+            android:id="@+id/textView_timerview_timeSectionDebater"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:alpha="0.7"
+            android:background="@drawable/circleshape_timerview"
+            android:gravity="center"
+            android:text="00:00"
+            android:textColor="@android:color/black"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
 
 
 </RelativeLayout>

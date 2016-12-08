@@ -1,29 +1,25 @@
 package com.nativos.forumriu;
 
 import android.app.AlertDialog;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import android.os.Handler;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nativos.forumriu.models.DebateModel;
-import com.nativos.forumriu.models.PlayerModel;
 import com.nativos.forumriu.models.SectionModel;
 import com.nativos.forumriu.models.UserModel;
 
@@ -41,19 +37,21 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.id;
-import static android.R.attr.inAnimation;
-
 public class PublicActivity extends AppCompatActivity {
 
     private DebateModel debateModel;
     private SectionModel sectionModel;
     private UserModel userModel;
     private ListView listViewSection;
-    private TextView  tvSectionName, tvSectionMinutes;
+    private TextView  tvSectionName, tvSectionMinutes,textViewShowTime;
     private ImageButton imgButtonQuestions;
 
-
+    private SectionModel currentSectionModel = new SectionModel();
+    private ProgressBar progressBarStartPublic, progressBarRunningPublic;
+    private CountDownTimer countDownTimer;
+    private long totalTimeCountInMilliseconds;
+    private int minutes =0;
+    private int sectionNumber =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +62,12 @@ public class PublicActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(debateModel.getName()+"  (Público)");
         setContentView(R.layout.activity_public);
         listViewSection = (ListView) findViewById(R.id.listViewSectionsPublic);
-       // new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getsections?id=" + debateModel.getId());
+
+        textViewShowTime = (TextView)findViewById(R.id.textView_timerview_timePublic);
+
+        progressBarStartPublic = (ProgressBar) findViewById(R.id.progressbar_timerviewStartPublic);
+        progressBarRunningPublic = (ProgressBar) findViewById(R.id.progressbar1_timerviewRunningPublic);
+
         startRepeatingTaskCallWebService();
 
     }
@@ -185,6 +188,18 @@ public class PublicActivity extends AppCompatActivity {
                 }
 
 
+                sectionNumber = sectionModelList.get(position).getSectionNumber();
+                minutes = sectionModelList.get(position).getMinutes();
+
+                if (sectionNumber != currentSectionModel.getSectionNumber()) {
+
+                    currentSectionModel.setSectionNumber(sectionNumber);
+                    setTimer(minutes);
+                    startTimer();
+
+                }
+
+
             } else {
                 tvSectionName.setTextColor(Color.BLACK);
                 tvSectionMinutes.setTextColor(Color.BLACK);
@@ -197,6 +212,42 @@ public class PublicActivity extends AppCompatActivity {
         }
 
     }
+
+    private void setTimer(int time) {
+
+        time = time * 60;
+
+        totalTimeCountInMilliseconds = time * 1000;
+        progressBarRunningPublic.setMax(time * 1000);
+    }
+
+    public void startTimer() {
+        countDownTimer = new CountDownTimer(totalTimeCountInMilliseconds, 1) {
+            @Override
+            public void onTick(long leftTimeInMilliseconds) {
+                long seconds = leftTimeInMilliseconds / 1000;
+                progressBarRunningPublic.setProgress((int) (leftTimeInMilliseconds));
+
+                textViewShowTime.setText(String.format("%02d", seconds / 60)
+                        + ":" + String.format("%02d", seconds % 60));
+
+                progressBarStartPublic.setVisibility(View.INVISIBLE);
+                progressBarRunningPublic.setVisibility(View.VISIBLE);
+
+            }
+
+            @Override
+            public void onFinish() {
+                textViewShowTime.setText("00:00");
+                textViewShowTime.setVisibility(View.VISIBLE);
+                progressBarStartPublic.setVisibility(View.VISIBLE);
+                progressBarRunningPublic.setVisibility(View.GONE);
+                return;
+
+            }
+        }.start();
+    }
+
 
 
 

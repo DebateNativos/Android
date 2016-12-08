@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,11 +53,18 @@ public class ObserverActivity extends AppCompatActivity {
     private SectionModel sectionModel;
     private UserModel userModel;
     private ListView listViewSection;
-    private TextView  tvSectionName, tvSectionMinutes;
+    private TextView  tvSectionName, tvSectionMinutes,textViewShowTime;
 
     private PlayerModel playerModel = new PlayerModel();
     private PlayerModel currentPlayerModel ;
     private ImageButton imgButtonQuestions;
+
+    private SectionModel currentSectionModel = new SectionModel();
+    private ProgressBar progressBarStartObserver, progressBarRunningObserver;
+    private CountDownTimer countDownTimer;
+    private long totalTimeCountInMilliseconds;
+    private int minutes =0;
+    private int sectionNumber =0;
 
 
     @Override
@@ -66,9 +75,13 @@ public class ObserverActivity extends AppCompatActivity {
         userModel = getIntent().getParcelableExtra("userModel");
         getSupportActionBar().setTitle(debateModel.getName()+"  (Observador)");
 
-
         setContentView(R.layout.activity_observer);
         listViewSection = (ListView) findViewById(R.id.listViewSectionsObserver);
+
+        textViewShowTime = (TextView)findViewById(R.id.textView_timerview_timeObserver);
+
+        progressBarStartObserver = (ProgressBar) findViewById(R.id.progressbar_timerviewStartObserver);
+        progressBarRunningObserver = (ProgressBar) findViewById(R.id.progressbar1_timerviewRunningObserver);
 
         startRepeatingTaskCallWebService();
     }
@@ -179,12 +192,24 @@ public class ObserverActivity extends AppCompatActivity {
                 convertView.setBackgroundResource(R.color.colorVerde);
 
                 imgButtonQuestions = (ImageButton) findViewById(R.id.imageButtonQuestionsObserver);
+
                 if(sectionModelList.get(position).getSectionNumber()>3){
 
                     imgButtonQuestions.setVisibility(View.INVISIBLE);
                 }
                 else{
                     imgButtonQuestions.setVisibility(View.VISIBLE);
+                }
+
+                sectionNumber = sectionModelList.get(position).getSectionNumber();
+                minutes = sectionModelList.get(position).getMinutes();
+
+                if (sectionNumber != currentSectionModel.getSectionNumber()) {
+
+                    currentSectionModel.setSectionNumber(sectionNumber);
+                    setTimer(minutes);
+                    startTimer();
+
                 }
 
 
@@ -198,6 +223,46 @@ public class ObserverActivity extends AppCompatActivity {
         }
 
     }
+
+
+    private void setTimer(int time) {
+
+        time = time * 60;
+
+        totalTimeCountInMilliseconds = time * 1000;
+        progressBarRunningObserver.setMax(time * 1000);
+    }
+
+    public void startTimer() {
+        countDownTimer = new CountDownTimer(totalTimeCountInMilliseconds, 1) {
+            @Override
+            public void onTick(long leftTimeInMilliseconds) {
+                long seconds = leftTimeInMilliseconds / 1000;
+                progressBarRunningObserver.setProgress((int) (leftTimeInMilliseconds));
+
+                textViewShowTime.setText(String.format("%02d", seconds / 60)
+                        + ":" + String.format("%02d", seconds % 60));
+
+                progressBarStartObserver.setVisibility(View.INVISIBLE);
+                progressBarRunningObserver.setVisibility(View.VISIBLE);
+
+            }
+
+            @Override
+            public void onFinish() {
+                textViewShowTime.setText("00:00");
+                textViewShowTime.setVisibility(View.VISIBLE);
+                progressBarStartObserver.setVisibility(View.VISIBLE);
+                progressBarRunningObserver.setVisibility(View.GONE);
+                return;
+
+            }
+        }.start();
+    }
+
+    
+
+
 
     public void notifications(PlayerModel playerModel) {
 

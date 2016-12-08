@@ -4,22 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProfileFragment"
-    >
+    android:background="@drawable/editprofile">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/profile"
-        android:id="@+id/imageViewEditProfile"
-
-        android:adjustViewBounds="true"
-        />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editProfileNameTIL"
-        android:layout_below="@id/imageViewEditProfile"
+        android:layout_marginTop="130dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         >

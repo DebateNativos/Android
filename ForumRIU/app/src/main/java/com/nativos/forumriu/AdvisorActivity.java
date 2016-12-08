@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.R.attr.id;
+import static android.R.attr.name;
 
 public class AdvisorActivity extends AppCompatActivity {
     NotificationCompat.Builder notification;
@@ -48,11 +51,17 @@ public class AdvisorActivity extends AppCompatActivity {
     private ListView listViewSection;
     private DebateModel debateModel;
     private UserModel userModel;
-    private TextView  tvSectionName, tvSectionMinutes;
+    private TextView  tvSectionName, tvSectionMinutes,textViewShowTime;
     private SectionModel sectionModel;
-
     private PlayerModel playerModel = new PlayerModel();
     private PlayerModel currentPlayerModel ;
+    private SectionModel currentSectionModel = new SectionModel();
+
+    private ProgressBar progressBarStartAdvisor, progressBarRunningAdvisor;
+    private CountDownTimer countDownTimer;
+    private long totalTimeCountInMilliseconds;
+     private int minutes =0;
+    private int sectionNumber =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +71,16 @@ public class AdvisorActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(debateModel.getName()+"  (Asesor)");
         setContentView(R.layout.activity_advisor);
 
+        textViewShowTime = (TextView)findViewById(R.id.textView_timerview_timeAdvisor);
+
+        progressBarStartAdvisor = (ProgressBar) findViewById(R.id.progressbar_timerviewStartAdvisor);
+        progressBarRunningAdvisor = (ProgressBar) findViewById(R.id.progressbar1_timerviewRunningAdvisor);
 
         listViewSection = (ListView) findViewById(R.id.listViewSectionsAdvisor);
+
         startRepeatingTaskCallWebService();
+
+
     }
 
     public class JsonTask extends AsyncTask<String, String, List<SectionModel>> {
@@ -161,18 +177,30 @@ public class AdvisorActivity extends AppCompatActivity {
             tvSectionName = (TextView) convertView.findViewById(R.id.textViewSectionName);
             tvSectionMinutes = (TextView) convertView.findViewById(R.id.textViewSectionMinutes);
 
-            tvSectionName.setText("  "+sectionModelList.get(position).getName());
-            tvSectionMinutes.setText("  "+sectionModelList.get(position).getMinutes() + " minutos");
+
             boolean active = sectionModelList.get(position).getActiveSection();
+
             if (active) {
+
                 tvSectionName.setTextColor(Color.WHITE);
                 tvSectionMinutes.setTextColor(Color.WHITE);
                 tvSectionName.setText(" " + sectionModelList.get(position).getName());
-                tvSectionMinutes.setText("  "+sectionModelList.get(position).getMinutes() + " minutos");
+                tvSectionMinutes.setText("  " + sectionModelList.get(position).getMinutes() + " minutos");
                 convertView.setBackgroundResource(R.color.colorVerde);
 
+                sectionNumber = sectionModelList.get(position).getSectionNumber();
+                minutes = sectionModelList.get(position).getMinutes();
 
+                if (sectionNumber != currentSectionModel.getSectionNumber()) {
+
+                    currentSectionModel.setSectionNumber(sectionNumber);
+                    setTimer(minutes);
+                    startTimer();
+
+                }
             } else {
+                tvSectionName.setText("  " + sectionModelList.get(position).getName());
+                tvSectionMinutes.setText("  " + sectionModelList.get(position).getMinutes() + " minutos");
                 tvSectionName.setTextColor(Color.BLACK);
                 tvSectionMinutes.setTextColor(Color.BLACK);
                 convertView.setBackgroundColor(Color.LTGRAY);
@@ -184,6 +212,40 @@ public class AdvisorActivity extends AppCompatActivity {
     }
 
 
+    private void setTimer(int time) {
+
+        time = time * 60;
+
+        totalTimeCountInMilliseconds = time * 1000;
+        progressBarRunningAdvisor.setMax(time * 1000);
+    }
+
+    public void startTimer() {
+        countDownTimer = new CountDownTimer(totalTimeCountInMilliseconds, 1) {
+            @Override
+            public void onTick(long leftTimeInMilliseconds) {
+                long seconds = leftTimeInMilliseconds / 1000;
+                progressBarRunningAdvisor.setProgress((int) (leftTimeInMilliseconds));
+
+                textViewShowTime.setText(String.format("%02d", seconds / 60)
+                        + ":" + String.format("%02d", seconds % 60));
+
+                progressBarStartAdvisor.setVisibility(View.INVISIBLE);
+                progressBarRunningAdvisor.setVisibility(View.VISIBLE);
+
+            }
+
+            @Override
+            public void onFinish() {
+                textViewShowTime.setText("00:00");
+                textViewShowTime.setVisibility(View.VISIBLE);
+                progressBarStartAdvisor.setVisibility(View.VISIBLE);
+                progressBarRunningAdvisor.setVisibility(View.GONE);
+                return;
+
+            }
+        }.start();
+    }
 
 
     public void notifications(PlayerModel playerModel) {

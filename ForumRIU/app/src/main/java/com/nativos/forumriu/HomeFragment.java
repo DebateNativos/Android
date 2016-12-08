@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
                 tvDebateDate = (TextView) rootView.findViewById(R.id.textViewDebateDate);
 
-                if (debateModel.getActive()) {
+                if (debateModel.getActive() ) {
                     //&& currentDebate()
                     new JsonTaskGetRole().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/confirmeddebates?email=" + userModel.getEmail());
 
@@ -398,7 +398,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         boolean status = false;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-        Date now = new Date(System.currentTimeMillis());
+        Date now = new Date(System.currentTimeMillis()+ (60 * 60000));
 
         try {
             Date date = sdf.parse(debateModel.getDate());

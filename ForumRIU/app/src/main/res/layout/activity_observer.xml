@@ -9,7 +9,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.nativos.forumriu.ObserverActivity">
+    tools:context="com.nativos.forumriu.ObserverActivity"
+    android:background="@drawable/observer">
 
     <ListView
         android:id="@+id/listViewSectionsObserver"
@@ -19,32 +20,22 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="370dp"
+        android:layout_above="@id/buttonWarningAdvisor"
         android:divider="@color/colorVerde"
-        android:dividerHeight="4px" />
+        android:dividerHeight="4px"
+        android:layout_marginTop="210dp"/>
 
 
     <ImageButton
         android:id="@+id/imageButtonQuestionsObserver"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="1dp"
         android:background="@drawable/button_blackcircle"
         android:onClick="goToSendQuestion"
         app:srcCompat="@drawable/ic_question" />
 
-    <ImageView
-        android:id="@+id/imageViewObserverLogo"
-        android:layout_width="100dp"
-        android:layout_height="120dp"
-        android:layout_above="@+id/imageButtonQuestionsObserver"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="150dp"
-        app:srcCompat="@drawable/publiclogo" />
+
 
     <TextView
         android:text="@string/warningTextview"
@@ -54,9 +45,8 @@
         android:id="@+id/textViewWarningObserver"
         android:textStyle="normal|bold"
         android:textSize="10sp"
-        tools:elevation="0dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginEnd="12dp"/>
+        />
+
 
     <Button
         android:layout_width="80dp"
@@ -64,11 +54,55 @@
         android:id="@+id/buttonWarningObserver"
         android:background="@drawable/button_redcircle"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="12dp"
-        android:layout_marginEnd="12dp"
-
 
         />
+
+    <RelativeLayout  android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_marginRight="-20dp"
+        android:layout_alignParentBottom="true"
+       android:layout_alignParentRight="true">
+
+        <ProgressBar
+            android:id="@+id/progressbar1_timerviewRunningObserver"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal|center"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/circularshape_timerview_runningsections"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/progressbar_timerviewStartObserver"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/circularshape_timerview_startsections"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            />
+
+
+        <TextView
+
+            android:id="@+id/textView_timerview_timeObserver"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:alpha="0.7"
+            android:background="@drawable/circleshape_timerview"
+            android:gravity="center"
+            android:text="00:00"
+            android:textColor="@android:color/black"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
 
 </RelativeLayout>

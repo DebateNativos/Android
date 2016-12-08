@@ -16,8 +16,11 @@
                     android:endColor="#0eaf56"
                     android:startColor="#0F7F41"
                     android:type="sweep" />
+
             </shape>
         </rotate>
 
     </item>
+
+
 </layer-list>

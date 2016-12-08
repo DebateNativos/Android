@@ -8,7 +8,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.nativos.forumriu.AdvisorActivity">
+    tools:context="com.nativos.forumriu.AdvisorActivity"
+    android:background="@drawable/observer"
+    >
 
     <ListView
         android:layout_width="wrap_content"
@@ -17,12 +19,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/listViewSectionsAdvisor"
-        android:layout_marginBottom="370dp"
+        android:layout_marginTop="210dp"
         android:layout_centerHorizontal="true"
         android:divider="@color/colorVerde"
         android:dividerHeight="4px"
 
         />
+
 
     <Button
         android:layout_width="80dp"
@@ -33,21 +36,68 @@
         android:layout_marginRight="12dp"
         android:layout_marginEnd="12dp"
 
-
         />
+
+
+    <RelativeLayout  android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true" android:layout_marginRight="-20dp"
+
+       >
+
+    <ProgressBar
+        android:id="@+id/progressbar1_timerviewRunningAdvisor"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_horizontal|center"
+        android:indeterminate="false"
+        android:progressDrawable="@drawable/circularshape_timerview_runningsections"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/progressbar_timerviewStartAdvisor"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:indeterminate="false"
+        android:progressDrawable="@drawable/circularshape_timerview_startsections"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+       />
+
+
+    <TextView
+
+        android:id="@+id/textView_timerview_timeAdvisor"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:alpha="0.7"
+        android:background="@drawable/circleshape_timerview"
+        android:gravity="center"
+        android:text="00:00"
+        android:textColor="@android:color/black"
+        android:textSize="10sp"
+        android:textStyle="bold" />
+    </RelativeLayout>
 
     <TextView
         android:text="@string/warningTextview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonWarningAdvisor"
         android:id="@+id/textViewWarningAdvisor"
         android:textStyle="normal|bold"
         android:textSize="10sp"
         tools:elevation="0dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginEnd="12dp"/>
-
+        android:layout_above="@+id/buttonWarningAdvisor"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
