@@ -9,11 +9,13 @@
             android:useLevel="false"
             android:visible="true">
             <gradient
+
                 android:centerColor="#2b891d"
                 android:endColor="#42a926"
                 android:startColor="#76f41c"
                 android:type="sweep" />
         </shape>
+
     </item>
 
 

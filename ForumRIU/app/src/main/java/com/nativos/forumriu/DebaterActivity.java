@@ -2,7 +2,6 @@ package com.nativos.forumriu;
 
 import android.app.AlertDialog;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,9 +12,6 @@ import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,33 +43,31 @@ import java.util.ArrayList;
 
 import java.util.List;
 
-import static android.R.attr.color;
-import static android.R.attr.colorBackground;
-import static android.R.attr.drawable;
 import static android.R.attr.id;
-import static android.graphics.Color.DKGRAY;
-import static android.graphics.Color.GRAY;
 import static android.graphics.Color.LTGRAY;
-import static android.graphics.Color.TRANSPARENT;
 
 
-public class DebaterActivity extends AppCompatActivity implements View.OnClickListener {
+public class DebaterActivity extends AppCompatActivity {
 
     NotificationCompat.Builder notification;
     private Button btnNotification;
     private int warning = 0;
-    ProgressBar mProgressBar, mProgressBar1;
-    private Button buttonStartTime, buttonStopTime, buttonWarning;
+    private ProgressBar progressBarStartSectionDebater, progressBarRunningSectionDebater,progressBarStartDebater,progressBarRunningDebater ;
+    private Button buttonWarning;
 
-    private TextView textViewShowTime, tvSectionName, tvSectionMinutes;
-    private CountDownTimer countDownTimer;
-    private long totalTimeCountInMilliseconds;
+    private TextView textViewShowTimeSectionDebater,textViewShowTimeDebater, tvSectionName, tvSectionMinutes;
+    private CountDownTimer countDownTimerSection,countDownTimer;
+    private long totalTimeCountInMillisecondsSection,totalTimeCountInMilliseconds;
+
     private PlayerModel playerModel = new PlayerModel();
     private SectionModel sectionModel;
     private DebateModel debateModel;
     private UserModel userModel;
     private ListView listViewSection;
-    private PlayerModel currentPlayerModel ;
+    private PlayerModel currentPlayerModel;
+    private SectionModel currentSectionModel = new SectionModel();
+    private int minutesSection = 0;
+    private int sectionNumber = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,27 +75,22 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_debater);
         debateModel = getIntent().getParcelableExtra("debateModel");
         userModel = getIntent().getParcelableExtra("userModel");
-        getSupportActionBar().setTitle(debateModel.getName()+"  (Debatiente)");
+        getSupportActionBar().setTitle(debateModel.getName() + "  (Debatiente)");
 
         listViewSection = (ListView) findViewById(R.id.listViewSections);
 
 
-        buttonStartTime = (Button) findViewById(R.id.button_timerview_start);
-        buttonStopTime = (Button) findViewById(R.id.button_timerview_stop);
+        textViewShowTimeDebater = (TextView) findViewById(R.id.textView_timerview_timeDebater);
+        progressBarStartDebater = (ProgressBar) findViewById(R.id.progressbar_timerviewStartDebater);
+        progressBarRunningDebater = (ProgressBar) findViewById(R.id.progressbar1_timerviewRunningDebater);
 
-        textViewShowTime = (TextView)
-                findViewById(R.id.textView_timerview_time);
+        textViewShowTimeSectionDebater = (TextView) findViewById(R.id.textView_timerview_timeSectionDebater);
+        progressBarStartSectionDebater = (ProgressBar) findViewById(R.id.progressbar_timerviewStartSectionDebater);
+        progressBarRunningSectionDebater = (ProgressBar) findViewById(R.id.progressbar1_timerviewRunningSectionDebater);
 
-
-        mProgressBar = (ProgressBar) findViewById(R.id.progressbar_timerview);
-        mProgressBar1 = (ProgressBar) findViewById(R.id.progressbar1_timerview);
-
-        buttonStartTime.setOnClickListener(this);
-        buttonStopTime.setOnClickListener(this);
-
-        // new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getsections?id=" + debateModel.getId());
 
         startRepeatingTaskCallWebService();
+
 
     }
 
@@ -203,6 +192,7 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
             tvSectionName.setText(" " + sectionModelList.get(position).getName());
             tvSectionMinutes.setText("  " + sectionModelList.get(position).getMinutes() + " minutos");
             boolean active = sectionModelList.get(position).getActiveSection();
+
             if (active) {
                 tvSectionName.setTextColor(Color.WHITE);
                 tvSectionMinutes.setTextColor(Color.WHITE);
@@ -210,7 +200,16 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
                 tvSectionMinutes.setText("  " + sectionModelList.get(position).getMinutes() + " minutos ");
                 convertView.setBackgroundResource(R.color.colorVerde);
 
-                setTimer(sectionModelList.get(position).getMinutes());
+                sectionNumber = sectionModelList.get(position).getSectionNumber();
+                minutesSection = sectionModelList.get(position).getMinutes();
+
+                if (sectionNumber != currentSectionModel.getSectionNumber()) {
+
+                    currentSectionModel.setSectionNumber(sectionNumber);
+                    setTimerSection(minutesSection);
+                    startTimerSection();
+
+                }
 
             } else {
                 tvSectionName.setTextColor(Color.BLACK);
@@ -224,60 +223,34 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    @Override
-    public void onClick(View v) {
-
-        if (v.getId() == R.id.button_timerview_start) {
-
-
-            buttonStartTime.setVisibility(View.INVISIBLE);
-            buttonStopTime.setVisibility(View.VISIBLE);
-            mProgressBar.setVisibility(View.INVISIBLE);
-
-            startTimer();
-            mProgressBar1.setVisibility(View.VISIBLE);
-
-
-        } else if (v.getId() == R.id.button_timerview_stop) {
-            countDownTimer.cancel();
-            countDownTimer.onFinish();
-            mProgressBar1.setVisibility(View.GONE);
-            mProgressBar.setVisibility(View.VISIBLE);
-
-            buttonStartTime.setVisibility(View.VISIBLE);
-            buttonStopTime.setVisibility(View.INVISIBLE);
-        }
-
-    }
-
-    private void setTimer(int time) {
+    private void setTimerSection(int time) {
 
         time = time * 60;
 
-        totalTimeCountInMilliseconds = time * 1000;
-        mProgressBar1.setMax(time * 1000);
+        totalTimeCountInMillisecondsSection = time * 1000;
+        progressBarRunningSectionDebater.setMax(time * 1000);
     }
 
-    private void startTimer() {
-        countDownTimer = new CountDownTimer(totalTimeCountInMilliseconds, 1) {
+    private void startTimerSection() {
+        countDownTimerSection = new CountDownTimer(totalTimeCountInMillisecondsSection, 1) {
             @Override
             public void onTick(long leftTimeInMilliseconds) {
                 long seconds = leftTimeInMilliseconds / 1000;
-                mProgressBar1.setProgress((int) (leftTimeInMilliseconds));
+                progressBarRunningSectionDebater.setProgress((int) (leftTimeInMilliseconds));
 
-                textViewShowTime.setText(String.format("%02d", seconds / 60)
+                textViewShowTimeSectionDebater.setText(String.format("%02d", seconds / 60)
                         + ":" + String.format("%02d", seconds % 60));
+
+                progressBarStartSectionDebater.setVisibility(View.INVISIBLE);
+                progressBarRunningSectionDebater.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onFinish() {
-                textViewShowTime.setText("00:00");
-                textViewShowTime.setVisibility(View.VISIBLE);
-                buttonStartTime.setVisibility(View.VISIBLE);
-                buttonStopTime.setVisibility(View.VISIBLE);
-                mProgressBar.setVisibility(View.VISIBLE);
-                mProgressBar1.setVisibility(View.GONE);
-
+                textViewShowTimeSectionDebater.setText("00:00");
+                textViewShowTimeSectionDebater.setVisibility(View.VISIBLE);
+                progressBarStartSectionDebater.setVisibility(View.VISIBLE);
+                progressBarRunningSectionDebater.setVisibility(View.GONE);
             }
         }.start();
     }
@@ -290,7 +263,7 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
         notification = new NotificationCompat.Builder(this);
         notification.setAutoCancel(true);
 
-        if (text != current && text!="") {
+        if (text != current && text != "" || text.equals("3")) {
 
             NotificationClick();
         }
@@ -426,7 +399,7 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         public void run() {
             new JsonTaskSectionDebater().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getsections?id=" + debateModel.getId());
-            //Log.d("myTag", "This is my message");
+            // Log.d("myTag", "This is my message");
             new JsonTaskGetRoleDebater().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/confirmeddebates?email=" + userModel.getEmail());
 
             mHandler.postDelayed(mHandlerTask, INTERVAL);
@@ -446,13 +419,13 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
     public void onBackPressed() {
         //stopRepeatingTaskCallWebService();
 
-       createExitDialog();
+        createExitDialog();
 
     }
 
-    private void createExitDialog(){
+    private void createExitDialog() {
 
-        AlertDialog.Builder alertDialog= new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setMessage("¿Está seguro que desea salir del debate?");
         alertDialog.setCancelable(false);
         alertDialog.setIcon(R.drawable.ic_logout_ic);
@@ -480,4 +453,37 @@ public class DebaterActivity extends AppCompatActivity implements View.OnClickLi
 
         alertDialog.create().show();
     }
+
+    private void setTimer(int time) {
+
+        time = time * 60;
+
+        totalTimeCountInMilliseconds = time * 1000;
+        progressBarRunningDebater.setMax(time * 1000);
+    }
+
+    private void startTimer() {
+        countDownTimer = new CountDownTimer(totalTimeCountInMilliseconds, 1) {
+            @Override
+            public void onTick(long leftTimeInMilliseconds) {
+                long seconds = leftTimeInMilliseconds / 1000;
+                progressBarRunningDebater.setProgress((int) (leftTimeInMilliseconds));
+
+                textViewShowTimeDebater.setText(String.format("%02d", seconds / 60)
+                        + ":" + String.format("%02d", seconds % 60));
+
+                progressBarStartDebater.setVisibility(View.INVISIBLE);
+                progressBarRunningDebater.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFinish() {
+                textViewShowTimeDebater.setText("00:00");
+                textViewShowTimeDebater.setVisibility(View.VISIBLE);
+                progressBarStartDebater.setVisibility(View.VISIBLE);
+                progressBarRunningDebater.setVisibility(View.GONE);
+            }
+        }.start();
+    }
+
 }
