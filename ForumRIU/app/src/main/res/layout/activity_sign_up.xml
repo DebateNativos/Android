@@ -1,142 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_sign_up"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/signup"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.nativos.forumriu.SignUp"
-    android:background="@drawable/signup">
+    tools:context="com.nativos.forumriu.SignUp">
 
-
-    <android.support.design.widget.TextInputLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/signUpNameTIL"
-        android:layout_marginTop="200dp"
+        android:layout_height="match_parent"
         >
-    <EditText
-        android:drawableLeft="@drawable/ic_user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="@string/prompt_name"
-        android:ems="10"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/editTextSignUpName"
-        android:textSize="18sp" />
 
-    </android.support.design.widget.TextInputLayout>
-
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/signUpLastNameTIL"
-        android:layout_below="@+id/signUpNameTIL"
-        >
-        <EditText
-            android:drawableLeft="@drawable/ic_user"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/signUpNameTIL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:hint="@string/prompt_lastname"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/editTextSignUpLastName" />
+            android:layout_marginTop="200dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/editTextSignUpName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/ic_user"
+                android:ems="10"
+                android:hint="@string/prompt_name"
+                android:inputType="textPersonName"
+                android:textSize="18sp" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/signUpLastName2TIL"
-        android:layout_below="@+id/signUpLastNameTIL"
-        >
-        <EditText
-            android:drawableLeft="@drawable/ic_user"
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/signUpLastNameTIL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:hint="@string/prompt_lastname2"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/editTextSignUpLastName2" />
+            android:layout_below="@+id/signUpNameTIL">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/editTextSignUpLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/ic_user"
+                android:ems="10"
+                android:hint="@string/prompt_lastname"
+                android:inputType="textPersonName" />
 
-       <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/signUpEmailTIL"
-        android:layout_below="@+id/signUpLastName2TIL"
-        >
-        <EditText
-            android:drawableLeft="@drawable/ic_email"
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/signUpLastName2TIL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:hint="@string/prompt_email"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/editTextSignUpEmail" />
+            android:layout_below="@+id/signUpLastNameTIL">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/editTextSignUpLastName2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/ic_user"
+                android:ems="10"
+                android:hint="@string/prompt_lastname2"
+                android:inputType="textPersonName" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/signUpPasswordTIL"
-        android:layout_below="@+id/signUpEmailTIL"
-        >
-        <EditText
-            android:drawableLeft="@drawable/ic_password"
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/signUpEmailTIL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:hint="@string/prompt_password"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/editTextSignUpPassword" />
+            android:layout_below="@+id/signUpLastName2TIL">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/editTextSignUpEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/ic_email"
+                android:ems="10"
+                android:hint="@string/prompt_email"
+                android:inputType="textEmailAddress" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/signUpConfirmPasswordTIL"
-        android:layout_below="@+id/signUpPasswordTIL"
-        >
-        <EditText
-            android:drawableLeft="@drawable/ic_password"
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/signUpPasswordTIL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:hint="@string/prompt_confirmPassword"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/signUpEmailTIL">
+
+            <EditText
+                android:id="@+id/editTextSignUpPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/ic_password"
+                android:ems="10"
+                android:hint="@string/prompt_password"
+                android:inputType="textPassword" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/signUpConfirmPasswordTIL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signUpPasswordTIL">
+
+            <EditText
+                android:id="@+id/editTextSignUpConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/ic_password"
+                android:ems="10"
+                android:hint="@string/prompt_confirmPassword"
+                android:inputType="textPassword" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/signUpPhoneTIL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signUpConfirmPasswordTIL">
+
+            <EditText
+                android:id="@+id/editTextSignUpPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/ic_phone_icon"
+                android:ems="10"
+                android:hint="@string/prompt_phone"
+                android:inputType="phone" />
+
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/signUpAddressTIL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signUpPhoneTIL">
+
+            <EditText
+                android:id="@+id/editTextSignUpAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/ic_menu_home"
+                android:ems="10"
+                android:hint="@string/prompt_address"
+                android:inputType="textAutoComplete" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/buttonSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:id="@+id/editTextSignUpConfirmPassword" />
+            android:backgroundTint="#0F7F41"
+            android:text="@string/signUpButton"
+            android:textColor="@android:color/white"
+            android:layout_below="@+id/signUpAddressTIL"/>
 
-    </android.support.design.widget.TextInputLayout>
-
-8
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonSignUp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:backgroundTint="#0F7F41"
-        android:textColor="@android:color/white"
-        android:text="@string/signUpButton" />
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

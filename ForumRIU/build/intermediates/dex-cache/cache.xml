@@ -52,7 +52,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="ea0ae9d19407176a39f4a8c58e0d77dd4ad681a9">
+        sha1="92abbab27de191eb9c0e1a5de17c98d5706bd569">
         <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_9112f66aa92bad8f73a07307d25641c870f52cca\classes.dex" />
     </item>
     <item
@@ -160,7 +160,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="21c3877e83a3e0eda4e4bd1d5294e5b40cd94c56">
+        sha1="e2bd2f39b6c1075c16cd8ac9e3506fbb87a83559">
         <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_d5711200b7bca29e768c0e07ad64feb88cb31a51\classes.dex" />
     </item>
     <item
@@ -171,15 +171,6 @@
         revision="24.0.2"
         sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
         <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-24.2.1_1d26defa9daf5f7bb8cbf4d8448e7bdc913b8b3a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\exploded-aar\com.android.volley\volley\1.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="2cd4b982617e544728de0782d718a58ce1b06e3f">
-        <dex dex="C:\Users\chang\OneDrive\Documentos\GitHub\Android\ForumRIU\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.volley-volley-1.0.0_9fb3d1ee7a7bd4edcaf83254085ed616d6a252b2\classes.dex" />
     </item>
 
 </items>

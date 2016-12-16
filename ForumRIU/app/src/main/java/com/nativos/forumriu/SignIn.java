@@ -48,7 +48,6 @@ public class SignIn extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sign_in);
 
-
         login();
 
     }
@@ -116,6 +115,8 @@ public class SignIn extends Activity {
                     userModel.setLastname(finalObject.getString("lastName"));
                     userModel.setLastname2(finalObject.getString("lastName2"));
                     userModel.setEmail(finalObject.getString("email"));
+                    userModel.setPhone(finalObject.getString("phone"));
+                    userModel.setAddress(finalObject.getString("address"));
                 }
                 return userModel;
 

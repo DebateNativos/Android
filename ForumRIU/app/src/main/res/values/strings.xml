@@ -8,6 +8,8 @@
     <string name="prompt_lastname">Primer Apellido</string>
     <string name="prompt_lastname2">Segundo Apellido</string>
     <string name="prompt_confirmPassword">Confirmar Contraseña</string>
+    <string name="prompt_phone">Número de teléfono</string>
+    <string name="prompt_address">Dirección</string>
     <string name="signUpButton">Registrar</string>
     <string name="loginButton">Iniciar Sesión</string>
     <string name="title_activity_main">Debates Activos</string>
@@ -38,14 +40,63 @@
     <string name="tvNotActive">Este debate aún no se encuentra activo.\nIntente más tarde.</string>
 
     <string name="S4U">Solutions4U</string>
+    <string name="S4UMission">\n Nuestra Misión \n</string>
     <string name="S4Uinfo">
-        Joselyn Rodriguez\n
-        Jorge Soler\n
-        Carlos Solis Araya\n
-        Jordan Wong Yeung
+        Proporcionar soluciones tecnológicas innovadoras, diseñadas a la medida y caracterizadas por nuestro desarrollo creativo, de forma que, podamos satisfacer las necesidades de nuestros clientes.
     </string>
     <string name="insertCode">Código del curso</string>
     <string name="insertCodeInstructions">\n Ingrese el código del curso para acceder a los debates \n</string>
     <string name="GotoHomeButton">Regresar al Menú Principal</string>
+    <string name="remainingComment">Comentarios restantes: \t\t </string>
+    <string name="rules">
+        1.	CAPÍTULO PRIMERO: DISPOSICIONES GENERALES.\n\n
+ARTÍCULO 1: El siguiente reglamento tiene como propósito establecer el procedimiento aplicable para la organización, coordinación, planificación, celebración y vigilancia de los debates a efectuarse en la Escuela de Relaciones Internacionales, o bien, entre escuelas de la Universidad Latina de Costa Rica.
+\n\n ARTÍCULO 2: Para efectos del reglamento, se entiende por:
+\n\nA.	Programa de Debates: es el encargado de proponer los lineamientos para la preparación, organización, desarrollo, vigilancia del debate y la revisión y trámite de solicitudes de los estudiantes, así como, analizar el tema a debatir.
+\n\nB.	Debatientes: son los  estudiantes encargados de desarrollar el debate el día asignado y previa capacitación y fundamentaciones de la temática.
+\n\nC.	Moderador: es la persona comisionada de conducir el debate. Será asignado por las personas gestoras del presente Programa. La figura del moderador o moderadora tendrá la responsabilidad de dirigir el debate, de manera tal, que las áreas temáticas definidas por los organizadores sean discutidas y previa capacitación.
+\n\nD.	Debate: acto organizado por el Programa de Debates donde dos o más personas y/o grupos,  bajo un esquema y mecánica previamente establecido, exponen y discuten sus puntos de vista sobre un tema de interés común y  público, con la finalidad de que la comunidad estudiantil pueda observar las diferentes propuestas  y posiciones.
+
+  \n\n
+2.	CAPÍTULO DOS: COMPETENCIAS.\n
+\n ARTÍCULO 3: El Programa de Debates tendrá las siguientes atribuciones:
+\n\n A.	Hacerse cargo de la construcción de los lineamientos respecto a la preparación, desarrollo y vigilancia del debate.
+\n\n B.	Dar trámite a las solicitudes del debate.
+\n\n C.	Garantizar que todos los participantes puedan intervenir en condiciones de equidad y respeto hacia su integridad.
+\n\n D.	El Programa de Debate establecerá las pautas a seguir respecto al protocolo a seguir para el debate. (Entiéndase reglas de vestimenta para los debatientes y moderador y pautas de comportamiento)
+\n\n E.	Programar capacitaciones para los estudiantes que participarán en los debates
+ 
+\n\n3.	CAPÍTULO TRES: SOBRE LA FECHA DE REALIZACIÓN DEL DEBATE.\n
+\n\nARTÍCULO 4: Es importante que la solicitud para el empleo del auditorio o aula de videoconferencia se realice con la suficiente anterioridad a  la fecha de  realizar un debate, ya que el auditorio está en constante uso. Por lo mismo,   el auditorio debe solicitarse con un mes antes, empero, es necesario esperar si la fecha solicitada está disponible o bien, gestionar la asignación de una nueva  fecha por parte de los encargados del auditorio o aula de videoconferencia.
+ \n\n
+4.	CAPÍTULO CUATRO: PARA LA APERTURA DEL DEBATE.
+\n\n ARTÍCULO 5: Los estudiantes debatientes serán capacitados para la actividad dos semanas (quince días) antes del desarrollo del debate. La capacitación será dirigida por los coordinadores del presente Programa. El máximo de capacitaciones a realizar son dos.
+\n\n ARTÍCULO 6: Si un profesor, por cuenta propia, considera de suma importancia la participación de sus estudiantes en el debate, ya sea como público o debatientes, se otorgará una lista (entiéndase como “Hoja de asistencia”) para la confirmación de los mismos al debate.
+\n\n ARTÍCULO 7: En algunos formatos es importante que público especializado en los temas del debate esté presente. En el  momento de circular las invitaciones, hay que tomar en cuenta a personajes generadores de opinión pública y ciudadanos interesados en los temas por debatir. Bajo este formato, los organizadores deben definir quiénes serán los participantes, enviar tarjetas con suficiente tiempo y hacerle seguimiento constante a las mismas. También, serán los coordinadores quienes asignen el modelo a seguir para el debate. Se contará con un máximo de dos modelos para el Programa de Debates.
+\n\n ARTÍCULO 8: El Programa estará a cargo de divulgar las pautas de comportamiento a seguir por  los asistentes antes de comenzar el debate. Por ejemplo, no uso de cámaras fotográficas, ni de celulares, permanecer en silencio durante el transcurso del debate y no emplear equipos electrónicos, salvo aquellos necesarios para los medios acreditados. Estas pautas se determinarán para cada debate por separado.
+\n\n ARTÍCULO 9: El Programa recomendará a los invitados llegar por lo menos 30 minutos antes del inicio del debate, una vez iniciado el debate no será permitido el ingreso de personas al auditorio. Para este apartado se toma en cuenta aspectos como, por ejemplo: algún medio de comunicación que pueda estar realizando una transmisión en vivo.
+\n\n ARTÍCULO 10: Para generar un ambiente de confianza y seguridad, tanto para los debatientes, como invitados y público en general, es importante que el auditorio se encuentre bajo control y el público no interrumpa de manera abrupta el desarrollo del debate.
+
+       \n\n 5.	CAPÍTULO CINCO: DESARROLLO DEL DEBATE.\n
+\n\nARTÍCULO 11: Se empezará con un marco introductorio a cargo del moderador, luego procederá una de las partes, otorgándole de cinco a siete minutos o bien, el tiempo que es determinado de acuerdo al modelo que se asignará, para exponer su posición de forma ordenada. Se le concederá  el mismo tiempo al grupo contrario para su réplica.
+\n\nARTÍCULO 12: Cada parte contará con un minuto para formular una pregunta clara y concisa. En la medida de lo posible, será necesario incluir datos cuantitativos de fuentes reconocidas las cuales justifiquen la importancia del tema que se está tratando. La contraparte contará con un máximo de 3 minutos para responder.
+\n\nARTÍCULO 13: Es necesario que los debatientes sean objetivos. El debate se realiza con el fin de enriquecer el conocimiento de los y las estudiantes de la Universidad Latina de Costa Rica, no para generar disputas y/o peleas.
+\n\nARTÍCULO 14: Los debatientes no tienen permitido interrumpir el tiempo de habla del contrincante o alguno de sus compañeros. El incumplimiento de esta acción podría acarrear una amonestación.
+\n\nARTÍCULO 15: Es muy importante que los debatientes, al exponer sus argumentos, los plasmen con claridad y evitando términos como: “Muchas personas creen…”, “La mayoría piensa que…”, etc. Realizar los argumentos con hechos reales y pruebas de acuerdo con  la investigación previa al debate es obligatorio.
+\n\nARTÍCULO 16: Es de suma relevancia dejar los "emocionalismos" fuera del debate, de manera tal, que no existan improperios de parte de los debatientes. El uso de palabras irrespetuosas ameritará una amonestación.
+\n\nARTÍCULO 17: Las preguntas a realizarse, ya sea de una de las partes debatientes o del público, deben ser claras y concisas, sin influir en las posibles respuestas de los demás debatientes.
+\n\nARTÍCULO 18: El o la debatiente que acumule tres sanciones a lo largo de un debate deberá abandonar el mismo.
+\n\nARTÍCULO 19: El tiempo será medido con un instrumento digital proporcionado por la Universidad o por cronómetro. El moderador contará con el apoyo de un ayudante que le indicará la finalización del tiempo.
+\n\nARTÍCULO 20: Debido al espacio del escenario, el debate se realizará en dos partes, de acuerdo con la cantidad de estudiantes que deliberarán; la primera de 50 minutos (posición inicial, argumentaciones y preguntas), luego habrá un receso de 10 a 15 minutos, y por último, la segunda parte de 50 minutos (argumentaciones y posición final)
+\n\nARTÍCULO 21: Para finalizar el debate, cada parte podrá contar con un máximo de ocho minutos para realizar una posición final.
+
+
+ \n\n\n
+6.	CAPÍTULO SEIS: CIERRE DEL DEBATE.\n
+\n\nARTÍCULO 22: Luego de finalizado el debate, se solicitará un análisis por parte del moderador o moderadora del debate. La participación de los profesores, directores de la Escuelas que participan (Relaciones Internacionales, Derecho, entre otras) y la Rectoría de la Universidad; será siempre bienvenida.
+\n\nARTÍCULO 23: Antes de que los estudiantes participantes del debate se retiren, se les otorgará un certificado comprobante de su participación en el mismo.
+  </string>
+
+
 
 </resources>

@@ -10,6 +10,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,15 +44,18 @@ public class PublicActivity extends AppCompatActivity {
     private SectionModel sectionModel;
     private UserModel userModel;
     private ListView listViewSection;
-    private TextView  tvSectionName, tvSectionMinutes,textViewShowTime;
+    private TextView tvSectionName, textViewShowTime;
     private ImageButton imgButtonQuestions;
 
     private SectionModel currentSectionModel = new SectionModel();
     private ProgressBar progressBarStartPublic, progressBarRunningPublic;
     private CountDownTimer countDownTimer;
     private long totalTimeCountInMilliseconds;
-    private int minutes =0;
-    private int sectionNumber =0;
+    private int minutes = 0;
+    private int sectionNumber = 0;
+
+    private List<SectionModel> currentSectionModelList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,16 +63,33 @@ public class PublicActivity extends AppCompatActivity {
 
         debateModel = getIntent().getParcelableExtra("debateModel");
         userModel = getIntent().getParcelableExtra("userModel");
-        getSupportActionBar().setTitle(debateModel.getName()+"  (Público)");
+        getSupportActionBar().setTitle(debateModel.getName() + "  (Público)");
         setContentView(R.layout.activity_public);
         listViewSection = (ListView) findViewById(R.id.listViewSectionsPublic);
 
-        textViewShowTime = (TextView)findViewById(R.id.textView_timerview_timePublic);
+        textViewShowTime = (TextView) findViewById(R.id.textView_timerview_timePublic);
 
         progressBarStartPublic = (ProgressBar) findViewById(R.id.progressbar_timerviewStartPublic);
         progressBarRunningPublic = (ProgressBar) findViewById(R.id.progressbar1_timerviewRunningPublic);
+        imgButtonQuestions = (ImageButton) findViewById(R.id.imageButtonQuestionsPublic);
 
         startRepeatingTaskCallWebService();
+
+        imgButtonQuestions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), QuestionActivity.class);
+
+                Bundle mBundle = new Bundle();
+                mBundle.putParcelable("userModel", userModel);
+                mBundle.putParcelable("debateModel", debateModel);
+                intent.putExtras(mBundle);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
+                startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -110,7 +131,7 @@ public class PublicActivity extends AppCompatActivity {
                     sectionModelList.add(sectionModel);
                 }
 
-
+                currentSectionModelList = sectionModelList;
                 return sectionModelList;
 
             } catch (MalformedURLException e) {
@@ -165,25 +186,21 @@ public class PublicActivity extends AppCompatActivity {
             }
 
             tvSectionName = (TextView) convertView.findViewById(R.id.textViewSectionName);
-            tvSectionMinutes = (TextView) convertView.findViewById(R.id.textViewSectionMinutes);
 
-            tvSectionName.setText(" " +sectionModelList.get(position).getName());
-            tvSectionMinutes.setText("  "+sectionModelList.get(position).getMinutes() + " minutos");
+
+            tvSectionName.setText(" " + sectionModelList.get(position).getName());
+
             boolean active = sectionModelList.get(position).getActiveSection();
             if (active) {
 
                 tvSectionName.setTextColor(Color.WHITE);
-                tvSectionMinutes.setTextColor(Color.WHITE);
-                tvSectionName.setText(" " +sectionModelList.get(position).getName());
-                tvSectionMinutes.setText("  "+sectionModelList.get(position).getMinutes() + " minutos ");
+                tvSectionName.setText(" " + sectionModelList.get(position).getName());
                 convertView.setBackgroundResource(R.color.colorVerde);
 
-                imgButtonQuestions = (ImageButton) findViewById(R.id.imageButtonQuestionsPublic);
-                if(sectionModelList.get(position).getSectionNumber()>3){
+                if (sectionModelList.get(position).getSectionNumber() > 3) {
 
                     imgButtonQuestions.setVisibility(View.INVISIBLE);
-                }
-                else{
+                } else {
                     imgButtonQuestions.setVisibility(View.VISIBLE);
                 }
 
@@ -202,10 +219,8 @@ public class PublicActivity extends AppCompatActivity {
 
             } else {
                 tvSectionName.setTextColor(Color.BLACK);
-                tvSectionMinutes.setTextColor(Color.BLACK);
                 convertView.setBackgroundColor(Color.LTGRAY);
             }
-
 
 
             return convertView;
@@ -249,8 +264,6 @@ public class PublicActivity extends AppCompatActivity {
     }
 
 
-
-
     private final static int INTERVAL = 1000 * 1; //1 sec
     Handler mHandler = new Handler();
 
@@ -258,7 +271,7 @@ public class PublicActivity extends AppCompatActivity {
         @Override
         public void run() {
             new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getsections?id=" + debateModel.getId());
-           // Log.d("myTag", "This is my message");
+           // Log.d("myTag", "This is my messagePublic");
 
             mHandler.postDelayed(mHandlerTask, INTERVAL);
         }
@@ -276,7 +289,11 @@ public class PublicActivity extends AppCompatActivity {
     public void onBackPressed() {
         //stopRepeatingTaskGetSections();
 
-        createExitDialog();
+        if (!activeSection()) {
+            createExitDialog();
+        } else {
+            createStayDialog();
+        }
 
     }
 
@@ -285,9 +302,9 @@ public class PublicActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void createExitDialog(){
+    private void createExitDialog() {
 
-        AlertDialog.Builder alertDialog= new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setMessage("¿Está seguro que desea salir del debate?");
         alertDialog.setCancelable(false);
         alertDialog.setIcon(R.drawable.ic_logout_ic);
@@ -301,7 +318,8 @@ public class PublicActivity extends AppCompatActivity {
                 Bundle mBundle = new Bundle();
                 mBundle.putParcelable("userModel", userModel);
                 intent.putExtras(mBundle);
-
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                stopRepeatingTaskCallWebService();
                 startActivity(intent);
             }
 
@@ -314,6 +332,36 @@ public class PublicActivity extends AppCompatActivity {
         });
 
         alertDialog.create().show();
-}
+    }
+
+    private void createStayDialog() {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("No puede abandonar el debate. En este momento hay una sección del debate en progreso");
+        alertDialog.setCancelable(false);
+        alertDialog.setIcon(R.drawable.ic_logout_ic);
+        alertDialog.setTitle("Intente más tarde");
+
+        alertDialog.setNegativeButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alertDialog.create().show();
+    }
+
+
+    private boolean activeSection() {
+        boolean active = false;
+        for (SectionModel sm : currentSectionModelList) {
+
+            if (sm.getActiveSection()) {
+                active = true;
+            }
+        }
+        return active;
+    }
 
 }

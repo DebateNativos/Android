@@ -8,11 +8,12 @@ import static android.R.attr.name;
 
 public class CourseModel {
 
-    int courseId;
-    String courseName;
-    String courseTeacher;
-    String courseSchedule;
-    String courseClassroom;
+   private int courseId;
+    private String courseName;
+    private String courseTeacher;
+    private String courseSchedule;
+    private String courseClassroom;
+    private String courseCode;
 
     public CourseModel() {
     }
@@ -23,6 +24,14 @@ public class CourseModel {
         this.courseName = courseName;
         this.courseSchedule = courseSchedule;
         this.courseTeacher = courseTeacher;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
     }
 
     public String getCourseClassroom() {
