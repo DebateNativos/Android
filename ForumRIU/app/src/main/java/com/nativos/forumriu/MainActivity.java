@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         ProfileFragment.OnFragmentInteractionListener,
         AboutUsFragment.OnFragmentInteractionListener,
-        InsertCodeFragment.OnFragmentInteractionListener {
+        InsertCodeFragment.OnFragmentInteractionListener,
+        RulesFragment.OnFragmentInteractionListener{
 
 
     FragmentTransaction fragmentTransaction;
@@ -140,6 +141,9 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
                 break;
             case R.id.nav_rules:
+                RulesFragment rulesFragment = RulesFragment.newInstance("as", "sd");
+                manager.beginTransaction().replace(R.id.fragmentContainer, rulesFragment, rulesFragment.getTag()).commit();
+                getSupportActionBar().setTitle("Reglamento");
                 break;
             case R.id.nav_aboutUs:
                 AboutUsFragment aboutUsFragment = AboutUsFragment.newInstance("1", "2");

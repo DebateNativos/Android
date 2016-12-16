@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,6 +6,10 @@
     tools:context=".ProfileFragment"
     android:background="@drawable/editprofile">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -116,6 +120,54 @@
 
     </android.support.design.widget.TextInputLayout>
 
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/editProfilePhoneTIL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editProfileConfirmPasswordTIL"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <EditText
+            android:id="@+id/editTextProfilePhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:drawableLeft="@drawable/ic_phone_icon"
+            android:ems="10"
+            android:hint="@string/prompt_phone"
+            android:inputType="phone" />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/editProfileAddressTIL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editProfilePhoneTIL"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <EditText
+            android:id="@+id/editTextProfileAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:drawableLeft="@drawable/ic_menu_home"
+            android:ems="10"
+            android:hint="@string/prompt_address"
+            android:inputType="textAutoComplete" />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -124,8 +176,8 @@
         android:textColor="@android:color/white"
         android:text="@string/editProfileButton"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/editProfileConfirmPasswordTIL"/>
+        android:layout_below="@+id/editProfileAddressTIL"/>
 
 
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

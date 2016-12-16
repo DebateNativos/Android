@@ -1,7 +1,9 @@
 package com.nativos.forumriu;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 
 import com.nativos.forumriu.models.DebateModel;
 import com.nativos.forumriu.models.PlayerModel;
+import com.nativos.forumriu.models.SectionModel;
 import com.nativos.forumriu.models.UserModel;
 
 import org.json.JSONArray;
@@ -58,6 +61,10 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private DebateModel debateModel;
     private UserModel userModel;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private SectionModel sectionModel;
+    private SectionModel currentSectionModel= new SectionModel();
+    private List<SectionModel> currentSectionModelList = new ArrayList<>();
+
 
     public HomeFragment() {
 
@@ -83,14 +90,18 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 view.setSelected(true);
                 debateModel = (DebateModel) listViewDebate.getItemAtPosition(position);
 
-                //  String name = String.valueOf(listViewDebate.getItemAtPosition(position));
-
                 tvDebateDate = (TextView) rootView.findViewById(R.id.textViewDebateDate);
 
                 if (debateModel.getActive() ) {
                     //&& currentDebate()
-                    new JsonTaskGetRole().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/confirmeddebates?email=" + userModel.getEmail());
+                    new JsonTaskSection().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getsections?id=" + debateModel.getId());
 
+                    if(!activeSection()) {
+                        new JsonTaskGetRole().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/confirmeddebates?email=" + userModel.getEmail());
+                    }
+                    else{
+                        createStayDialog();
+                    }
                 } else {
 
                     Intent intent = new Intent(getActivity().getBaseContext(), DebateNotActiveActivity.class);
@@ -185,22 +196,24 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 if (playerModel.getDebate() == debateModel.getId()) {
                     pm = playerModel;
                 }
-
-
             }
 
-            if (pm.getDebate() == debateModel.getId()) {
-                Intent intent;
-                Bundle mBundle = new Bundle();
-                mBundle.putParcelable("userModel", userModel);
-                mBundle.putParcelable("debateModel", debateModel);
-                mBundle.putParcelable("playerModel", pm);
+            if(!activeSection()) {
 
+            Intent intent;
+            Bundle mBundle = new Bundle();
+            mBundle.putParcelable("userModel", userModel);
+            mBundle.putParcelable("debateModel", debateModel);
+            mBundle.putParcelable("playerModel", pm);
+
+            if (pm.getDebate() == debateModel.getId()) {
+
+                if(pm.getWarnings()<3){
                 switch (pm.getRole()) {
                     case 1:
                         intent = new Intent(getActivity().getBaseContext(), DebaterActivity.class);
                         intent.putExtras(mBundle);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
 
                         break;
@@ -208,29 +221,45 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     case 2:
                         intent = new Intent(getActivity().getBaseContext(), AdvisorActivity.class);
                         intent.putExtras(mBundle);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                       // intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                     case 3:
                         intent = new Intent(getActivity().getBaseContext(), ObserverActivity.class);
                         intent.putExtras(mBundle);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                     case 4:
                         intent = new Intent(getActivity().getBaseContext(), PublicActivity.class);
                         intent.putExtras(mBundle);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         break;
                     default:
-                        Toast.makeText(getActivity(), "No tiene rol asignado", Toast.LENGTH_SHORT).show();
+                        intent = new Intent(getActivity().getBaseContext(), PublicActivity.class);
+                        intent.putExtras(mBundle);
+                       //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
                         break;
+                }
+                }
+                else{
+                    Toast.makeText(getActivity(), "Te han expulsado del debate", Toast.LENGTH_SHORT).show();
+
                 }
 
             } else {
-                Toast.makeText(getActivity(), "No tiene acceso al debate seleccionado ", Toast.LENGTH_SHORT).show();
+                intent = new Intent(getActivity().getBaseContext(), PublicActivity.class);
+                intent.putExtras(mBundle);
+                //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
 
+            }
+            }
+            else {
+
+                createStayDialog();
             }
 
         }
@@ -272,6 +301,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     debateModel.setId(finalObject.getInt("idDebates"));
                     debateModel.setActive(Boolean.parseBoolean(finalObject.getString("isActive")));
                     debateModel.setDebateType(finalObject.getString("debateType"));
+                    debateModel.setFirstcourse(finalObject.getString("course1"));
+                    debateModel.setSecondCourse(finalObject.getString("course2"));
 
                     Calendar calendar = Calendar.getInstance();
 
@@ -355,6 +386,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         }
 
+
+
     }
 
     public class DebateAdapter extends ArrayAdapter {
@@ -394,6 +427,94 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         }
     }
 
+    public class JsonTaskSection extends AsyncTask<String, String, List<SectionModel>> {
+        @Override
+        protected List<SectionModel> doInBackground(String... params) {
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+            try {
+                URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+
+                InputStream stream = connection.getInputStream();
+
+                reader = new BufferedReader(new InputStreamReader(stream));
+
+                StringBuffer buffer = new StringBuffer();
+
+                String line = "";
+
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line);
+                }
+                String finalJson = buffer.toString();
+                JSONArray parentArray = new JSONArray(finalJson);
+
+                List<SectionModel> sectionModelList = new ArrayList<>();
+
+                for (int i = 0; i < parentArray.length(); i++) {
+                    JSONObject finalObject = parentArray.getJSONObject(i);
+
+                    sectionModel = new SectionModel();
+                    sectionModel.setMinutes(Integer.parseInt(finalObject.getString("minutesPerUser")));
+                    sectionModel.setActiveSection(Boolean.parseBoolean(finalObject.getString("activeSection")));
+                    sectionModel.setName(finalObject.getString("name"));
+                    sectionModel.setSectionNumber(Integer.parseInt(finalObject.getString("sectionNUmber")));
+
+                    sectionModelList.add(sectionModel);
+                }
+
+                currentSectionModelList = sectionModelList;
+                return sectionModelList;
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<SectionModel> result) {
+            super.onPostExecute(result);
+
+            for(SectionModel sm: result){
+                if(sm.getActiveSection()){
+                    currentSectionModel=sm;
+                }
+            }
+        }
+
+    }
+
+    private boolean activeSection(){
+        boolean active=false;
+        for(SectionModel sm: currentSectionModelList){
+
+            if(sm.getActiveSection()){
+                active=true;
+            }
+        }
+
+        return active;
+    }
+
+
     public boolean currentDebate() {
 
         boolean status = false;
@@ -417,5 +538,22 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         return status;
     }
 
+    private void createStayDialog() {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setMessage("No puede ingresar al debate. En este momento hay una sección del debate en progreso");
+        alertDialog.setCancelable(false);
+        alertDialog.setIcon(R.drawable.ic_logout_ic);
+        alertDialog.setTitle("Intente más tarde");
+
+        alertDialog.setNegativeButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alertDialog.create().show();
+    }
 
 }

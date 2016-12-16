@@ -6,10 +6,10 @@ package com.nativos.forumriu.models;
 
 public class SectionModel {
 
-    String name;
-    int minutes;
-    boolean activeSection;
-    int sectionNumber;
+    private String name;
+    private int minutes;
+    private boolean activeSection;
+    private int sectionNumber;
 
     public SectionModel() {
     }

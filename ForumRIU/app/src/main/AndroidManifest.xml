@@ -50,11 +50,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".AdvisorActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ObserverActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".ObserverActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+        <activity android:name=".CommentsActivity"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>

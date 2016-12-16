@@ -12,11 +12,13 @@ import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -52,12 +54,12 @@ public class DebaterActivity extends AppCompatActivity {
     NotificationCompat.Builder notification;
     private Button btnNotification;
     private int warning = 0;
-    private ProgressBar progressBarStartSectionDebater, progressBarRunningSectionDebater,progressBarStartDebater,progressBarRunningDebater ;
+    private ProgressBar progressBarStartSectionDebater, progressBarRunningSectionDebater, progressBarStartDebater, progressBarRunningDebater;
     private Button buttonWarning;
 
-    private TextView textViewShowTimeSectionDebater,textViewShowTimeDebater, tvSectionName, tvSectionMinutes;
-    private CountDownTimer countDownTimerSection,countDownTimer;
-    private long totalTimeCountInMillisecondsSection,totalTimeCountInMilliseconds;
+    private TextView textViewShowTimeSectionDebater, textViewShowTimeDebater, tvSectionName;
+    private CountDownTimer countDownTimerSection, countDownTimer;
+    private long totalTimeCountInMillisecondsSection, totalTimeCountInMilliseconds;
 
     private PlayerModel playerModel = new PlayerModel();
     private SectionModel sectionModel;
@@ -68,6 +70,9 @@ public class DebaterActivity extends AppCompatActivity {
     private SectionModel currentSectionModel = new SectionModel();
     private int minutesSection = 0;
     private int sectionNumber = 0;
+    private ImageButton imgbuttonComment;
+    private List<SectionModel> currentSectionModelList = new ArrayList<>();
+    private int talking = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +84,12 @@ public class DebaterActivity extends AppCompatActivity {
 
         listViewSection = (ListView) findViewById(R.id.listViewSections);
 
-
+        imgbuttonComment = (ImageButton) findViewById(R.id.imageButtonCommentDebater);
         textViewShowTimeDebater = (TextView) findViewById(R.id.textView_timerview_timeDebater);
         progressBarStartDebater = (ProgressBar) findViewById(R.id.progressbar_timerviewStartDebater);
         progressBarRunningDebater = (ProgressBar) findViewById(R.id.progressbar1_timerviewRunningDebater);
+        progressBarStartDebater.setVisibility(View.INVISIBLE);
+        textViewShowTimeDebater.setVisibility(View.INVISIBLE);
 
         textViewShowTimeSectionDebater = (TextView) findViewById(R.id.textView_timerview_timeSectionDebater);
         progressBarStartSectionDebater = (ProgressBar) findViewById(R.id.progressbar_timerviewStartSectionDebater);
@@ -90,6 +97,22 @@ public class DebaterActivity extends AppCompatActivity {
 
 
         startRepeatingTaskCallWebService();
+
+        imgbuttonComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), CommentsActivity.class);
+
+                Bundle mBundle = new Bundle();
+                mBundle.putParcelable("userModel", userModel);
+                mBundle.putParcelable("debateModel", debateModel);
+                mBundle.putParcelable("playerModel", playerModel);
+                intent.putExtras(mBundle);
+
+                startActivity(intent);
+
+            }
+        });
 
 
     }
@@ -132,7 +155,7 @@ public class DebaterActivity extends AppCompatActivity {
                     sectionModelList.add(sectionModel);
                 }
 
-
+                currentSectionModelList = sectionModelList;
                 return sectionModelList;
 
             } catch (MalformedURLException e) {
@@ -187,17 +210,13 @@ public class DebaterActivity extends AppCompatActivity {
             }
 
             tvSectionName = (TextView) convertView.findViewById(R.id.textViewSectionName);
-            tvSectionMinutes = (TextView) convertView.findViewById(R.id.textViewSectionMinutes);
 
             tvSectionName.setText(" " + sectionModelList.get(position).getName());
-            tvSectionMinutes.setText("  " + sectionModelList.get(position).getMinutes() + " minutos");
             boolean active = sectionModelList.get(position).getActiveSection();
 
             if (active) {
                 tvSectionName.setTextColor(Color.WHITE);
-                tvSectionMinutes.setTextColor(Color.WHITE);
                 tvSectionName.setText(" " + sectionModelList.get(position).getName());
-                tvSectionMinutes.setText("  " + sectionModelList.get(position).getMinutes() + " minutos ");
                 convertView.setBackgroundResource(R.color.colorVerde);
 
                 sectionNumber = sectionModelList.get(position).getSectionNumber();
@@ -213,7 +232,6 @@ public class DebaterActivity extends AppCompatActivity {
 
             } else {
                 tvSectionName.setTextColor(Color.BLACK);
-                tvSectionMinutes.setTextColor(Color.BLACK);
                 convertView.setBackgroundColor(LTGRAY);
             }
 
@@ -272,7 +290,7 @@ public class DebaterActivity extends AppCompatActivity {
     }
 
 
-    public class JsonTaskGetRoleDebater extends AsyncTask<String, String, List<PlayerModel>> {
+    public class JsonTaskGetRoleDebaterList extends AsyncTask<String, String, List<PlayerModel>> {
         @Override
         protected List<PlayerModel> doInBackground(String... params) {
             HttpURLConnection connection = null;
@@ -305,6 +323,9 @@ public class DebaterActivity extends AppCompatActivity {
                     playerModel.setRole(Integer.parseInt(finalObject.getString("role")));
                     playerModel.setDebate(Integer.parseInt(finalObject.getString("debate")));
                     playerModel.setWarnings(Integer.parseInt(finalObject.getString("warning")));
+                    playerModel.setTeam(finalObject.getString("team"));
+                    playerModel.setIsTalking(Boolean.parseBoolean(finalObject.getString("isTalking")));
+                    playerModel.setMinutes(Integer.parseInt(finalObject.getString("minutesToTalk")));
 
                     playerModelList.add(playerModel);
                 }
@@ -346,6 +367,22 @@ public class DebaterActivity extends AppCompatActivity {
             }
             notifications(currentPlayerModel);
 
+            if (currentPlayerModel.getIsTalking() && talking == 0) {
+
+                progressBarStartDebater.setVisibility(View.VISIBLE);
+                textViewShowTimeDebater.setVisibility(View.VISIBLE);
+                setTimerDebater(currentPlayerModel.getMinutes());
+                startTimerDebater();
+                talking++;
+            }
+            if (!currentPlayerModel.getIsTalking()) {
+                talking = 0;
+                progressBarRunningDebater.setVisibility(View.INVISIBLE);
+                progressBarStartDebater.setVisibility(View.INVISIBLE);
+                textViewShowTimeDebater.setVisibility(View.INVISIBLE);
+
+            }
+
         }
 
     }
@@ -358,36 +395,118 @@ public class DebaterActivity extends AppCompatActivity {
         notification.setContentTitle("Notificación de amonestación");
         notification.setContentText("Has sido amonestado por el moderador");
 
-        warning = currentPlayerModel.getWarnings();
+        warning = playerModel.getWarnings();
 
         notification.setVibrate(new long[]{1000, 1000});
         if (warning >= 3) {
 
-            Toast.makeText(DebaterActivity.this, "Tercera amonestación, has sido expulsado del debate", Toast.LENGTH_LONG).show();
+            Toast.makeText(DebaterActivity.this, "Tercera amonestación, has sido expulsado del debate", Toast.LENGTH_SHORT).show();
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             nm.notify(id, notification.build());
+            stopRepeatingTaskCallWebService();
             goToSignIn();
         } else {
             Toast.makeText(DebaterActivity.this, "Has sido amonestado", Toast.LENGTH_SHORT).show();
 
-//            Intent intent = new Intent(this, DebaterActivity.class);
-//
-//            Bundle mBundle = new Bundle();
-//            mBundle.putParcelable("userModel", userModel);
-//            mBundle.putParcelable("debateModel", debateModel);
-//            intent.putExtras(mBundle);
-//
-//            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//            notification.setContentIntent(pendingIntent);
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             nm.notify(id, notification.build());
         }
 
     }
 
+
+    public class JsonTaskGetRoleDebater extends AsyncTask<String, String, PlayerModel> {
+        @Override
+        protected PlayerModel doInBackground(String... params) {
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+
+            try {
+                URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+
+                InputStream stream = connection.getInputStream();
+
+                reader = new BufferedReader(new InputStreamReader(stream));
+
+                StringBuffer buffer = new StringBuffer();
+
+                String line = "";
+
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line);
+                }
+                String finalJson = buffer.toString();
+
+                JSONObject parentObject = new JSONObject(finalJson);
+                //playerModel = new PlayerModel();
+                playerModel.setRole(Integer.parseInt(parentObject.getString("role")));
+                playerModel.setDebate(Integer.parseInt(parentObject.getString("debate")));
+                playerModel.setWarnings(Integer.parseInt(parentObject.getString("warning")));
+                playerModel.setTeam(parentObject.getString("team"));
+                playerModel.setIsTalking(Boolean.parseBoolean(parentObject.getString("isTalking")));
+                playerModel.setMinutes(Integer.parseInt(parentObject.getString("minutesToTalk")));
+
+                return playerModel;
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(PlayerModel result) {
+            super.onPostExecute(result);
+
+            //PlayerModel pm = new PlayerModel();
+
+            notifications(result);
+
+            if (result.getIsTalking() && talking == 0) {
+
+                progressBarStartDebater.setVisibility(View.VISIBLE);
+                textViewShowTimeDebater.setVisibility(View.VISIBLE);
+                setTimerDebater(result.getMinutes());
+                startTimerDebater();
+                talking++;
+            }
+            if (!result.getIsTalking()) {
+                talking = 0;
+                countDownTimer.cancel();
+                countDownTimer.onFinish();
+                //progressBarRunningDebater.setVisibility(View.GONE);
+                progressBarStartDebater.setVisibility(View.INVISIBLE);
+                textViewShowTimeDebater.setVisibility(View.INVISIBLE);
+
+            }
+
+        }
+
+    }
+
+
     public void goToSignIn() {
-        stopRepeatingTaskCallWebService();
+
         Intent intent = new Intent(getBaseContext(), SignIn.class);
+        stopRepeatingTaskCallWebService();
         startActivity(intent);
 
     }
@@ -399,8 +518,8 @@ public class DebaterActivity extends AppCompatActivity {
         @Override
         public void run() {
             new JsonTaskSectionDebater().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getsections?id=" + debateModel.getId());
-            // Log.d("myTag", "This is my message");
-            new JsonTaskGetRoleDebater().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/confirmeddebates?email=" + userModel.getEmail());
+            //Log.d("myTag", "This is my messageDeabter");
+            new JsonTaskGetRoleDebater().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/realtimefeed?email=" + userModel.getEmail()+"&debate="+debateModel.getId());
 
             mHandler.postDelayed(mHandlerTask, INTERVAL);
         }
@@ -414,14 +533,46 @@ public class DebaterActivity extends AppCompatActivity {
         mHandler.removeCallbacks(mHandlerTask);
     }
 
+    private boolean activeSection() {
+        boolean active = false;
+        for (SectionModel sm : currentSectionModelList) {
+
+            if (sm.getActiveSection()) {
+                active = true;
+            }
+        }
+        return active;
+    }
 
     @Override
     public void onBackPressed() {
         //stopRepeatingTaskCallWebService();
 
-        createExitDialog();
-
+        if (!activeSection()) {
+            createExitDialog();
+        } else {
+            createStayDialog();
+        }
     }
+
+    private void createStayDialog() {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("No puede abandonar el debate. En este momento hay una sección del debate en progreso");
+        alertDialog.setCancelable(false);
+        alertDialog.setIcon(R.drawable.ic_logout_ic);
+        alertDialog.setTitle("Intente más tarde");
+
+        alertDialog.setNegativeButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alertDialog.create().show();
+    }
+
 
     private void createExitDialog() {
 
@@ -439,7 +590,8 @@ public class DebaterActivity extends AppCompatActivity {
                 Bundle mBundle = new Bundle();
                 mBundle.putParcelable("userModel", userModel);
                 intent.putExtras(mBundle);
-
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                stopRepeatingTaskCallWebService();
                 startActivity(intent);
             }
 
@@ -454,7 +606,7 @@ public class DebaterActivity extends AppCompatActivity {
         alertDialog.create().show();
     }
 
-    private void setTimer(int time) {
+    private void setTimerDebater(int time) {
 
         time = time * 60;
 
@@ -462,7 +614,7 @@ public class DebaterActivity extends AppCompatActivity {
         progressBarRunningDebater.setMax(time * 1000);
     }
 
-    private void startTimer() {
+    private void startTimerDebater() {
         countDownTimer = new CountDownTimer(totalTimeCountInMilliseconds, 1) {
             @Override
             public void onTick(long leftTimeInMilliseconds) {

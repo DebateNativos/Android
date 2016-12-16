@@ -31,7 +31,7 @@ public class ProfileFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private EditText  et_name,et_lastname,et_lastname2,et_Password,et_confirmPassword;;
+    private EditText  et_name,et_lastname,et_lastname2,et_Password,et_confirmPassword,et_phone, et_address;
     private Button btnUpdateProfile;
 
 
@@ -98,6 +98,12 @@ public class ProfileFragment extends Fragment {
 
         et_Password =(EditText) rootView.findViewById(R.id.editTextProfilePassword);
         et_confirmPassword =(EditText) rootView.findViewById(R.id.editTextProfileConfirmPassword);
+
+        et_phone = (EditText) rootView.findViewById(R.id.editTextProfilePhone);
+        et_phone.setText(userModel.getPhone());
+
+        et_address = (EditText) rootView.findViewById(R.id.editTextProfileAddress);
+        et_address.setText(userModel.getAddress());
 
         btnUpdateProfile=(Button) rootView.findViewById(R.id.StudentButton);
 

@@ -53,7 +53,7 @@ public class ObserverActivity extends AppCompatActivity {
     private SectionModel sectionModel;
     private UserModel userModel;
     private ListView listViewSection;
-    private TextView  tvSectionName, tvSectionMinutes,textViewShowTime;
+    private TextView  tvSectionName,textViewShowTime;
 
     private PlayerModel playerModel = new PlayerModel();
     private PlayerModel currentPlayerModel ;
@@ -65,7 +65,7 @@ public class ObserverActivity extends AppCompatActivity {
     private long totalTimeCountInMilliseconds;
     private int minutes =0;
     private int sectionNumber =0;
-
+    private List<SectionModel> currentSectionModelList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +123,7 @@ public class ObserverActivity extends AppCompatActivity {
                     sectionModelList.add(sectionModel);
                 }
 
-
+                currentSectionModelList = sectionModelList;
                 return sectionModelList;
 
             } catch (MalformedURLException e) {
@@ -178,17 +178,13 @@ public class ObserverActivity extends AppCompatActivity {
             }
 
             tvSectionName = (TextView) convertView.findViewById(R.id.textViewSectionName);
-            tvSectionMinutes = (TextView) convertView.findViewById(R.id.textViewSectionMinutes);
 
             tvSectionName.setText(" " +sectionModelList.get(position).getName());
-            tvSectionMinutes.setText("  "+sectionModelList.get(position).getMinutes() + " minutos");
             boolean active = sectionModelList.get(position).getActiveSection();
             if (active) {
 
                 tvSectionName.setTextColor(Color.WHITE);
-                tvSectionMinutes.setTextColor(Color.WHITE);
                 tvSectionName.setText(" " +sectionModelList.get(position).getName());
-                tvSectionMinutes.setText("  "+sectionModelList.get(position).getMinutes() + " minutos ");
                 convertView.setBackgroundResource(R.color.colorVerde);
 
                 imgButtonQuestions = (ImageButton) findViewById(R.id.imageButtonQuestionsObserver);
@@ -215,7 +211,6 @@ public class ObserverActivity extends AppCompatActivity {
 
             } else {
                 tvSectionName.setTextColor(Color.BLACK);
-                tvSectionMinutes.setTextColor(Color.BLACK);
                 convertView.setBackgroundColor(Color.LTGRAY);
             }
 
@@ -280,7 +275,7 @@ public class ObserverActivity extends AppCompatActivity {
         btnNotification.setText(String.valueOf(playerModel.getWarnings()));
     }
 
-    public class JsonTaskGetRole extends AsyncTask<String, String, List<PlayerModel>> {
+    public class JsonTaskGetRoleList extends AsyncTask<String, String, List<PlayerModel>> {
         @Override
         protected List<PlayerModel> doInBackground(String... params) {
             HttpURLConnection connection = null;
@@ -313,7 +308,7 @@ public class ObserverActivity extends AppCompatActivity {
                     playerModel.setRole(Integer.parseInt(finalObject.getString("role")));
                     playerModel.setDebate(Integer.parseInt(finalObject.getString("debate")));
                     playerModel.setWarnings(Integer.parseInt(finalObject.getString("warning")));
-
+                    playerModel.setTeam(finalObject.getString("team"));
                     playerModelList.add(playerModel);
                 }
 
@@ -352,6 +347,72 @@ public class ObserverActivity extends AppCompatActivity {
                 }
             }
             notifications(currentPlayerModel);
+
+        }
+
+    }
+
+    public class JsonTaskGetRoleObserver extends AsyncTask<String, String, PlayerModel> {
+        @Override
+        protected PlayerModel doInBackground(String... params) {
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+
+            try {
+                URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+
+                InputStream stream = connection.getInputStream();
+
+                reader = new BufferedReader(new InputStreamReader(stream));
+
+                StringBuffer buffer = new StringBuffer();
+
+                String line = "";
+
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line);
+                }
+                String finalJson = buffer.toString();
+
+                JSONObject parentObject = new JSONObject(finalJson);
+                playerModel.setRole(Integer.parseInt(parentObject.getString("role")));
+                playerModel.setDebate(Integer.parseInt(parentObject.getString("debate")));
+                playerModel.setWarnings(Integer.parseInt(parentObject.getString("warning")));
+                playerModel.setTeam(parentObject.getString("team"));
+                playerModel.setIsTalking(Boolean.parseBoolean(parentObject.getString("isTalking")));
+                playerModel.setMinutes(Integer.parseInt(parentObject.getString("minutesToTalk")));
+
+                return playerModel;
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(PlayerModel result) {
+            super.onPostExecute(result);
+
+            notifications(result);
 
         }
 
@@ -403,7 +464,7 @@ public class ObserverActivity extends AppCompatActivity {
         public void run() {
             new JsonTask().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/getsections?id=" + debateModel.getId());
             // Log.d("myTag", "This is my message");
-            new JsonTaskGetRole().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/confirmeddebates?email=" + userModel.getEmail());
+            new JsonTaskGetRoleObserver().execute("http://debatesapp.azurewebsites.net/podiumwebapp/ws/debate/realtimefeed?email=" + userModel.getEmail()+"&debate="+debateModel.getId());
 
             mHandler.postDelayed(mHandlerTask, INTERVAL);
         }
@@ -421,7 +482,12 @@ public class ObserverActivity extends AppCompatActivity {
     public void onBackPressed() {
         //stopRepeatingTaskGetSections();
 
-      createExitDialog();
+        if (!activeSection()) {
+            createExitDialog();
+        } else {
+            createStayDialog();
+        }
+
 
     }
 
@@ -446,7 +512,8 @@ public class ObserverActivity extends AppCompatActivity {
                 Bundle mBundle = new Bundle();
                 mBundle.putParcelable("userModel", userModel);
                 intent.putExtras(mBundle);
-
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                stopRepeatingTaskCallWebService();
                 startActivity(intent);
             }
 
@@ -460,4 +527,35 @@ public class ObserverActivity extends AppCompatActivity {
 
         alertDialog.create().show();
     }
+
+    private void createStayDialog() {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setMessage("No puede abandonar el debate. En este momento hay una sección del debate en progreso");
+        alertDialog.setCancelable(false);
+        alertDialog.setIcon(R.drawable.ic_logout_ic);
+        alertDialog.setTitle("Intente más tarde");
+
+        alertDialog.setNegativeButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alertDialog.create().show();
+    }
+
+    private boolean activeSection() {
+        boolean active = false;
+        for (SectionModel sm : currentSectionModelList) {
+
+            if (sm.getActiveSection()) {
+                active = true;
+            }
+        }
+        return active;
+    }
+
+
 }
