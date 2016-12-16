@@ -397,17 +397,19 @@ public class DebaterActivity extends AppCompatActivity {
 
         warning = playerModel.getWarnings();
 
-        notification.setVibrate(new long[]{1000, 1000});
+
         if (warning >= 3) {
 
             Toast.makeText(DebaterActivity.this, "Tercera amonestación, has sido expulsado del debate", Toast.LENGTH_SHORT).show();
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            notification.setVibrate(new long[]{1000, 1000});
             nm.notify(id, notification.build());
             stopRepeatingTaskCallWebService();
             goToSignIn();
+
         } else {
             Toast.makeText(DebaterActivity.this, "Has sido amonestado", Toast.LENGTH_SHORT).show();
-
+            notification.setVibrate(new long[]{1000, 1000});
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             nm.notify(id, notification.build());
         }
