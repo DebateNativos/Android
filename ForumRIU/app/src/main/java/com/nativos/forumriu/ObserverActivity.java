@@ -426,19 +426,19 @@ public class ObserverActivity extends AppCompatActivity {
         notification.setContentTitle("Notificación de amonestación");
         notification.setContentText("Has sido amonestado por el moderador");
 
-        warning = currentPlayerModel.getWarnings();
+        warning = playerModel.getWarnings();
 
-        notification.setVibrate(new long[]{1000, 1000});
+
         if (warning >= 3) {
 
             Toast.makeText(this, "Tercera amonestación, has sido expulsado del debate", Toast.LENGTH_LONG).show();
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            notification.setVibrate(new long[]{1000, 1000});
             nm.notify(id, notification.build());
             goToSignIn();
         } else {
             Toast.makeText(this, "Has sido amonestado", Toast.LENGTH_SHORT).show();
-
-
+            notification.setVibrate(new long[]{1000, 1000});
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             nm.notify(id, notification.build());
         }
@@ -493,6 +493,13 @@ public class ObserverActivity extends AppCompatActivity {
 
     public void goToSendQuestion(View view) {
         Intent intent = new Intent(getBaseContext(), QuestionActivity.class);
+
+        Bundle mBundle = new Bundle();
+        mBundle.putParcelable("userModel", userModel);
+        mBundle.putParcelable("debateModel", debateModel);
+        intent.putExtras(mBundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
         startActivity(intent);
     }
 

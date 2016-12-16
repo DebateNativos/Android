@@ -94,8 +94,6 @@ public class CommentsActivity extends AppCompatActivity implements SwipeRefreshL
 
             }
         });
-
-
     }
 
     @Override

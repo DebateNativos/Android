@@ -201,7 +201,6 @@ public class AdvisorActivity extends AppCompatActivity {
 
             tvSectionName = (TextView) convertView.findViewById(R.id.textViewSectionName);
 
-
             boolean active = sectionModelList.get(position).getActiveSection();
 
             if (active) {
@@ -435,19 +434,18 @@ public class AdvisorActivity extends AppCompatActivity {
         notification.setContentTitle("Notificación de amonestación");
         notification.setContentText("Has sido amonestado por el moderador");
 
-        warning = currentPlayerModel.getWarnings();
+        warning = playerModel.getWarnings();
 
-        notification.setVibrate(new long[]{1000, 1000});
+
         if (warning >= 3) {
-
+            notification.setVibrate(new long[]{1000, 1000});
             Toast.makeText(this, "Tercera amonestación, has sido expulsado del debate", Toast.LENGTH_LONG).show();
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             nm.notify(id, notification.build());
             goToSignIn();
         } else {
             Toast.makeText(this, "Has sido amonestado", Toast.LENGTH_SHORT).show();
-
-
+            notification.setVibrate(new long[]{1000, 1000});
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             nm.notify(id, notification.build());
         }
